@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>فروشگاه | VENSIZ</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050805;
+    color:#fff;
+    font-family:Tahoma,Arial,sans-serif;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+header{
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+
+    height:78px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 6%;
+
+    background:rgba(3,8,4,.95);
+
+    border-bottom:1px solid rgba(0,255,100,.15);
+
+    backdrop-filter:blur(15px);
+
+    z-index:1000;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    color:#00ff66;
+
+    text-decoration:none;
+
+    font-size:27px;
+    font-weight:bold;
+
+    text-shadow:0 0 20px rgba(0,255,100,.5);
+}
+
+.logo-box{
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid #00ff66;
+
+    border-radius:10px;
+
+    box-shadow:0 0 18px rgba(0,255,100,.35);
+}
+
+nav{
+    display:flex;
+    gap:26px;
+}
+
+nav a{
+    color:#aaa;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    transition:.3s;
+}
+
+nav a:hover,
+nav a.active{
+    color:#00ff66;
+}
+
+/* PAGE */
+
+.page{
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:130px 20px 70px;
+
+    background:
+    radial-gradient(
+        circle at center,
+        rgba(0,255,100,.10),
+        transparent 45%
+    );
+}
+
+/* SHOP WINDOW */
+
+.shop-window{
+
+    width:100%;
+
+    max-width:700px;
+
+    padding:60px 35px;
+
+    text-align:center;
+
+    background:#080e09;
+
+    border:1px solid rgba(0,255,100,.18);
+
+    border-radius:22px;
+
+    box-shadow:
+    0 20px 70px rgba(0,0,0,.4),
+    0 0 50px rgba(0,255,100,.03);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.shop-window::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    top:-180px;
+    left:-120px;
+
+    border-radius:50%;
+
+    background:rgba(0,255,100,.05);
+}
+
+/* ICON */
+
+.shop-icon{
+
+    width:100px;
+    height:100px;
+
+    margin:0 auto 25px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:2px solid #00ff66;
+
+    border-radius:25px;
+
+    color:#00ff66;
+
+    font-size:45px;
+
+    box-shadow:
+    0 0 30px rgba(0,255,100,.25);
+}
+
+/* TEXT */
+
+.shop-window h1{
+
+    font-size:34px;
+
+    margin-bottom:15px;
+}
+
+.shop-window h1 span{
+
+    color:#00ff66;
+}
+
+.shop-window h2{
+
+    color:#00ff66;
+
+    font-size:19px;
+
+    margin-bottom:15px;
+}
+
+.shop-window p{
+
+    color:#888;
+
+    font-size:13px;
+
+    line-height:2.3;
+
+    max-width:500px;
+
+    margin:auto;
+}
+
+/* STATUS */
+
+.status{
+
+    display:inline-block;
+
+    margin-top:25px;
+
+    padding:9px 18px;
+
+    color:#00ff66;
+
+    background:rgba(0,255,100,.06);
+
+    border:1px solid rgba(0,255,100,.2);
+
+    border-radius:9px;
+
+    font-size:12px;
+
+    font-weight:bold;
+}
+
+/* BACK */
+
+.back-button{
+
+    display:inline-block;
+
+    margin-top:28px;
+
+    padding:11px 25px;
+
+    color:#031006;
+
+    background:#00ff66;
+
+    border-radius:9px;
+
+    text-decoration:none;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+.back-button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 25px rgba(0,255,100,.3);
+}
+
+/* FOOTER */
+
+footer{
+
+    padding:35px 20px;
+
+    text-align:center;
+
+    background:#030603;
+
+    border-top:1px solid rgba(0,255,100,.1);
+
+    color:#666;
+
+    font-size:12px;
+}
+
+footer strong{
+
+    color:#00ff66;
+
+    font-size:20px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    header{
+        padding:0 20px;
+    }
+
+    nav{
+        display:none;
+    }
+
+    .shop-window{
+        padding:45px 22px;
+    }
+
+    .shop-window h1{
+        font-size:27px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<header>
+
+<a href="index.html" class="logo">
+
+<div class="logo-box">
+V
+</div>
+
+VENSIZ
+
+</a>
+
+
+<nav>
+
+<a href="rules.html">قوانین</a>
+
+<a href="updates.html">بروزرسانی‌ها</a>
+
+<a href="download.html">دانلود</a>
+
+<a href="about.html">درباره ما</a>
+
+<a href="shop.html" class="active">فروشگاه</a>
+
+<a href="support.html">پشتیبانی</a>
+
+</nav>
+
+</header>
+
+
+<main class="page">
+
+
+<div class="shop-window">
+
+
+<div class="shop-icon">
+🛒
+</div>
+
+
+<h1>
+فروشگاه <span>VENSIZ</span>
+</h1>
+
+
+<h2>
+تا اطلاع ثانوی در دسترس نمی‌باشد
+</h2>
+
+
+<p>
+فروشگاه VENSIZ در حال آماده‌سازی و توسعه می‌باشد.
+به‌زودی محصولات و خدمات ویژه سرور در این بخش قرار خواهند گرفت.
+</p>
+
+
+<div class="status">
+● فروشگاه موقتاً غیرفعال است
+</div>
+
+
+<br>
+
+
+<a href="index.html" class="back-button">
+بازگشت به صفحه اصلی
+</a>
+
+
+</div>
+
+
+</main>
+
+
+<footer>
+
+<strong>
+VENSIZ
+</strong>
+
+<br><br>
+
+VENSIZ Roleplay © 2026
+
+</footer>
+
+
+</body>
+</html>
