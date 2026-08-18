@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>بروزرسانی‌ها | VENSIZ</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050805;
+    color:#fff;
+    font-family:Tahoma,Arial,sans-serif;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+header{
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    height:78px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 6%;
+
+    background:rgba(3,8,4,.95);
+    border-bottom:1px solid rgba(0,255,100,.15);
+
+    backdrop-filter:blur(15px);
+
+    z-index:1000;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    color:#00ff66;
+    text-decoration:none;
+
+    font-size:27px;
+    font-weight:bold;
+
+    text-shadow:0 0 20px rgba(0,255,100,.5);
+}
+
+.logo-box{
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid #00ff66;
+    border-radius:10px;
+
+    box-shadow:0 0 18px rgba(0,255,100,.35);
+}
+
+nav{
+    display:flex;
+    gap:26px;
+}
+
+nav a{
+    color:#aaa;
+    text-decoration:none;
+    font-size:13px;
+    transition:.3s;
+}
+
+nav a:hover,
+nav a.active{
+    color:#00ff66;
+}
+
+/* HERO */
+
+.hero{
+    padding:150px 20px 70px;
+
+    text-align:center;
+
+    background:
+    radial-gradient(
+        circle at center,
+        rgba(0,255,100,.12),
+        transparent 50%
+    );
+}
+
+.hero-logo{
+    width:80px;
+    height:80px;
+
+    margin:0 auto 20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid #00ff66;
+    border-radius:20px;
+
+    color:#00ff66;
+
+    font-size:42px;
+    font-weight:bold;
+
+    box-shadow:0 0 30px rgba(0,255,100,.3);
+}
+
+.hero h1{
+    font-size:45px;
+}
+
+.hero h1 span{
+    color:#00ff66;
+}
+
+.hero p{
+    margin-top:10px;
+    color:#777;
+    font-size:13px;
+}
+
+/* UPDATES */
+
+.updates{
+    max-width:900px;
+    margin:auto;
+
+    padding:30px 20px 100px;
+}
+
+/* UPDATE CARD */
+
+.update-card{
+    background:#080e09;
+
+    border:1px solid rgba(0,255,100,.15);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+.update-card:hover{
+    transform:translateY(-5px);
+
+    border-color:rgba(0,255,100,.45);
+
+    box-shadow:
+    0 15px 45px rgba(0,255,100,.08);
+}
+
+.update-header{
+    padding:25px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+.update-info{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.version{
+    min-width:75px;
+
+    padding:8px 12px;
+
+    text-align:center;
+
+    color:#00ff66;
+
+    background:rgba(0,255,100,.07);
+
+    border:1px solid rgba(0,255,100,.2);
+
+    border-radius:8px;
+
+    font-size:12px;
+    font-weight:bold;
+}
+
+.update-title{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.update-date{
+    color:#666;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.arrow{
+    color:#00ff66;
+    font-size:22px;
+
+    transition:.3s;
+}
+
+.update-card.open .arrow{
+    transform:rotate(180deg);
+}
+
+/* DETAILS */
+
+.update-details{
+    max-height:0;
+
+    overflow:hidden;
+
+    transition:max-height .45s ease;
+}
+
+.update-card.open .update-details{
+    max-height:500px;
+}
+
+.details-content{
+    padding:0 30px 30px;
+
+    border-top:1px solid rgba(0,255,100,.08);
+}
+
+.details-content h3{
+    color:#00ff66;
+
+    font-size:15px;
+
+    padding-top:25px;
+
+    margin-bottom:10px;
+}
+
+.details-content p{
+    color:#999;
+
+    font-size:13px;
+
+    line-height:2.2;
+}
+
+/* FOOTER */
+
+footer{
+    padding:40px 20px;
+
+    text-align:center;
+
+    background:#030603;
+
+    border-top:1px solid rgba(0,255,100,.1);
+
+    color:#666;
+
+    font-size:12px;
+}
+
+footer strong{
+    color:#00ff66;
+    font-size:20px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    header{
+        padding:0 20px;
+    }
+
+    nav{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:34px;
+    }
+
+    .update-header{
+        padding:20px;
+    }
+
+    .update-info{
+        gap:12px;
+    }
+
+    .update-title{
+        font-size:15px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<a href="index.html" class="logo">
+
+<div class="logo-box">V</div>
+
+VENSIZ
+
+</a>
+
+<nav>
+
+<a href="rules.html">قوانین</a>
+<a href="updates.html" class="active">بروزرسانی‌ها</a>
+<a href="download.html">دانلود</a>
+<a href="about.html">درباره ما</a>
+<a href="shop.html">فروشگاه</a>
+<a href="support.html">پشتیبانی</a>
+
+</nav>
+
+</header>
+
+
+<section class="hero">
+
+<div class="hero-logo">V</div>
+
+<h1>
+بروزرسانی‌های <span>VENSIZ</span>
+</h1>
+
+<p>
+آخرین اخبار و تغییرات سرور
+</p>
+
+</section>
+
+
+<section class="updates">
+
+<div class="update-card" onclick="toggleUpdate(this)">
+
+<div class="update-header">
+
+<div class="update-info">
+
+<div class="version">
+نسخه 1.1
+</div>
+
+<div>
+
+<div class="update-title">
+سرور VENSIZ رسماً ران شد
+</div>
+
+<div class="update-date">
+اولین نسخه رسمی سرور
+</div>
+
+</div>
+
+</div>
+
+<div class="arrow">
+⌄
+</div>
+
+</div>
+
+
+<div class="update-details">
+
+<div class="details-content">
+
+<h3>
+🚀 نسخه 1.1 — آغاز فعالیت VENSIZ
+</h3>
+
+<p>
+سرور VENSIZ رسماً فعالیت خود را آغاز کرد.
+از این نسخه، بازیکنان می‌توانند وارد دنیای VENSIZ شوند
+و ماجراجویی خود را در سرور شروع کنند.
+</p>
+
+<p>
+این اولین نسخه رسمی سرور است و در بروزرسانی‌های آینده
+امکانات، سیستم‌ها و قابلیت‌های جدید به VENSIZ اضافه خواهد شد.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<strong>VENSIZ</strong>
+
+<br><br>
+
+VENSIZ Roleplay © 2026
+
+</footer>
+
+
+<script>
+
+function toggleUpdate(card){
+
+    card.classList.toggle("open");
+
+}
+
+</script>
+
+</body>
+</html>
