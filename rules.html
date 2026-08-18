@@ -1,1 +1,867 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>قوانین | VENSIZ</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#050805;
+    color:#fff;
+    font-family:Tahoma,Arial,sans-serif;
+    line-height:2;
+}
+
+/* HEADER */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:78px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 6%;
+
+    background:rgba(3,8,4,.95);
+    border-bottom:1px solid rgba(0,255,100,.15);
+
+    backdrop-filter:blur(15px);
+
+    z-index:1000;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    color:#00ff66;
+    text-decoration:none;
+
+    font-size:27px;
+    font-weight:bold;
+
+    text-shadow:0 0 20px rgba(0,255,100,.5);
+}
+
+.logo-box{
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid #00ff66;
+    border-radius:10px;
+
+    font-size:23px;
+
+    box-shadow:0 0 18px rgba(0,255,100,.35);
+}
+
+nav{
+    display:flex;
+    gap:26px;
+}
+
+nav a{
+    color:#bbb;
+    text-decoration:none;
+    font-size:13px;
+
+    transition:.3s;
+}
+
+nav a:hover,
+nav a.active{
+    color:#00ff66;
+}
+
+/* HERO */
+
+.hero{
+    min-height:48vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:130px 20px 70px;
+
+    background:
+    radial-gradient(
+        circle at center,
+        rgba(0,255,100,.12),
+        transparent 48%
+    ),
+    linear-gradient(
+        rgba(0,0,0,.5),
+        #050805
+    );
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.hero-logo{
+    width:90px;
+    height:90px;
+
+    margin:0 auto 25px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid #00ff66;
+    border-radius:22px;
+
+    color:#00ff66;
+
+    font-size:48px;
+    font-weight:bold;
+
+    box-shadow:
+    0 0 30px rgba(0,255,100,.35),
+    inset 0 0 20px rgba(0,255,100,.08);
+}
+
+.hero h1{
+    font-size:55px;
+
+    color:#fff;
+
+    text-shadow:
+    0 0 25px rgba(0,255,100,.4);
+}
+
+.hero h1 span{
+    color:#00ff66;
+}
+
+.hero p{
+    margin-top:10px;
+
+    color:#777;
+
+    font-size:14px;
+}
+
+/* LAYOUT */
+
+.page{
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:70px 20px 100px;
+
+    display:grid;
+
+    grid-template-columns:250px 1fr;
+
+    gap:35px;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:sticky;
+
+    top:105px;
+
+    height:max-content;
+
+    padding:20px;
+
+    background:#080f09;
+
+    border:1px solid rgba(0,255,100,.12);
+
+    border-radius:15px;
+}
+
+.sidebar-title{
+    color:#00ff66;
+
+    font-size:14px;
+
+    margin-bottom:15px;
+
+    font-weight:bold;
+}
+
+.sidebar a{
+    display:block;
+
+    padding:10px 12px;
+
+    margin-bottom:5px;
+
+    color:#888;
+
+    text-decoration:none;
+
+    border-radius:8px;
+
+    font-size:12px;
+
+    transition:.3s;
+}
+
+.sidebar a:hover{
+    color:#00ff66;
+
+    background:rgba(0,255,100,.06);
+}
+
+/* CONTENT */
+
+.content{
+    min-width:0;
+}
+
+.notice{
+    padding:22px 25px;
+
+    margin-bottom:25px;
+
+    background:rgba(0,255,100,.04);
+
+    border-right:3px solid #00ff66;
+
+    border-radius:10px;
+
+    color:#aaa;
+
+    font-size:13px;
+}
+
+.rule{
+    scroll-margin-top:100px;
+
+    padding:30px;
+
+    margin-bottom:20px;
+
+    background:#080e09;
+
+    border:1px solid rgba(0,255,100,.1);
+
+    border-radius:15px;
+
+    transition:.3s;
+}
+
+.rule:hover{
+    border-color:rgba(0,255,100,.3);
+
+    box-shadow:
+    0 10px 35px rgba(0,255,100,.05);
+}
+
+.rule-number{
+    color:#00ff66;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    margin-bottom:5px;
+}
+
+.rule h2{
+    color:#fff;
+
+    font-size:20px;
+
+    margin-bottom:15px;
+}
+
+.rule p{
+    color:#aaa;
+
+    font-size:13px;
+
+    margin-bottom:8px;
+}
+
+.rule strong{
+    color:#ddd;
+}
+
+.final{
+    text-align:center;
+
+    padding:35px;
+
+    margin-top:35px;
+
+    background:#080e09;
+
+    border:1px solid rgba(0,255,100,.2);
+
+    border-radius:15px;
+}
+
+.final h2{
+    color:#00ff66;
+
+    margin-bottom:12px;
+}
+
+.final p{
+    color:#999;
+
+    font-size:13px;
+}
+
+/* FOOTER */
+
+footer{
+    padding:45px 20px;
+
+    text-align:center;
+
+    background:#030603;
+
+    border-top:1px solid rgba(0,255,100,.1);
+
+    color:#666;
+
+    font-size:12px;
+}
+
+footer strong{
+    color:#00ff66;
+
+    font-size:20px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    header{
+        padding:0 20px;
+    }
+
+    nav{
+        display:none;
+    }
+
+    .page{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        position:relative;
+        top:auto;
+    }
+
+    .hero h1{
+        font-size:40px;
+    }
+}
+
+@media(max-width:600px){
+
+    .hero{
+        padding-top:120px;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .rule{
+        padding:22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<a href="index.html" class="logo">
+
+<div class="logo-box">V</div>
+
+VENSIZ
+
+</a>
+
+<nav>
+
+<a href="rules.html" class="active">قوانین</a>
+
+<a href="updates.html">بروزرسانی‌ها</a>
+
+<a href="download.html">دانلود</a>
+
+<a href="about.html">درباره ما</a>
+
+<a href="shop.html">فروشگاه</a>
+
+<a href="support.html">پشتیبانی</a>
+
+</nav>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="hero-logo">V</div>
+
+<h1>
+قوانین <span>VENSIZ</span>
+</h1>
+
+<p>
+قوانین و مقررات رسمی سرور VENSIZ Roleplay
+</p>
+
+</div>
+
+</section>
+
+
+<!-- MAIN -->
+
+<div class="page">
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div class="sidebar-title">
+فهرست قوانین
+</div>
+
+<a href="#rule1">۱ — قوانین عمومی</a>
+<a href="#rule2">۲ — حساب کاربری</a>
+<a href="#rule3">۳ — RolePlay</a>
+<a href="#rule4">۴ — IC / OOC</a>
+<a href="#rule5">۵ — Combat</a>
+<a href="#rule6">۶ — جرایم</a>
+<a href="#rule7">۷ — فکشن‌ها</a>
+<a href="#rule8">۸ — اقتصاد</a>
+<a href="#rule9">۹ — تقلب</a>
+<a href="#rule10">۱۰ — مناطق</a>
+<a href="#rule11">۱۱ — خودروها</a>
+<a href="#rule12">۱۲ — مدیریت</a>
+<a href="#rule13">۱۳ — گزارش</a>
+<a href="#rule14">۱۴ — مجازات‌ها</a>
+<a href="#rule15">۱۵ — امنیت</a>
+<a href="#rule16">۱۶ — فروشگاه</a>
+<a href="#rule17">۱۷ — پشتیبانی</a>
+<a href="#rule18">۱۸ — تغییر قوانین</a>
+
+</aside>
+
+
+<!-- CONTENT -->
+
+<main class="content">
+
+
+<div class="notice">
+
+<strong>توجه:</strong>
+
+با ورود به سرور و استفاده از خدمات VENSIZ،
+کاربر موظف به رعایت قوانین مربوط به فعالیت خود می‌باشد.
+قوانین ممکن است در آینده با توجه به نیاز سرور به‌روزرسانی شوند.
+
+</div>
+
+
+<section class="rule" id="rule1">
+
+<div class="rule-number">ARTICLE 01</div>
+
+<h2>قوانین عمومی</h2>
+
+<p>۱.۱ — ورود و فعالیت در VENSIZ به معنی پذیرش قوانین سرور است.</p>
+
+<p>۱.۲ — احترام به بازیکنان، اعضای فکشن و تیم مدیریت الزامی است.</p>
+
+<p>۱.۳ — توهین، تهدید، آزار عمدی و ایجاد مزاحمت ممنوع است.</p>
+
+<p>۱.۴ — استفاده از هویت یا نام جعلی برای فریب دیگران ممنوع است.</p>
+
+<p>۱.۵ — تبلیغ سرور یا کامیونیتی‌های دیگر بدون اجازه مدیریت ممنوع است.</p>
+
+<p>۱.۶ — بازیکنان موظف‌اند تغییرات قوانین و اطلاعیه‌های رسمی را دنبال کنند.</p>
+
+</section>
+
+
+<section class="rule" id="rule2">
+
+<div class="rule-number">ARTICLE 02</div>
+
+<h2>حساب کاربری</h2>
+
+<p>۲.۱ — مسئولیت فعالیت‌های انجام‌شده با حساب بر عهده صاحب آن است.</p>
+
+<p>۲.۲ — اطلاعات ورود حساب نباید در اختیار اشخاص غیرمجاز قرار گیرد.</p>
+
+<p>۲.۳ — خرید و فروش حساب بدون تأیید مدیریت ممنوع است.</p>
+
+<p>۲.۴ — تلاش برای سرقت یا دسترسی به حساب دیگران تخلف محسوب می‌شود.</p>
+
+<p>۲.۵ — استفاده از چند حساب برای دور زدن محدودیت‌ها یا مجازات‌ها ممنوع است.</p>
+
+</section>
+
+
+<section class="rule" id="rule3">
+
+<div class="rule-number">ARTICLE 03</div>
+
+<h2>اصول RolePlay</h2>
+
+<p>۳.۱ — شخصیت باید مطابق شرایط محیط و داستان خود رفتار کند.</p>
+
+<p>۳.۲ — استفاده از اطلاعات خارج از بازی برای تصمیم‌گیری داخل بازی ممنوع است.</p>
+
+<p>۳.۳ — انجام اعمال غیرممکن یا غیرمنطقی برای ایجاد برتری ممنوع است.</p>
+
+<p>۳.۴ — شخصیت باید نسبت به خطرات جدی واکنش منطقی داشته باشد.</p>
+
+<p>۳.۵ — خروج عمدی از بازی برای فرار از یک سناریو ممنوع است.</p>
+
+<p>۳.۶ — بازگشت برای انتقام پس از مرگ یا Knock شدن ممنوع است.</p>
+
+</section>
+
+
+<section class="rule" id="rule4">
+
+<div class="rule-number">ARTICLE 04</div>
+
+<h2>IC و OOC</h2>
+
+<p>۴.۱ — اطلاعات داخل بازی و خارج از بازی باید از یکدیگر جدا باشند.</p>
+
+<p>۴.۲ — استفاده از Discord یا منابع خارجی برای کسب اطلاعات IC ممنوع است.</p>
+
+<p>۴.۳ — استفاده از اطلاعات OOC برای پیدا کردن بازیکنان یا اموال آن‌ها ممنوع است.</p>
+
+<p>۴.۴ — اختلافات شخصی خارج از بازی نباید وارد سناریوی RolePlay شوند.</p>
+
+</section>
+
+
+<section class="rule" id="rule5">
+
+<div class="rule-number">ARTICLE 05</div>
+
+<h2>Combat و درگیری</h2>
+
+<p>۵.۱ — حمله به بازیکن بدون دلیل معتبر RolePlay ممنوع است.</p>
+
+<p>۵.۲ — کشتن بدون سناریو یا دلیل منطقی می‌تواند به عنوان DM بررسی شود.</p>
+
+<p>۵.۳ — استفاده عمدی از خودرو برای آسیب زدن به بازیکنان ممنوع است.</p>
+
+<p>۵.۴ — ایجاد درگیری در مناطق محافظت‌شده ممنوع است.</p>
+
+<p>۵.۵ — تحریک بی‌دلیل نیروهای دولتی برای ایجاد تعقیب ممنوع است.</p>
+
+</section>
+
+
+<section class="rule" id="rule6">
+
+<div class="rule-number">ARTICLE 06</div>
+
+<h2>سرقت، گروگان‌گیری و جرایم</h2>
+
+<p>۶.۱ — سرقت باید دارای سناریوی منطقی باشد.</p>
+
+<p>۶.۲ — گروگان‌گیری صرفاً برای آزار بازیکنان ممنوع است.</p>
+
+<p>۶.۳ — سوءاستفاده از سیستم‌های سرور برای ایجاد سرقت ممنوع است.</p>
+
+<p>۶.۴ — استفاده از گروگان صوری برای دور زدن قوانین ممنوع است.</p>
+
+</section>
+
+
+<section class="rule" id="rule7">
+
+<div class="rule-number">ARTICLE 07</div>
+
+<h2>فکشن‌ها و گروه‌ها</h2>
+
+<p>۷.۱ — اعضای فکشن‌های دولتی باید از اختیارات خود در چارچوب RolePlay استفاده کنند.</p>
+
+<p>۷.۲ — استفاده شخصی از تجهیزات و خودروهای فکشن ممنوع است.</p>
+
+<p>۷.۳ — گنگ‌ها نیز موظف به رعایت قوانین عمومی سرور هستند.</p>
+
+<p>۷.۴ — درگیری گنگ‌ها باید مطابق قوانین مربوطه انجام شود.</p>
+
+</section>
+
+
+<section class="rule" id="rule8">
+
+<div class="rule-number">ARTICLE 08</div>
+
+<h2>اقتصاد و دارایی‌ها</h2>
+
+<p>۸.۱ — سوءاستفاده از سیستم اقتصادی سرور ممنوع است.</p>
+
+<p>۸.۲ — استفاده از باگ برای تولید پول یا آیتم تخلف سنگین محسوب می‌شود.</p>
+
+<p>۸.۳ — انتقال دارایی برای فرار از مجازات ممنوع است.</p>
+
+<p>۸.۴ — خرید و فروش دارایی‌های درون سرور با پول واقعی خارج از سیستم رسمی ممنوع است.</p>
+
+</section>
+
+
+<section class="rule" id="rule9">
+
+<div class="rule-number">ARTICLE 09</div>
+
+<h2>تقلب و نرم‌افزارهای غیرمجاز</h2>
+
+<p>۹.۱ — استفاده از Cheat یا Hack ممنوع است.</p>
+
+<p>۹.۲ — استفاده از Script، Macro یا ابزار ایجادکننده برتری ناعادلانه ممنوع است.</p>
+
+<p>۹.۳ — دستکاری فایل‌های بازی برای دور زدن سیستم‌های امنیتی ممنوع است.</p>
+
+<p>۹.۴ — سوءاستفاده از Bug یا Exploit ممنوع است.</p>
+
+</section>
+
+
+<section class="rule" id="rule10">
+
+<div class="rule-number">ARTICLE 10</div>
+
+<h2>مناطق ویژه</h2>
+
+<p>۱۰.۱ — Safe Zone دارای قوانین حفاظتی ویژه است.</p>
+
+<p>۱۰.۲ — ایجاد درگیری یا تیراندازی در Safe Zone ممنوع است.</p>
+
+<p>۱۰.۳ — مناطق ویژه ممکن است قوانین اختصاصی داشته باشند.</p>
+
+<p>۱۰.۴ — قوانین هر منطقه از طریق اطلاعیه رسمی VENSIZ اعلام خواهد شد.</p>
+
+</section>
+
+
+<section class="rule" id="rule11">
+
+<div class="rule-number">ARTICLE 11</div>
+
+<h2>خودروها</h2>
+
+<p>۱۱.۱ — استفاده از خودرو برای کشتن عمدی بازیکنان ممنوع است.</p>
+
+<p>۱۱.۲ — سرقت خودرو باید با منطق RolePlay انجام شود.</p>
+
+<p>۱۱.۳ — استفاده غیرمنطقی از خودرو برای فرار ممنوع است.</p>
+
+<p>۱۱.۴ — مسدود کردن عمدی مسیر بازیکنان با خودرو ممنوع است.</p>
+
+</section>
+
+
+<section class="rule" id="rule12">
+
+<div class="rule-number">ARTICLE 12</div>
+
+<h2>ادمین‌ها و تیم مدیریت</h2>
+
+<p>۱۲.۱ — تصمیمات تیم مدیریت باید محترم شمرده شود.</p>
+
+<p>۱۲.۲ — اعتراض به مجازات از طریق سیستم پشتیبانی امکان‌پذیر است.</p>
+
+<p>۱۲.۳ — ارائه مدرک جعلی یا اطلاعات دروغ به ادمین تخلف است.</p>
+
+<p>۱۲.۴ — ایجاد مزاحمت هنگام بررسی پرونده ممنوع است.</p>
+
+</section>
+
+
+<section class="rule" id="rule13">
+
+<div class="rule-number">ARTICLE 13</div>
+
+<h2>گزارش تخلف</h2>
+
+<p>۱۳.۱ — گزارش تخلف باید تا حد امکان دارای مدرک معتبر باشد.</p>
+
+<p>۱۳.۲ — مدارک نباید به شکل گمراه‌کننده دستکاری شده باشند.</p>
+
+<p>۱۳.۳ — گزارش ساختگی می‌تواند باعث مجازات گزارش‌دهنده شود.</p>
+
+<p>۱۳.۴ — مدیریت می‌تواند برای بررسی پرونده مدارک بیشتری درخواست کند.</p>
+
+</section>
+
+
+<section class="rule" id="rule14">
+
+<div class="rule-number">ARTICLE 14</div>
+
+<h2>مجازات‌ها</h2>
+
+<p>۱۴.۱ — مجازات با توجه به شدت تخلف و سابقه بازیکن تعیین می‌شود.</p>
+
+<p>۱۴.۲ — مجازات‌ها می‌توانند شامل Warn، Mute، Kick، Jail، Ban موقت یا Ban دائمی باشند.</p>
+
+<p>۱۴.۳ — دارایی‌های به‌دست‌آمده از تخلف ممکن است حذف شوند.</p>
+
+<p>۱۴.۴ — تکرار تخلف می‌تواند باعث افزایش شدت مجازات شود.</p>
+
+</section>
+
+
+<section class="rule" id="rule15">
+
+<div class="rule-number">ARTICLE 15</div>
+
+<h2>Bug Abuse و امنیت</h2>
+
+<p>۱۵.۱ — پیدا کردن باگ تخلف نیست؛ سوءاستفاده آگاهانه از آن تخلف است.</p>
+
+<p>۱۵.۲ — انتشار روش سوءاستفاده از باگ‌های امنیتی ممنوع است.</p>
+
+<p>۱۵.۳ — تلاش برای دسترسی غیرمجاز به پنل، دیتابیس یا زیرساخت ممنوع است.</p>
+
+<p>۱۵.۴ — هرگونه تلاش برای ایجاد اختلال در سرور یا وب‌سایت VENSIZ ممنوع است.</p>
+
+</section>
+
+
+<section class="rule" id="rule16">
+
+<div class="rule-number">ARTICLE 16</div>
+
+<h2>فروشگاه VENSIZ</h2>
+
+<p>۱۶.۱ — خرید محصولات باید از روش‌های رسمی VENSIZ انجام شود.</p>
+
+<p>۱۶.۲ — خریدار موظف است پیش از پرداخت توضیحات محصول را مطالعه کند.</p>
+
+<p>۱۶.۳ — شرایط بازگشت وجه بر اساس نوع محصول و وضعیت سفارش تعیین می‌شود.</p>
+
+<p>۱۶.۴ — پرداخت جعلی یا تلاش برای دریافت محصول بدون پرداخت تخلف محسوب می‌شود.</p>
+
+<p>۱۶.۵ — مشکلات سفارش باید از طریق بخش پشتیبانی سایت پیگیری شوند.</p>
+
+</section>
+
+
+<section class="rule" id="rule17">
+
+<div class="rule-number">ARTICLE 17</div>
+
+<h2>پشتیبانی و اعتراض</h2>
+
+<p>۱۷.۱ — درخواست‌های پشتیبانی باید در بخش مربوط ثبت شوند.</p>
+
+<p>۱۷.۲ — برای بررسی بهتر، توضیحات کامل و مدارک لازم ارائه شود.</p>
+
+<p>۱۷.۳ — ایجاد تیکت‌های تکراری یا اسپم ممنوع است.</p>
+
+<p>۱۷.۴ — اعتراض به مجازات باید محترمانه و همراه با مدارک کافی باشد.</p>
+
+</section>
+
+
+<section class="rule" id="rule18">
+
+<div class="rule-number">ARTICLE 18</div>
+
+<h2>تغییر قوانین</h2>
+
+<p>
+۱۸.۱ — VENSIZ می‌تواند برای بهبود کیفیت RolePlay،
+امنیت سرور و تعادل اقتصادی، قوانین را اصلاح یا قوانین جدیدی اضافه کند.
+</p>
+
+<p>
+۱۸.۲ — تغییرات مهم از طریق وب‌سایت یا کانال‌های رسمی VENSIZ اطلاع‌رسانی خواهند شد.
+</p>
+
+</section>
+
+
+<div class="final">
+
+<h2>تأیید قوانین VENSIZ</h2>
+
+<p>
+با ورود به سرور VENSIZ، ایجاد حساب، خرید محصول یا استفاده
+از خدمات مجموعه، کاربر تأیید می‌کند که قوانین مربوطه را مطالعه
+کرده و مسئولیت رعایت آن‌ها را می‌پذیرد.
+</p>
+
+<br>
+
+<strong style="color:#00ff66;">
+VENSIZ ROLEPLAY — YOUR STORY, YOUR WORLD.
+</strong>
+
+</div>
+
+
+</main>
+
+</div>
+
+
+<footer>
+
+<strong>VENSIZ</strong>
+
+<br><br>
+
+VENSIZ Roleplay © 2026
+
+</footer>
+
+
+</body>
+</html>
