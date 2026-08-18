@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>درباره ما | VENSIZ</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#050805;
+    color:white;
+    font-family:Tahoma,Arial,sans-serif;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+
+    height:78px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 6%;
+
+    background:rgba(3,8,4,.95);
+
+    border-bottom:1px solid rgba(0,255,100,.15);
+
+    backdrop-filter:blur(15px);
+
+    z-index:1000;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    color:#00ff66;
+
+    text-decoration:none;
+
+    font-size:27px;
+    font-weight:bold;
+
+    text-shadow:0 0 20px rgba(0,255,100,.5);
+}
+
+.logo-box{
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid #00ff66;
+
+    border-radius:10px;
+
+    box-shadow:0 0 18px rgba(0,255,100,.35);
+}
+
+nav{
+    display:flex;
+    gap:26px;
+}
+
+nav a{
+    color:#aaa;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    transition:.3s;
+}
+
+nav a:hover,
+nav a.active{
+    color:#00ff66;
+}
+
+/* HERO */
+
+.hero{
+
+    padding:150px 20px 65px;
+
+    text-align:center;
+
+    background:
+    radial-gradient(
+        circle at center,
+        rgba(0,255,100,.12),
+        transparent 50%
+    );
+}
+
+.hero-logo{
+
+    width:80px;
+    height:80px;
+
+    margin:0 auto 20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid #00ff66;
+
+    border-radius:20px;
+
+    color:#00ff66;
+
+    font-size:42px;
+
+    font-weight:bold;
+
+    box-shadow:0 0 30px rgba(0,255,100,.3);
+}
+
+.hero h1{
+    font-size:45px;
+}
+
+.hero h1 span{
+    color:#00ff66;
+}
+
+.hero p{
+    margin-top:10px;
+
+    color:#777;
+
+    font-size:13px;
+}
+
+/* TEAM */
+
+.team{
+
+    max-width:1050px;
+
+    margin:auto;
+
+    padding:30px 20px 100px;
+}
+
+.team-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:25px;
+}
+
+/* CARD */
+
+.member{
+
+    position:relative;
+
+    padding:30px;
+
+    background:#080e09;
+
+    border:1px solid rgba(0,255,100,.13);
+
+    border-radius:18px;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    transition:.35s;
+}
+
+.member::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    top:-100px;
+    right:-70px;
+
+    background:rgba(0,255,100,.05);
+
+    border-radius:50%;
+}
+
+.member:hover{
+
+    transform:translateY(-7px);
+
+    border-color:rgba(0,255,100,.4);
+
+    box-shadow:
+    0 15px 45px rgba(0,255,100,.08);
+}
+
+/* PHOTO */
+
+.photo{
+
+    width:110px;
+    height:110px;
+
+    margin:0 auto 20px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    border:2px solid #00ff66;
+
+    background:#050805;
+
+    color:#00ff66;
+
+    font-size:42px;
+
+    box-shadow:
+    0 0 25px rgba(0,255,100,.2);
+
+    overflow:hidden;
+}
+
+.photo img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    display:none;
+}
+
+/* ROLE */
+
+.role{
+
+    display:inline-block;
+
+    padding:6px 14px;
+
+    margin-bottom:12px;
+
+    color:#00ff66;
+
+    background:rgba(0,255,100,.06);
+
+    border:1px solid rgba(0,255,100,.18);
+
+    border-radius:8px;
+
+    font-size:11px;
+
+    font-weight:bold;
+}
+
+.member h2{
+
+    font-size:20px;
+
+    margin-bottom:8px;
+}
+
+.member p{
+
+    color:#777;
+
+    font-size:12px;
+
+    line-height:2;
+}
+
+/* FOOTER */
+
+footer{
+
+    padding:40px 20px;
+
+    text-align:center;
+
+    background:#030603;
+
+    border-top:1px solid rgba(0,255,100,.1);
+
+    color:#666;
+
+    font-size:12px;
+}
+
+footer strong{
+
+    color:#00ff66;
+
+    font-size:20px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    header{
+        padding:0 20px;
+    }
+
+    nav{
+        display:none;
+    }
+
+    .hero h1{
+        font-size:34px;
+    }
+
+    .team-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<header>
+
+<a href="index.html" class="logo">
+
+<div class="logo-box">
+V
+</div>
+
+VENSIZ
+
+</a>
+
+
+<nav>
+
+<a href="rules.html">قوانین</a>
+
+<a href="updates.html">بروزرسانی‌ها</a>
+
+<a href="download.html">دانلود</a>
+
+<a href="about.html" class="active">درباره ما</a>
+
+<a href="shop.html">فروشگاه</a>
+
+<a href="support.html">پشتیبانی</a>
+
+</nav>
+
+</header>
+
+
+<section class="hero">
+
+<div class="hero-logo">
+V
+</div>
+
+<h1>
+تیم <span>VENSIZ</span>
+</h1>
+
+<p>
+افرادی که VENSIZ را می‌سازند و مدیریت می‌کنند
+</p>
+
+</section>
+
+
+<section class="team">
+
+<div class="team-grid">
+
+
+<!-- OWNER -->
+
+<div class="member">
+
+<div class="photo">
+
+<span>♛</span>
+
+</div>
+
+<div class="role">
+OWNER
+</div>
+
+<h2>
+Fatah Shahi
+</h2>
+
+<p>
+مدیریت و مالکیت مجموعه VENSIZ
+</p>
+
+</div>
+
+
+<!-- CO OWNER -->
+
+<div class="member">
+
+<div class="photo">
+
+<span>🛡</span>
+
+</div>
+
+<div class="role">
+CO OWNER
+</div>
+
+<h2>
+Aria Karimi
+</h2>
+
+<p>
+مدیریت و همکاری در توسعه مجموعه VENSIZ
+</p>
+
+</div>
+
+
+<!-- DEVELOPER -->
+
+<div class="member">
+
+<div class="photo">
+
+<span>⚙</span>
+
+</div>
+
+<div class="role">
+DEVELOPER
+</div>
+
+<h2>
+Atlas
+</h2>
+
+<p>
+توسعه و پیاده‌سازی سیستم‌های سرور VENSIZ
+</p>
+
+</div>
+
+
+<!-- WEB DEVELOPER -->
+
+<div class="member">
+
+<div class="photo">
+
+<span>⌘</span>
+
+</div>
+
+<div class="role">
+WEB DEVELOPER
+</div>
+
+<h2>
+Amir Nico
+</h2>
+
+<p>
+توسعه و طراحی وب‌سایت VENSIZ
+</p>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<footer>
+
+<strong>
+VENSIZ
+</strong>
+
+<br><br>
+
+VENSIZ Roleplay © 2026
+
+</footer>
+
+
+</body>
+</html>
