@@ -2,11 +2,12 @@
 <html lang="fa" dir="rtl">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ورود | VENSIZ</title>
+<title>احراز هویت | VENSIZ</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
@@ -16,72 +17,45 @@
     box-sizing:border-box;
 }
 
-html{
-    scroll-behavior:smooth;
-}
-
 body{
     min-height:100vh;
+    background:#050805;
+    color:#fff;
+    font-family:Tahoma,Arial,sans-serif;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    padding:30px;
-
-    background:
-    radial-gradient(
-        circle at center,
-        rgba(0,255,100,.10),
-        transparent 45%
-    ),
-    #050805;
-
-    color:#fff;
-
-    font-family:
-    Tahoma,
-    Arial,
-    sans-serif;
+    padding:20px;
 }
-
-
-/* =========================
-   BOX
-========================= */
 
 .auth-box{
 
     width:100%;
-    max-width:450px;
+    max-width:430px;
 
-    padding:42px 32px;
+    padding:40px 30px;
 
     background:#080e09;
 
-    border:1px solid rgba(0,255,100,.18);
+    border:1px solid rgba(0,255,100,.2);
 
-    border-radius:22px;
+    border-radius:20px;
 
     box-shadow:
-    0 25px 80px rgba(0,0,0,.55),
-    0 0 50px rgba(0,255,100,.04);
+    0 20px 70px rgba(0,0,0,.5),
+    0 0 40px rgba(0,255,100,.05);
 
     text-align:center;
-
 }
-
-
-/* =========================
-   LOGO
-========================= */
 
 .logo{
 
-    width:82px;
-    height:82px;
+    width:75px;
+    height:75px;
 
-    margin:0 auto 22px;
+    margin:0 auto 20px;
 
     display:flex;
     align-items:center;
@@ -89,676 +63,337 @@ body{
 
     border:2px solid #00ff66;
 
-    border-radius:20px;
+    border-radius:18px;
 
     color:#00ff66;
 
-    font-size:43px;
-
+    font-size:40px;
     font-weight:bold;
 
     box-shadow:
-    0 0 30px rgba(0,255,100,.30),
-    inset 0 0 20px rgba(0,255,100,.08);
-
+    0 0 25px rgba(0,255,100,.3);
 }
-
 
 h1{
-
     font-size:27px;
-
     margin-bottom:8px;
-
 }
-
 
 h1 span{
-
     color:#00ff66;
-
 }
-
 
 .subtitle{
-
-    color:#777;
-
-    font-size:13px;
-
-    margin-bottom:30px;
-
-}
-
-
-/* =========================
-   TABS
-========================= */
-
-.tabs{
-
-    display:flex;
-
-    gap:10px;
-
-    margin-bottom:25px;
-
-}
-
-
-.tab{
-
-    flex:1;
-
-    padding:13px;
-
-    border:1px solid rgba(0,255,100,.15);
-
-    border-radius:9px;
-
-    background:#0a110b;
-
     color:#888;
-
-    cursor:pointer;
-
-    font-family:inherit;
-
-    transition:.3s;
-
+    font-size:13px;
+    margin-bottom:30px;
 }
 
-
-.tab:hover{
-
-    border-color:#00ff66;
-
-    color:#00ff66;
-
-}
-
-
-.tab.active{
-
-    color:#00ff66;
-
-    background:rgba(0,255,100,.08);
-
-    border-color:#00ff66;
-
-}
-
-
-/* =========================
-   FORM
-========================= */
-
-.form{
-
-    display:none;
-
-}
-
-
-.form.active{
-
-    display:block;
-
-}
-
-
-.input{
+input{
 
     width:100%;
 
-    height:50px;
+    padding:14px;
 
-    padding:0 15px;
-
-    margin-bottom:14px;
-
-    border:1px solid rgba(0,255,100,.15);
-
-    border-radius:9px;
+    margin-bottom:13px;
 
     background:#050805;
 
     color:#fff;
 
+    border:1px solid rgba(0,255,100,.15);
+
+    border-radius:9px;
+
     outline:none;
 
-    font-family:inherit;
+    font-family:Tahoma,Arial,sans-serif;
 
-    font-size:13px;
-
-    direction:ltr;
-
-    text-align:left;
-
-    transition:.3s;
-
+    direction:rtl;
 }
 
-
-.input:focus{
-
+input:focus{
     border-color:#00ff66;
-
-    box-shadow:
-    0 0 15px rgba(0,255,100,.08);
-
 }
 
-
-.input::placeholder{
-
-    color:#555;
-
-}
-
-
-/* =========================
-   BUTTON
-========================= */
-
-.button{
+button{
 
     width:100%;
 
-    height:50px;
+    padding:14px;
+
+    margin-top:5px;
 
     border:none;
 
     border-radius:9px;
 
-    background:#00c853;
+    background:#00d95a;
 
     color:#001b08;
-
-    font-family:inherit;
-
-    font-size:13px;
 
     font-weight:bold;
 
     cursor:pointer;
 
-    transition:.3s;
+    font-family:Tahoma,Arial,sans-serif;
 
+    transition:.3s;
 }
 
-
-.button:hover{
+button:hover{
 
     background:#00ff66;
 
-    transform:translateY(-2px);
-
     box-shadow:
-    0 0 25px rgba(0,255,100,.25);
-
+    0 0 25px rgba(0,255,100,.3);
 }
 
-
-.button:disabled{
-
-    opacity:.5;
-
-    cursor:not-allowed;
-
-    transform:none;
-
-}
-
-
-/* =========================
-   MESSAGE
-========================= */
-
-.message{
-
-    min-height:28px;
-
-    margin-top:18px;
-
-    color:#aaa;
-
-    font-size:12px;
-
-    line-height:2;
-
-}
-
-
-/* =========================
-   BACK
-========================= */
-
-.back{
-
-    display:inline-block;
+.switch{
 
     margin-top:20px;
 
+    color:#777;
+
+    font-size:12px;
+}
+
+.switch span{
+
     color:#00ff66;
+
+    cursor:pointer;
+
+    font-weight:bold;
+}
+
+.message{
+
+    margin-top:18px;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    font-size:12px;
+
+    display:none;
+}
+
+.success{
+
+    display:block;
+
+    color:#00ff66;
+
+    background:rgba(0,255,100,.06);
+
+    border:1px solid rgba(0,255,100,.15);
+}
+
+.error{
+
+    display:block;
+
+    color:#ff7070;
+
+    background:rgba(255,0,0,.05);
+
+    border:1px solid rgba(255,0,0,.15);
+}
+
+.back{
+
+    display:block;
+
+    margin-top:22px;
+
+    color:#777;
 
     text-decoration:none;
 
     font-size:12px;
-
-    transition:.3s;
-
 }
-
 
 .back:hover{
-
-    text-shadow:
-    0 0 10px #00ff66;
-
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:500px){
-
-    body{
-
-        padding:15px;
-
-    }
-
-    .auth-box{
-
-        padding:35px 22px;
-
-    }
-
+    color:#00ff66;
 }
 
 </style>
 
 </head>
 
-
 <body>
-
 
 <div class="auth-box">
 
-
-<!-- LOGO -->
-
 <div class="logo">
-
 V
-
 </div>
-
 
 <h1>
-
-VENSIZ <span>ROLEPLAY</span>
-
+VENSIZ <span>AUTH</span>
 </h1>
 
-
 <div class="subtitle">
-
-ورود به حساب کاربری VENSIZ
-
+ورود یا ثبت‌نام در حساب VENSIZ
 </div>
 
-
-<!-- TABS -->
-
-<div class="tabs">
-
-<button
-    type="button"
-    class="tab active"
-    id="loginTab"
-    onclick="showForm('login')">
-
-    ورود
-
-</button>
-
-
-<button
-    type="button"
-    class="tab"
-    id="signupTab"
-    onclick="showForm('signup')">
-
-    ثبت‌نام
-
-</button>
-
-</div>
-
-
-
-<!-- =========================
-     LOGIN
-========================= -->
-
-<div
-    id="loginForm"
-    class="form active">
 
 <input
-    id="loginEmail"
-    class="input"
     type="email"
+    id="email"
     placeholder="ایمیل"
     autocomplete="email"
 >
 
 
 <input
-    id="loginPassword"
-    class="input"
     type="password"
+    id="password"
     placeholder="رمز عبور"
     autocomplete="current-password"
 >
 
 
-<button
-    id="loginButton"
-    type="button"
-    class="button"
-    onclick="login()">
-
-    ورود به حساب
-
+<button id="authButton">
+ورود
 </button>
 
-</div>
 
+<div class="switch" id="switchText">
 
+حساب کاربری ندارید؟
 
-<!-- =========================
-     SIGNUP
-========================= -->
-
-<div
-    id="signupForm"
-    class="form">
-
-
-<input
-    id="signupEmail"
-    class="input"
-    type="email"
-    placeholder="ایمیل"
-    autocomplete="email"
->
-
-
-<input
-    id="signupPassword"
-    class="input"
-    type="password"
-    placeholder="رمز عبور"
-    autocomplete="new-password"
->
-
-
-<input
-    id="signupPassword2"
-    class="input"
-    type="password"
-    placeholder="تکرار رمز عبور"
-    autocomplete="new-password"
->
-
-
-<button
-    id="signupButton"
-    type="button"
-    class="button"
-    onclick="signup()">
-
-    ساخت حساب
-
-</button>
+<span id="switchMode">
+ثبت‌نام
+</span>
 
 </div>
 
 
-<!-- MESSAGE -->
-
-<div
-    id="message"
-    class="message">
-</div>
+<div id="message" class="message"></div>
 
 
-<a
-    href="index.html"
-    class="back">
-
-    ← بازگشت به صفحه اصلی
-
+<a href="index.html" class="back">
+← بازگشت به سایت
 </a>
 
-
 </div>
-
-
-
-<!-- =========================
-     SUPABASE
-========================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
 
-
-/* =========================
-   SUPABASE CONFIG
-========================= */
-
 const SUPABASE_URL =
-'https://gpeckwmjsgklzhtqgdso.supabase.co';
-
+"https://gpeckwmjsgklzhtgqdso.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-'sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ';
+"sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
 
+const { createClient } =
+supabase;
 
-const supabase =
-window.supabase.createClient(
-
+const supabaseClient =
+createClient(
     SUPABASE_URL,
-
     SUPABASE_PUBLISHABLE_KEY
-
 );
 
 
+let isSignup = false;
 
-/* =========================
-   MESSAGE
-========================= */
 
-function showMessage(text){
+const emailInput =
+document.getElementById("email");
 
-    document
-    .getElementById('message')
-    .textContent = text;
+const passwordInput =
+document.getElementById("password");
 
+const authButton =
+document.getElementById("authButton");
+
+const switchMode =
+document.getElementById("switchMode");
+
+const switchText =
+document.getElementById("switchText");
+
+const message =
+document.getElementById("message");
+
+
+function showMessage(text,type){
+
+    message.textContent = text;
+
+    message.className =
+    "message " + type;
 }
 
 
-function clearMessage(){
+switchMode.addEventListener("click",()=>{
 
-    document
-    .getElementById('message')
-    .textContent = '';
+    isSignup = !isSignup;
 
-}
+    if(isSignup){
 
+        authButton.textContent =
+        "ثبت‌نام";
 
+        switchText.innerHTML =
+        'قبلاً حساب ساخته‌اید؟ <span id="switchMode">ورود</span>';
 
-/* =========================
-   SWITCH
-========================= */
+    }else{
 
-function showForm(type){
+        authButton.textContent =
+        "ورود";
 
-    clearMessage();
-
-
-    const loginForm =
-    document.getElementById('loginForm');
-
-
-    const signupForm =
-    document.getElementById('signupForm');
-
-
-    const loginTab =
-    document.getElementById('loginTab');
-
-
-    const signupTab =
-    document.getElementById('signupTab');
-
-
-    if(type === 'login'){
-
-        loginForm.classList.add('active');
-
-        signupForm.classList.remove('active');
-
-        loginTab.classList.add('active');
-
-        signupTab.classList.remove('active');
+        switchText.innerHTML =
+        'حساب کاربری ندارید؟ <span id="switchMode">ثبت‌نام</span>';
 
     }
 
-    else{
+    document.getElementById("switchMode")
+    .addEventListener("click",arguments.callee);
 
-        signupForm.classList.add('active');
-
-        loginForm.classList.remove('active');
-
-        signupTab.classList.add('active');
-
-        loginTab.classList.remove('active');
-
-    }
-
-}
+});
 
 
-
-/* =========================
-   SIGN UP
-========================= */
-
-async function signup(){
+authButton.addEventListener("click",async()=>{
 
     const email =
-    document
-    .getElementById('signupEmail')
-    .value
-    .trim();
-
+    emailInput.value.trim();
 
     const password =
-    document
-    .getElementById('signupPassword')
-    .value;
+    passwordInput.value;
 
 
-    const password2 =
-    document
-    .getElementById('signupPassword2')
-    .value;
-
-
-    const button =
-    document
-    .getElementById('signupButton');
-
-
-    if(!email){
+    if(!email || !password){
 
         showMessage(
-            'لطفاً ایمیل خود را وارد کنید.'
+            "ایمیل و رمز عبور را وارد کنید.",
+            "error"
         );
 
         return;
-
     }
 
 
-    if(!password){
-
-        showMessage(
-            'لطفاً رمز عبور را وارد کنید.'
-        );
-
-        return;
-
-    }
+    authButton.disabled = true;
 
 
-    if(password.length < 6){
+    if(isSignup){
 
-        showMessage(
-            'رمز عبور باید حداقل ۶ کاراکتر باشد.'
-        );
-
-        return;
-
-    }
-
-
-    if(password !== password2){
-
-        showMessage(
-            'تکرار رمز عبور با رمز اصلی یکسان نیست.'
-        );
-
-        return;
-
-    }
-
-
-    button.disabled = true;
-
-    showMessage(
-        'در حال ساخت حساب...'
-    );
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabase.auth.signUp({
+        const { error } =
+        await supabaseClient.auth.signUp({
 
             email:email,
 
             password:password,
 
             options:{
-
                 emailRedirectTo:
-                'https://vensiz.github.io/'
-
+                "https://vensiz.github.io/index.html"
             }
 
         });
@@ -766,104 +401,24 @@ async function signup(){
 
         if(error){
 
-            console.error(error);
-
             showMessage(
-                error.message
+                error.message,
+                "error"
             );
 
-            return;
+        }else{
+
+            showMessage(
+                "ثبت‌نام انجام شد. ایمیل خود را برای تأیید بررسی کنید.",
+                "success"
+            );
 
         }
 
+    }else{
 
-        showMessage(
-            'ثبت‌نام انجام شد. لطفاً ایمیل خود را باز کنید و حساب خود را تأیید کنید.'
-        );
-
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        showMessage(
-            'خطایی در ارتباط با سرور رخ داد.'
-        );
-
-    }
-
-    finally{
-
-        button.disabled = false;
-
-    }
-
-}
-
-
-
-/* =========================
-   LOGIN
-========================= */
-
-async function login(){
-
-    const email =
-    document
-    .getElementById('loginEmail')
-    .value
-    .trim();
-
-
-    const password =
-    document
-    .getElementById('loginPassword')
-    .value;
-
-
-    const button =
-    document
-    .getElementById('loginButton');
-
-
-    if(!email){
-
-        showMessage(
-            'لطفاً ایمیل خود را وارد کنید.'
-        );
-
-        return;
-
-    }
-
-
-    if(!password){
-
-        showMessage(
-            'لطفاً رمز عبور را وارد کنید.'
-        );
-
-        return;
-
-    }
-
-
-    button.disabled = true;
-
-    showMessage(
-        'در حال ورود...'
-    );
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabase.auth.signInWithPassword({
+        const { error } =
+        await supabaseClient.auth.signInWithPassword({
 
             email:email,
 
@@ -874,99 +429,35 @@ async function login(){
 
         if(error){
 
-            console.error(error);
-
             showMessage(
-                error.message
+                error.message,
+                "error"
             );
 
-            return;
+        }else{
 
-        }
+            showMessage(
+                "ورود موفق بود. در حال انتقال...",
+                "success"
+            );
 
-
-        showMessage(
-            'ورود موفق بود...'
-        );
-
-
-        setTimeout(
-
-            function(){
+            setTimeout(()=>{
 
                 window.location.href =
-                'index.html';
+                "index.html";
 
-            },
-
-            700
-
-        );
-
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        showMessage(
-            'خطایی در ارتباط با سرور رخ داد.'
-        );
-
-    }
-
-    finally{
-
-        button.disabled = false;
-
-    }
-
-}
-
-
-
-/* =========================
-   ENTER KEY
-========================= */
-
-document.addEventListener(
-
-    'keydown',
-
-    function(event){
-
-        if(event.key !== 'Enter'){
-            return;
-        }
-
-
-        const loginActive =
-        document
-        .getElementById('loginForm')
-        .classList
-        .contains('active');
-
-
-        if(loginActive){
-
-            login();
-
-        }
-
-        else{
-
-            signup();
+            },1000);
 
         }
 
     }
 
-);
 
+    authButton.disabled = false;
+
+});
 
 </script>
-
 
 </body>
 
