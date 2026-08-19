@@ -1,2051 +1,438 @@
-```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>پنل مدیریت | VENSIZ</title>
+<title>VENSIZ ADMIN</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-    min-height:100vh;
-    background:#050805;
-    color:#fff;
-    font-family:Tahoma,Arial,sans-serif;
+
+min-height:100vh;
+background:#020403;
+color:white;
+font-family:tahoma;
+
 }
 
-header{
-    height:80px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 6%;
-    background:#030603;
-    border-bottom:1px solid rgba(0,255,100,.15);
+
+.box{
+
+width:400px;
+max-width:90%;
+margin:120px auto;
+
+background:#071008;
+
+border:1px solid rgba(0,255,100,.2);
+
+border-radius:20px;
+
+padding:30px;
+
+text-align:center;
+
 }
 
-.logo{
-    color:#00ff66;
-    font-size:26px;
-    font-weight:bold;
-    text-shadow:0 0 20px rgba(0,255,100,.5);
-}
-
-.header-right{
-    display:flex;
-    align-items:center;
-    gap:20px;
-}
-
-.admin-email{
-    color:#888;
-    font-size:12px;
-}
-
-.back{
-    color:#00ff66;
-    text-decoration:none;
-    font-size:13px;
-}
-
-.live-status{
-    display:flex;
-    align-items:center;
-    gap:7px;
-    color:#00ff66;
-    font-size:11px;
-}
-
-.live-dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:#00ff66;
-    box-shadow:0 0 10px #00ff66;
-    animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-    0%,100%{
-        opacity:1;
-    }
-
-    50%{
-        opacity:.3;
-    }
-}
-
-.container{
-    width:94%;
-    max-width:1300px;
-    margin:40px auto;
-}
 
 h1{
-    font-size:32px;
-    margin-bottom:8px;
+
+color:#00ff66;
+
+margin-bottom:25px;
+
 }
 
-h1 span{
-    color:#00ff66;
+
+
+input{
+
+width:100%;
+
+padding:14px;
+
+margin-bottom:15px;
+
+background:#030604;
+
+border:1px solid rgba(0,255,100,.2);
+
+border-radius:10px;
+
+color:white;
+
+outline:none;
+
 }
 
-.subtitle{
-    color:#777;
-    font-size:13px;
-    margin-bottom:35px;
-}
 
-.layout{
-    display:grid;
-    grid-template-columns:340px 1fr;
-    gap:20px;
-}
-
-.panel{
-    background:#080e09;
-    border:1px solid rgba(0,255,100,.15);
-    border-radius:18px;
-    overflow:hidden;
-}
-
-.panel-title{
-    padding:20px;
-    border-bottom:1px solid rgba(0,255,100,.1);
-    color:#00ff66;
-    font-weight:bold;
-}
-
-.ticket-list{
-    max-height:650px;
-    overflow-y:auto;
-}
-
-.ticket-item{
-    padding:18px;
-    border-bottom:1px solid rgba(255,255,255,.05);
-    cursor:pointer;
-    transition:.2s;
-}
-
-.ticket-item:hover,
-.ticket-item.active{
-    background:rgba(0,255,100,.06);
-}
-
-.ticket-item h3{
-    font-size:14px;
-    margin-bottom:8px;
-}
-
-.ticket-item p{
-    color:#777;
-    font-size:11px;
-    margin-top:4px;
-}
-
-.status{
-    display:inline-block;
-    margin-top:10px;
-    padding:5px 9px;
-    border-radius:6px;
-    font-size:10px;
-}
-
-.status.open{
-    color:#00ff66;
-    background:rgba(0,255,100,.08);
-}
-
-.status.closed{
-    color:#ff7777;
-    background:rgba(255,0,0,.08);
-}
-
-.new-ticket{
-    animation:newTicket .7s ease;
-}
-
-@keyframes newTicket{
-    0%{
-        background:rgba(0,255,100,.25);
-    }
-
-    100%{
-        background:transparent;
-    }
-}
-
-.empty{
-    padding:40px 20px;
-    text-align:center;
-    color:#666;
-    font-size:13px;
-}
-
-.ticket-view{
-    min-height:650px;
-    padding:25px;
-}
-
-.no-ticket{
-    height:600px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#555;
-}
-
-.ticket-header{
-    padding-bottom:20px;
-    border-bottom:1px solid rgba(255,255,255,.07);
-    margin-bottom:20px;
-}
-
-.ticket-header h2{
-    color:#00ff66;
-    margin-bottom:10px;
-}
-
-.ticket-meta{
-    color:#777;
-    font-size:11px;
-    line-height:2;
-}
-
-.original-message{
-    background:#050805;
-    border:1px solid rgba(255,255,255,.06);
-    border-radius:12px;
-    padding:20px;
-    margin-bottom:20px;
-}
-
-.original-message-title{
-    color:#00ff66;
-    font-size:12px;
-    margin-bottom:12px;
-}
-
-.original-message-text{
-    color:#bbb;
-    font-size:13px;
-    line-height:2;
-    white-space:pre-wrap;
-}
-
-.replies{
-    max-height:380px;
-    overflow-y:auto;
-    margin-bottom:20px;
-    padding:4px;
-}
-
-.reply{
-    max-width:85%;
-    padding:15px;
-    margin-bottom:12px;
-    border-radius:12px;
-    background:#0b120c;
-    border:1px solid rgba(255,255,255,.05);
-}
-
-.reply.admin{
-    margin-right:auto;
-    border-color:rgba(0,255,100,.2);
-    background:rgba(0,255,100,.04);
-}
-
-.reply.user{
-    margin-left:auto;
-}
-
-.reply-author{
-    color:#00ff66;
-    font-size:11px;
-    margin-bottom:8px;
-}
-
-.reply.user .reply-author{
-    color:#aaa;
-}
-
-.reply-text{
-    color:#ccc;
-    font-size:13px;
-    line-height:1.9;
-    white-space:pre-wrap;
-    word-break:break-word;
-}
-
-.reply-date{
-    color:#555;
-    font-size:9px;
-    margin-top:8px;
-}
-
-.new-reply{
-    animation:newReply .5s ease;
-}
-
-@keyframes newReply{
-    0%{
-        transform:translateY(8px);
-        opacity:0;
-    }
-
-    100%{
-        transform:translateY(0);
-        opacity:1;
-    }
-}
-
-textarea{
-    width:100%;
-    min-height:120px;
-    resize:vertical;
-    background:#050805;
-    color:#fff;
-    border:1px solid rgba(0,255,100,.15);
-    border-radius:10px;
-    padding:14px;
-    outline:none;
-    font-family:Tahoma,Arial,sans-serif;
-    direction:rtl;
-}
-
-textarea:focus{
-    border-color:#00ff66;
-}
-
-.actions{
-    display:flex;
-    gap:10px;
-    margin-top:12px;
-}
 
 button{
-    border:none;
-    border-radius:9px;
-    padding:12px 20px;
-    cursor:pointer;
-    font-family:Tahoma,Arial,sans-serif;
-    font-weight:bold;
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+border-radius:10px;
+
+background:#00d95a;
+
+font-weight:bold;
+
+cursor:pointer;
+
 }
 
-.reply-button{
-    background:#00d95a;
-    color:#001b08;
-    flex:1;
+
+
+button:hover{
+
+background:#00ff66;
+
 }
 
-.reply-button:hover{
-    background:#00ff66;
+
+
+#message{
+
+margin-top:15px;
+
+font-size:13px;
+
 }
 
-.reply-button:disabled{
-    opacity:.5;
-    cursor:not-allowed;
+
+
+.success{
+
+color:#00ff66;
+
 }
 
-.close-button{
-    background:#171d18;
-    color:#aaa;
-    border:1px solid rgba(255,255,255,.1);
+
+.error{
+
+color:#ff7777;
+
 }
 
-.close-button:hover{
-    color:#fff;
+
+#panel{
+
+display:none;
+
+padding:40px;
+
 }
 
-.open-button{
-    background:#12351d;
-    color:#00ff66;
+
+
+.card{
+
+background:#071008;
+
+border:1px solid rgba(0,255,100,.15);
+
+border-radius:18px;
+
+padding:25px;
+
 }
 
-.message{
-    display:none;
-    margin-top:15px;
-    padding:12px;
-    border-radius:8px;
-    text-align:center;
-    font-size:12px;
-}
 
-.message.success{
-    display:block;
-    color:#00ff66;
-    background:rgba(0,255,100,.05);
-    border:1px solid rgba(0,255,100,.15);
-}
-
-.message.error{
-    display:block;
-    color:#ff7777;
-    background:rgba(255,0,0,.05);
-    border:1px solid rgba(255,0,0,.15);
-}
-
-#loading{
-    text-align:center;
-    padding:100px 20px;
-    color:#00ff66;
-}
-
-#denied{
-    display:none;
-    max-width:500px;
-    margin:100px auto;
-    text-align:center;
-    padding:40px;
-    background:#080e09;
-    border:1px solid rgba(255,0,0,.2);
-    border-radius:18px;
-}
-
-#denied h2{
-    color:#ff7777;
-    margin-bottom:15px;
-}
-
-#denied p{
-    color:#777;
-    font-size:13px;
-    line-height:2;
-}
-
-@media(max-width:850px){
-
-    .layout{
-        grid-template-columns:1fr;
-    }
-
-    .ticket-list{
-        max-height:300px;
-    }
-
-    .ticket-view{
-        min-height:500px;
-    }
-
-    .no-ticket{
-        height:300px;
-    }
-
-    .admin-email{
-        display:none;
-    }
-
-    .live-status{
-        display:none;
-    }
-
-    .reply{
-        max-width:95%;
-    }
-}
 
 </style>
 
 </head>
 
+
 <body>
 
-<header>
-
-    <div class="logo">
-        VENSIZ ADMIN
-    </div>
-
-    <div class="header-right">
-
-        <div class="live-status">
-            <span class="live-dot"></span>
-            LIVE
-        </div>
-
-        <div class="admin-email">
-            amirkhoz3823@gmail.com
-        </div>
-
-        <a href="index.html" class="back">
-            ← بازگشت به سایت
-        </a>
-
-    </div>
-
-</header>
 
 
-<div id="loading">
-    در حال بررسی دسترسی ادمین...
-</div>
+<!-- LOGIN -->
+
+<div class="box" id="loginBox">
 
 
-<div id="denied">
-
-    <h2>
-        دسترسی غیرمجاز
-    </h2>
-
-    <p>
-        این بخش فقط برای مدیر سایت قابل دسترسی است.
-    </p>
-
-</div>
+<h1>
+VENSIZ ADMIN
+</h1>
 
 
-<main
-    id="adminPanel"
-    class="container"
-    style="display:none;"
+<input
+id="username"
+placeholder="Username"
 >
 
-    <h1>
-        مدیریت <span>تیکت‌ها</span>
-    </h1>
 
-    <div class="subtitle">
-        VENSIZ SUPPORT ADMIN PANEL — REALTIME
-    </div>
-
-
-    <div class="layout">
+<input
+id="password"
+type="password"
+placeholder="Password"
+>
 
 
-        <!-- ================= TICKET LIST ================= -->
+<button id="loginBtn">
 
-        <div class="panel">
+ورود
 
-            <div class="panel-title">
-                تیکت‌های کاربران
-            </div>
-
-            <div
-                id="ticketList"
-                class="ticket-list"
-            >
-
-                <div class="empty">
-                    در حال دریافت تیکت‌ها...
-                </div>
-
-            </div>
-
-        </div>
+</button>
 
 
-        <!-- ================= TICKET VIEW ================= -->
+<div id="message"></div>
 
-        <div class="panel">
 
-            <div
-                id="ticketView"
-                class="ticket-view"
-            >
+</div>
 
-                <div class="no-ticket">
-                    یک تیکت را از لیست انتخاب کنید.
-                </div>
 
-            </div>
 
-        </div>
 
-    </div>
 
-</main>
+<!-- PANEL -->
+
+<div id="panel">
+
+
+<div class="card">
+
+
+<h1>
+خوش آمدید به پنل مدیریت VENSIZ
+</h1>
+
+
+<p id="adminInfo"></p>
+
+
+<br>
+
+
+<h3>
+🎫 تیکت‌ها
+</h3>
+
+
+<br>
+
+
+<h3>
+🛒 فروشگاه
+</h3>
+
+
+<br>
+
+
+<h3>
+👥 مدیریت ادمین‌ها
+</h3>
+
+
+</div>
+
+
+</div>
+
+
 
 
 <script>
 
-/* =========================================
-   SUPABASE
-========================================= */
 
 const SUPABASE_URL =
 "https://gpeckwmjsgklzhtgqdso.supabase.co";
+
 
 const SUPABASE_KEY =
 "sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
 
 
-const supabaseClient =
-window.supabase.createClient(
 
-    SUPABASE_URL,
+const db =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 
-    SUPABASE_KEY,
 
-    {
 
-        auth:{
 
-            persistSession:true,
 
-            autoRefreshToken:true,
+const loginBtn =
+document.getElementById(
+"loginBtn"
+);
 
-            detectSessionInUrl:true,
 
-            storageKey:
-                "vensiz-auth-session"
 
-        }
+const message =
+document.getElementById(
+"message"
+);
 
-    }
+
+
+
+loginBtn.onclick =
+async()=>{
+
+
+const username =
+document
+.getElementById(
+"username"
+)
+.value
+.trim();
+
+
+
+const password =
+document
+.getElementById(
+"password"
+)
+.value
+.trim();
+
+
+
+
+
+if(
+!username ||
+!password
+){
+
+message.innerHTML =
+"همه بخش‌ها را پر کنید";
+
+message.className =
+"error";
+
+return;
+
+}
+
+
+
+
+
+const {data,error}=
+
+await db
+
+.from("admins")
+
+.select("*")
+
+.eq(
+"username",
+username
+)
+
+.eq(
+"password",
+password
+)
+
+.single();
+
+
+
+
+
+
+if(error || !data){
+
+
+message.innerHTML =
+"یوزرنیم یا رمز اشتباه است";
+
+
+message.className =
+"error";
+
+
+return;
+
+
+}
+
+
+
+
+localStorage.setItem(
+
+"vensiz_admin",
+
+JSON.stringify(data)
 
 );
 
 
-/* =========================================
-   ELEMENTS
-========================================= */
 
-const loading =
-document.getElementById("loading");
 
-const denied =
-document.getElementById("denied");
+document
+.getElementById(
+"loginBox"
+)
+.style.display="none";
 
-const adminPanel =
-document.getElementById("adminPanel");
 
-const ticketList =
-document.getElementById("ticketList");
 
-const ticketView =
-document.getElementById("ticketView");
+document
+.getElementById(
+"panel"
+)
+.style.display="block";
 
 
-let currentTicket = null;
 
-let realtimeChannel = null;
 
+document
+.getElementById(
+"adminInfo"
+)
+.innerHTML =
 
-/* =========================================
-   AUTH + ADMIN CHECK
-========================================= */
+`
 
-async function checkAdmin(){
+ادمین:
+${data.name}
 
-    try{
+<br>
 
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-            .auth
-            .getSession();
+رنک:
+${data.rank}
 
+`;
 
-        if(
-            error ||
-            !data ||
-            !data.session
-        ){
 
-            showDenied();
 
-            return;
+};
 
-        }
 
 
-        const {
-            data:admin,
-            error:adminError
-        } =
-        await supabaseClient
-            .from("admins")
-            .select("user_id")
-            .eq(
-                "user_id",
-                data.session.user.id
-            )
-            .maybeSingle();
-
-
-        if(
-            adminError ||
-            !admin
-        ){
-
-            console.error(
-                "ADMIN CHECK:",
-                adminError
-            );
-
-            showDenied();
-
-            return;
-
-        }
-
-
-        loading.style.display =
-            "none";
-
-        adminPanel.style.display =
-            "block";
-
-
-        await loadTickets();
-
-
-        /*
-           بعد از ورود ادمین،
-           گوش دادن به تمام تغییرات تیکت‌ها
-           فعال می‌شود.
-        */
-
-        subscribeToTickets();
-
-    }
-    catch(error){
-
-        console.error(
-            "ADMIN ERROR:",
-            error
-        );
-
-        showDenied();
-
-    }
-
-}
-
-
-/* =========================================
-   DENIED
-========================================= */
-
-function showDenied(){
-
-    loading.style.display =
-        "none";
-
-    adminPanel.style.display =
-        "none";
-
-    denied.style.display =
-        "block";
-
-}
-
-
-/* =========================================
-   LOAD TICKETS
-========================================= */
-
-async function loadTickets(){
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-        .from("tickets")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
-
-
-    if(error){
-
-        console.error(
-            "TICKETS:",
-            error
-        );
-
-        ticketList.innerHTML =
-            `
-            <div class="empty">
-                خطا در دریافت تیکت‌ها
-                <br><br>
-                ${escapeHtml(
-                    error.message
-                )}
-            </div>
-            `;
-
-        return;
-
-    }
-
-
-    renderTicketList(
-        data || []
-    );
-
-}
-
-
-/* =========================================
-   RENDER TICKET LIST
-========================================= */
-
-function renderTicketList(data){
-
-    if(
-        !data ||
-        data.length === 0
-    ){
-
-        ticketList.innerHTML =
-            `
-            <div class="empty">
-                هنوز تیکتی ثبت نشده است.
-            </div>
-            `;
-
-        return;
-
-    }
-
-
-    ticketList.innerHTML =
-        "";
-
-
-    data.forEach(
-        function(ticket){
-
-            const item =
-                createTicketItem(
-                    ticket
-                );
-
-            ticketList.appendChild(
-                item
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   CREATE TICKET ITEM
-========================================= */
-
-function createTicketItem(ticket){
-
-    const item =
-        document.createElement(
-            "div"
-        );
-
-
-    item.className =
-        "ticket-item";
-
-
-    item.dataset.id =
-        String(ticket.id);
-
-
-    if(
-        currentTicket &&
-        String(currentTicket.id) ===
-        String(ticket.id)
-    ){
-
-        item.classList.add(
-            "active"
-        );
-
-    }
-
-
-    const status =
-        ticket.status || "open";
-
-
-    const statusText =
-        status === "closed"
-        ? "بسته"
-        : "باز";
-
-
-    item.innerHTML =
-
-        `
-        <h3>
-            ${escapeHtml(
-                ticket.subject ||
-                "بدون موضوع"
-            )}
-        </h3>
-
-        <p>
-            کاربر:
-            ${escapeHtml(
-                ticket.user_id ||
-                "-"
-            )}
-        </p>
-
-        <p>
-            ${formatDate(
-                ticket.created_at
-            )}
-        </p>
-
-        <span class="status ${status}">
-            ${statusText}
-        </span>
-        `;
-
-
-    item.addEventListener(
-        "click",
-        function(){
-
-            document
-                .querySelectorAll(
-                    ".ticket-item"
-                )
-                .forEach(
-                    function(x){
-
-                        x.classList.remove(
-                            "active"
-                        );
-
-                    }
-                );
-
-
-            item.classList.add(
-                "active"
-            );
-
-
-            openTicket(
-                ticket
-            );
-
-        }
-    );
-
-
-    return item;
-
-}
-
-
-/* =========================================
-   OPEN TICKET
-========================================= */
-
-async function openTicket(ticket){
-
-    currentTicket =
-        ticket;
-
-
-    ticketView.innerHTML =
-
-        `
-        <div class="ticket-header">
-
-            <h2>
-                ${escapeHtml(
-                    ticket.subject ||
-                    "بدون موضوع"
-                )}
-            </h2>
-
-            <div class="ticket-meta">
-
-                شناسه:
-                ${escapeHtml(
-                    String(ticket.id)
-                )}
-
-                <br>
-
-                کاربر:
-                ${escapeHtml(
-                    ticket.user_id ||
-                    "-"
-                )}
-
-                <br>
-
-                تاریخ:
-                ${formatDate(
-                    ticket.created_at
-                )}
-
-                <br>
-
-                وضعیت:
-                ${
-                    ticket.status === "closed"
-                    ? "بسته"
-                    : "باز"
-                }
-
-            </div>
-
-        </div>
-
-
-        <div class="original-message">
-
-            <div class="original-message-title">
-                پیام اولیه کاربر
-            </div>
-
-            <div class="original-message-text">
-                ${escapeHtml(
-                    ticket.message ||
-                    ""
-                )}
-            </div>
-
-        </div>
-
-
-        <div
-            id="replies"
-            class="replies"
-        >
-
-            <div class="empty">
-                در حال دریافت پیام‌ها...
-            </div>
-
-        </div>
-
-
-        ${
-            ticket.status === "closed"
-            ? ""
-            :
-            `
-            <textarea
-                id="replyText"
-                placeholder="پاسخ خود را برای کاربر بنویسید..."
-            ></textarea>
-            `
-        }
-
-
-        <div class="actions">
-
-            ${
-                ticket.status === "closed"
-
-                ?
-
-                `
-                <button
-                    id="openTicketButton"
-                    class="open-button"
-                >
-                    باز کردن تیکت
-                </button>
-                `
-
-                :
-
-                `
-                <button
-                    id="sendReply"
-                    class="reply-button"
-                >
-                    ارسال پاسخ
-                </button>
-
-                <button
-                    id="closeTicketButton"
-                    class="close-button"
-                >
-                    بستن تیکت
-                </button>
-                `
-
-            }
-
-        </div>
-
-
-        <div
-            id="ticketMessage"
-            class="message"
-        ></div>
-        `;
-
-
-    const sendButton =
-        document.getElementById(
-            "sendReply"
-        );
-
-
-    if(sendButton){
-
-        sendButton.addEventListener(
-            "click",
-            sendReply
-        );
-
-    }
-
-
-    const closeButton =
-        document.getElementById(
-            "closeTicketButton"
-        );
-
-
-    if(closeButton){
-
-        closeButton.addEventListener(
-            "click",
-            function(){
-
-                changeStatus(
-                    "closed"
-                );
-
-            }
-        );
-
-    }
-
-
-    const openButton =
-        document.getElementById(
-            "openTicketButton"
-        );
-
-
-    if(openButton){
-
-        openButton.addEventListener(
-            "click",
-            function(){
-
-                changeStatus(
-                    "open"
-                );
-
-            }
-        );
-
-    }
-
-
-    await loadReplies(
-        ticket.id
-    );
-
-
-    /*
-       اتصال Realtime مخصوص همین تیکت
-    */
-
-    subscribeToTicket(
-        ticket.id
-    );
-
-}
-
-
-/* =========================================
-   LOAD REPLIES
-========================================= */
-
-async function loadReplies(ticketId){
-
-    const repliesElement =
-        document.getElementById(
-            "replies"
-        );
-
-
-    if(!repliesElement){
-
-        return;
-
-    }
-
-
-    const {
-        data,
-        error
-    } =
-    await supabaseClient
-        .from("ticket_replies")
-        .select("*")
-        .eq(
-            "ticket_id",
-            ticketId
-        )
-        .order(
-            "created_at",
-            {
-                ascending:true
-            }
-        );
-
-
-    if(error){
-
-        console.error(
-            "REPLIES:",
-            error
-        );
-
-
-        repliesElement.innerHTML =
-            `
-            <div class="empty">
-                خطا در دریافت پاسخ‌ها
-                <br><br>
-                ${escapeHtml(
-                    error.message
-                )}
-            </div>
-            `;
-
-        return;
-
-    }
-
-
-    repliesElement.innerHTML =
-        "";
-
-
-    if(
-        !data ||
-        data.length === 0
-    ){
-
-        repliesElement.innerHTML =
-            `
-            <div class="empty">
-                هنوز پاسخی برای این تیکت وجود ندارد.
-            </div>
-            `;
-
-        return;
-
-    }
-
-
-    data.forEach(
-        function(reply){
-
-            addReply(
-                reply,
-                false
-            );
-
-        }
-    );
-
-
-    scrollReplies();
-
-}
-
-
-/* =========================================
-   ADD REPLY
-========================================= */
-
-function addReply(
-    reply,
-    animate = true
-){
-
-    const repliesElement =
-        document.getElementById(
-            "replies"
-        );
-
-
-    if(!repliesElement){
-
-        return;
-
-    }
-
-
-    /*
-       جلوگیری از تکراری شدن پیام
-    */
-
-    const existing =
-        repliesElement.querySelector(
-            '[data-reply-id="' +
-            String(reply.id) +
-            '"]'
-        );
-
-
-    if(existing){
-
-        return;
-
-    }
-
-
-    /*
-       اگر پیام خالی نمایش داده شده،
-       آن را پاک می‌کنیم.
-    */
-
-    const empty =
-        repliesElement.querySelector(
-            ".empty"
-        );
-
-
-    if(empty){
-
-        empty.remove();
-
-    }
-
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.className =
-        reply.is_admin
-        ? "reply admin"
-        : "reply user";
-
-
-    if(animate){
-
-        div.classList.add(
-            "new-reply"
-        );
-
-    }
-
-
-    div.dataset.replyId =
-        String(
-            reply.id
-        );
-
-
-    div.innerHTML =
-
-        `
-        <div class="reply-author">
-
-            ${
-                reply.is_admin
-                ? "🛡️ پشتیبانی VENSIZ"
-                : "👤 کاربر"
-            }
-
-        </div>
-
-        <div class="reply-text">
-
-            ${escapeHtml(
-                reply.message ||
-                ""
-            )}
-
-        </div>
-
-        <div class="reply-date">
-
-            ${formatDate(
-                reply.created_at
-            )}
-
-        </div>
-        `;
-
-
-    repliesElement.appendChild(
-        div
-    );
-
-
-    scrollReplies();
-
-}
-
-
-/* =========================================
-   REALTIME — ALL TICKETS
-========================================= */
-
-function subscribeToTickets(){
-
-    /*
-       گوش دادن به ایجاد تیکت جدید،
-       تغییر وضعیت و غیره.
-    */
-
-    const channel =
-        supabaseClient
-            .channel(
-                "vensiz-admin-tickets"
-            );
-
-
-    channel.on(
-
-        "postgres_changes",
-
-        {
-            event:"INSERT",
-            schema:"public",
-            table:"tickets"
-        },
-
-        function(payload){
-
-            console.log(
-                "NEW TICKET:",
-                payload.new
-            );
-
-
-            loadTickets();
-
-
-            /*
-               اگر تیکت جدید است،
-               پیام بصری کوچک نمایش می‌دهیم.
-            */
-
-            showBrowserNotice(
-                "🎫 تیکت جدید دریافت شد"
-            );
-
-        }
-
-    );
-
-
-    channel.on(
-
-        "postgres_changes",
-
-        {
-            event:"UPDATE",
-            schema:"public",
-            table:"tickets"
-        },
-
-        function(payload){
-
-            console.log(
-                "TICKET UPDATED:",
-                payload.new
-            );
-
-
-            /*
-               اگر همان تیکت باز است،
-               اطلاعات آن را به‌روز می‌کنیم.
-            */
-
-            if(
-                currentTicket &&
-                String(currentTicket.id) ===
-                String(payload.new.id)
-            ){
-
-                currentTicket =
-                    payload.new;
-
-            }
-
-
-            loadTickets();
-
-        }
-
-    );
-
-
-    channel.subscribe(
-        function(status){
-
-            console.log(
-                "ADMIN TICKETS REALTIME:",
-                status
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   REALTIME — CURRENT TICKET
-========================================= */
-
-function subscribeToTicket(ticketId){
-
-    /*
-       اتصال قبلی را قطع می‌کنیم.
-    */
-
-    if(realtimeChannel){
-
-        supabaseClient
-            .removeChannel(
-                realtimeChannel
-            );
-
-        realtimeChannel =
-            null;
-
-    }
-
-
-    console.log(
-        "SUBSCRIBE TICKET:",
-        ticketId
-    );
-
-
-    realtimeChannel =
-        supabaseClient
-            .channel(
-                "vensiz-admin-ticket-" +
-                String(ticketId) +
-                "-" +
-                Date.now()
-            );
-
-
-    realtimeChannel.on(
-
-        "postgres_changes",
-
-        {
-            event:"INSERT",
-
-            schema:"public",
-
-            table:"ticket_replies",
-
-            filter:
-                "ticket_id=eq." +
-                String(ticketId)
-
-        },
-
-        function(payload){
-
-            console.log(
-                "REALTIME MESSAGE:",
-                payload.new
-            );
-
-
-            /*
-               پیام جدید کاربر یا ادمین
-               همان لحظه به چت اضافه می‌شود.
-            */
-
-            addReply(
-                payload.new,
-                true
-            );
-
-
-            /*
-               اگر پیام از کاربر بود،
-               به ادمین اطلاع می‌دهیم.
-            */
-
-            if(
-                payload.new.is_admin === false
-            ){
-
-                showBrowserNotice(
-                    "💬 پیام جدید از کاربر"
-                );
-
-            }
-
-        }
-
-    );
-
-
-    realtimeChannel.subscribe(
-        function(status){
-
-            console.log(
-                "ADMIN TICKET REALTIME:",
-                status
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   SEND ADMIN REPLY
-========================================= */
-
-async function sendReply(){
-
-    if(!currentTicket){
-
-        return;
-
-    }
-
-
-    const textarea =
-        document.getElementById(
-            "replyText"
-        );
-
-
-    if(!textarea){
-
-        return;
-
-    }
-
-
-    const text =
-        textarea.value.trim();
-
-
-    if(!text){
-
-        showTicketMessage(
-            "پاسخ را وارد کنید.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const {
-        data:sessionData
-    } =
-    await supabaseClient
-        .auth
-        .getSession();
-
-
-    if(
-        !sessionData ||
-        !sessionData.session
-    ){
-
-        showTicketMessage(
-            "نشست ادمین منقضی شده است.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const adminId =
-        sessionData.session.user.id;
-
-
-    const button =
-        document.getElementById(
-            "sendReply"
-        );
-
-
-    button.disabled =
-        true;
-
-
-    button.textContent =
-        "در حال ارسال...";
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-            .from("ticket_replies")
-            .insert({
-
-                ticket_id:
-                    currentTicket.id,
-
-                user_id:
-                    adminId,
-
-                message:
-                    text,
-
-                is_admin:
-                    true
-
-            })
-            .select()
-            .single();
-
-
-        if(error){
-
-            console.error(
-                "ADMIN REPLY:",
-                error
-            );
-
-
-            showTicketMessage(
-                error.message,
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        textarea.value =
-            "";
-
-
-        /*
-           پیام خودمان را فوراً نمایش می‌دهیم.
-           Realtime هم اگر آن را برگرداند،
-           addReply از تکراری شدن جلوگیری می‌کند.
-        */
-
-        if(data){
-
-            addReply(
-                data,
-                true
-            );
-
-        }
-
-
-        showTicketMessage(
-            "پاسخ با موفقیت ارسال شد.",
-            "success"
-        );
-
-
-    }catch(error){
-
-        console.error(
-            error
-        );
-
-
-        showTicketMessage(
-            "خطایی هنگام ارسال پاسخ رخ داد.",
-            "error"
-        );
-
-    }finally{
-
-        button.disabled =
-            false;
-
-        button.textContent =
-            "ارسال پاسخ";
-
-    }
-
-}
-
-
-/* =========================================
-   CHANGE STATUS
-========================================= */
-
-async function changeStatus(status){
-
-    if(!currentTicket){
-
-        return;
-
-    }
-
-
-    const {
-        error
-    } =
-    await supabaseClient
-        .from("tickets")
-        .update({
-
-            status:
-                status
-
-        })
-        .eq(
-            "id",
-            currentTicket.id
-        );
-
-
-    if(error){
-
-        console.error(
-            "STATUS:",
-            error
-        );
-
-
-        showTicketMessage(
-            error.message,
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    currentTicket.status =
-        status;
-
-
-    showTicketMessage(
-        status === "closed"
-        ? "تیکت بسته شد."
-        : "تیکت دوباره باز شد.",
-        "success"
-    );
-
-
-    await loadTickets();
-
-
-    /*
-       صفحه تیکت را دوباره می‌سازیم
-       تا دکمه مناسب نمایش داده شود.
-    */
-
-    await openTicket(
-        currentTicket
-    );
-
-}
-
-
-/* =========================================
-   TICKET MESSAGE
-========================================= */
-
-function showTicketMessage(
-    text,
-    type
-){
-
-    const message =
-        document.getElementById(
-            "ticketMessage"
-        );
-
-
-    if(!message){
-
-        return;
-
-    }
-
-
-    message.textContent =
-        text;
-
-    message.className =
-        "message " +
-        type;
-
-}
-
-
-/* =========================================
-   BROWSER NOTICE
-========================================= */
-
-function showBrowserNotice(text){
-
-    /*
-       فقط یک اطلاع کوچک داخل عنوان صفحه.
-       بدون نیاز به permission مرورگر.
-    */
-
-    const oldTitle =
-        document.title;
-
-
-    document.title =
-        text;
-
-
-    setTimeout(
-        function(){
-
-            document.title =
-                oldTitle;
-
-        },
-        2500
-    );
-
-}
-
-
-/* =========================================
-   SCROLL
-========================================= */
-
-function scrollReplies(){
-
-    const replies =
-        document.getElementById(
-            "replies"
-        );
-
-
-    if(!replies){
-
-        return;
-
-    }
-
-
-    setTimeout(
-        function(){
-
-            replies.scrollTop =
-                replies.scrollHeight;
-
-        },
-        50
-    );
-
-}
-
-
-/* =========================================
-   ESCAPE HTML
-========================================= */
-
-function escapeHtml(value){
-
-    return String(value)
-
-        .replaceAll(
-            "&",
-            "&amp;"
-        )
-
-        .replaceAll(
-            "<",
-            "&lt;"
-        )
-
-        .replaceAll(
-            ">",
-            "&gt;"
-        )
-
-        .replaceAll(
-            '"',
-            "&quot;"
-        )
-
-        .replaceAll(
-            "'",
-            "&#039;"
-        );
-
-}
-
-
-/* =========================================
-   DATE
-========================================= */
-
-function formatDate(date){
-
-    if(!date){
-
-        return "-";
-
-    }
-
-
-    try{
-
-        return new Date(date)
-            .toLocaleString(
-                "fa-IR",
-                {
-                    dateStyle:"short",
-                    timeStyle:"short"
-                }
-            );
-
-    }catch{
-
-        return String(date);
-
-    }
-
-}
-
-
-/* =========================================
-   START
-========================================= */
-
-checkAdmin();
 
 </script>
+
 
 </body>
 
 </html>
-```
