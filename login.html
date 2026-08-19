@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
@@ -31,7 +32,6 @@ body{
 }
 
 .auth-box{
-
     width:100%;
     max-width:430px;
 
@@ -51,7 +51,6 @@ body{
 }
 
 .logo{
-
     width:75px;
     height:75px;
 
@@ -90,7 +89,6 @@ h1 span{
 }
 
 input{
-
     width:100%;
 
     padding:14px;
@@ -109,15 +107,19 @@ input{
 
     font-family:Tahoma,Arial,sans-serif;
 
-    direction:rtl;
+    direction:ltr;
+
+    text-align:left;
 }
 
 input:focus{
     border-color:#00ff66;
+
+    box-shadow:
+    0 0 12px rgba(0,255,100,.08);
 }
 
 button{
-
     width:100%;
 
     padding:14px;
@@ -142,15 +144,18 @@ button{
 }
 
 button:hover{
-
     background:#00ff66;
 
     box-shadow:
     0 0 25px rgba(0,255,100,.3);
 }
 
-.switch{
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
 
+.switch{
     margin-top:20px;
 
     color:#777;
@@ -159,7 +164,6 @@ button:hover{
 }
 
 .switch span{
-
     color:#00ff66;
 
     cursor:pointer;
@@ -168,7 +172,6 @@ button:hover{
 }
 
 .message{
-
     margin-top:18px;
 
     padding:10px;
@@ -178,10 +181,11 @@ button:hover{
     font-size:12px;
 
     display:none;
+
+    line-height:1.8;
 }
 
 .success{
-
     display:block;
 
     color:#00ff66;
@@ -192,7 +196,6 @@ button:hover{
 }
 
 .error{
-
     display:block;
 
     color:#ff7070;
@@ -203,7 +206,6 @@ button:hover{
 }
 
 .back{
-
     display:block;
 
     margin-top:22px;
@@ -227,238 +229,514 @@ button:hover{
 
 <div class="auth-box">
 
-<div class="logo">
-V
-</div>
+    <div class="logo">
+        V
+    </div>
 
-<h1>
-VENSIZ <span>AUTH</span>
-</h1>
+    <h1>
+        VENSIZ <span>AUTH</span>
+    </h1>
 
-<div class="subtitle">
-ورود یا ثبت‌نام در حساب VENSIZ
-</div>
+    <div class="subtitle">
+        ورود یا ثبت‌نام در حساب VENSIZ
+    </div>
 
+    <input
+        type="email"
+        id="email"
+        placeholder="ایمیل"
+        autocomplete="email"
+    >
 
-<input
-    type="email"
-    id="email"
-    placeholder="ایمیل"
-    autocomplete="email"
->
+    <input
+        type="password"
+        id="password"
+        placeholder="رمز عبور"
+        autocomplete="current-password"
+    >
 
+    <button id="authButton">
+        ورود
+    </button>
 
-<input
-    type="password"
-    id="password"
-    placeholder="رمز عبور"
-    autocomplete="current-password"
->
+    <div class="switch" id="switchText">
+        حساب کاربری ندارید؟
+        <span id="switchMode">ثبت‌نام</span>
+    </div>
 
+    <div id="message" class="message"></div>
 
-<button id="authButton">
-ورود
-</button>
-
-
-<div class="switch" id="switchText">
-
-حساب کاربری ندارید؟
-
-<span id="switchMode">
-ثبت‌نام
-</span>
-
-</div>
-
-
-<div id="message" class="message"></div>
-
-
-<a href="index.html" class="back">
-← بازگشت به سایت
-</a>
+    <a href="index.html" class="back">
+        ← بازگشت به سایت
+    </a>
 
 </div>
 
 
 <script>
 
+/* =====================================================
+   SUPABASE CONFIG
+===================================================== */
+
 const SUPABASE_URL =
-"https://gpeckwmjsgklzhtgqdso.supabase.co";
+    "https://gpeckwmijsgklzhtgqdso.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
+    "sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
 
-const { createClient } =
-supabase;
+
+/* =====================================================
+   SUPABASE CLIENT
+===================================================== */
 
 const supabaseClient =
-createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY,
+        {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true,
+                storage: window.localStorage,
+                storageKey: "vensiz-auth-session"
+            }
+        }
+    );
 
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const emailInput =
+    document.getElementById("email");
+
+const passwordInput =
+    document.getElementById("password");
+
+const authButton =
+    document.getElementById("authButton");
+
+const switchText =
+    document.getElementById("switchText");
+
+const message =
+    document.getElementById("message");
+
+
+/* =====================================================
+   MODE
+===================================================== */
 
 let isSignup = false;
 
 
-const emailInput =
-document.getElementById("email");
+/* =====================================================
+   MESSAGE
+===================================================== */
 
-const passwordInput =
-document.getElementById("password");
-
-const authButton =
-document.getElementById("authButton");
-
-const switchMode =
-document.getElementById("switchMode");
-
-const switchText =
-document.getElementById("switchText");
-
-const message =
-document.getElementById("message");
-
-
-function showMessage(text,type){
+function showMessage(text, type){
 
     message.textContent = text;
 
     message.className =
-    "message " + type;
+        "message " + type;
+
 }
 
 
-switchMode.addEventListener("click",()=>{
+/* =====================================================
+   SWITCH LOGIN / SIGNUP
+===================================================== */
 
-    isSignup = !isSignup;
+function updateMode(){
 
     if(isSignup){
 
         authButton.textContent =
-        "ثبت‌نام";
+            "ثبت‌نام";
 
         switchText.innerHTML =
-        'قبلاً حساب ساخته‌اید؟ <span id="switchMode">ورود</span>';
+            'قبلاً حساب ساخته‌اید؟ <span id="switchMode">ورود</span>';
 
     }else{
 
         authButton.textContent =
-        "ورود";
+            "ورود";
 
         switchText.innerHTML =
-        'حساب کاربری ندارید؟ <span id="switchMode">ثبت‌نام</span>';
+            'حساب کاربری ندارید؟ <span id="switchMode">ثبت‌نام</span>';
 
     }
 
-    document.getElementById("switchMode")
-    .addEventListener("click",arguments.callee);
 
-});
+    document
+        .getElementById("switchMode")
+        .addEventListener(
+            "click",
+            function(){
 
+                isSignup =
+                    !isSignup;
 
-authButton.addEventListener("click",async()=>{
+                updateMode();
 
-    const email =
-    emailInput.value.trim();
+                message.className =
+                    "message";
 
-    const password =
-    passwordInput.value;
-
-
-    if(!email || !password){
-
-        showMessage(
-            "ایمیل و رمز عبور را وارد کنید.",
-            "error"
+            }
         );
 
-        return;
-    }
+}
 
 
-    authButton.disabled = true;
+updateMode();
 
 
-    if(isSignup){
+/* =====================================================
+   LOGIN / SIGNUP
+===================================================== */
 
-        const { error } =
-        await supabaseClient.auth.signUp({
+authButton.addEventListener(
+    "click",
+    async function(){
 
-            email:email,
+        const email =
+            emailInput.value.trim();
 
-            password:password,
-
-            options:{
-                emailRedirectTo:
-                "https://vensiz.github.io/index.html"
-            }
-
-        });
+        const password =
+            passwordInput.value;
 
 
-        if(error){
+        if(!email || !password){
 
             showMessage(
-                error.message,
+                "ایمیل و رمز عبور را وارد کنید.",
                 "error"
             );
 
-        }else{
-
-            showMessage(
-                "ثبت‌نام انجام شد. ایمیل خود را برای تأیید بررسی کنید.",
-                "success"
-            );
+            return;
 
         }
 
-    }else{
 
-        const { error } =
-        await supabaseClient.auth.signInWithPassword({
-
-            email:email,
-
-            password:password
-
-        });
-
-
-        if(error){
+        if(password.length < 6){
 
             showMessage(
-                error.message,
+                "رمز عبور باید حداقل ۶ کاراکتر باشد.",
                 "error"
             );
 
-        }else{
+            return;
+
+        }
+
+
+        authButton.disabled =
+            true;
+
+
+        authButton.textContent =
+            isSignup
+                ? "در حال ثبت‌نام..."
+                : "در حال ورود...";
+
+
+        try{
+
+            /* =================================================
+               SIGN UP
+            ================================================= */
+
+            if(isSignup){
+
+                const {
+                    data,
+                    error
+                } =
+                await supabaseClient.auth.signUp({
+
+                    email: email,
+
+                    password: password,
+
+                    options: {
+
+                        emailRedirectTo:
+                            "https://vensiz.github.io/index.html"
+
+                    }
+
+                });
+
+
+                if(error){
+
+                    showMessage(
+                        error.message,
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                 اگر تأیید ایمیل فعال باشد،
+                 Supabase ممکن است Session را بلافاصله ندهد.
+                */
+
+                if(data.session){
+
+                    showMessage(
+                        "ثبت‌نام و ورود با موفقیت انجام شد.",
+                        "success"
+                    );
+
+
+                    setTimeout(
+                        function(){
+
+                            window.location.href =
+                                "https://vensiz.github.io/index.html";
+
+                        },
+                        700
+                    );
+
+                }else{
+
+                    showMessage(
+                        "ثبت‌نام انجام شد. ایمیل خود را برای تأیید حساب بررسی کنید.",
+                        "success"
+                    );
+
+                }
+
+                return;
+
+            }
+
+
+            /* =================================================
+               LOGIN
+            ================================================= */
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient.auth.signInWithPassword({
+
+                email: email,
+
+                password: password
+
+            });
+
+
+            if(error){
+
+                showMessage(
+                    error.message,
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if(!data.session){
+
+                showMessage(
+                    "ورود انجام شد اما Session دریافت نشد. دوباره تلاش کنید.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* =================================================
+               VERIFY SESSION WAS SAVED
+            ================================================= */
+
+            const {
+                data: sessionData
+            } =
+            await supabaseClient.auth.getSession();
+
+
+            if(!sessionData.session){
+
+                showMessage(
+                    "Session ذخیره نشد. لطفاً دوباره تلاش کنید.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            console.log(
+                "VENSIZ AUTH SUCCESS:",
+                sessionData.session.user.email
+            );
+
 
             showMessage(
                 "ورود موفق بود. در حال انتقال...",
                 "success"
             );
 
-            setTimeout(()=>{
 
-                window.location.href =
-                "index.html";
+            /* =================================================
+               GO TO HOME
+            ================================================= */
 
-            },1000);
+            setTimeout(
+                function(){
+
+                    window.location.replace(
+                        "https://vensiz.github.io/index.html"
+                    );
+
+                },
+                700
+            );
+
+
+        }catch(error){
+
+            console.error(
+                "VENSIZ AUTH ERROR:",
+                error
+            );
+
+
+            showMessage(
+                "خطای غیرمنتظره‌ای رخ داد. کنسول مرورگر را بررسی کنید.",
+                "error"
+            );
+
+        }finally{
+
+            authButton.disabled =
+                false;
+
+            authButton.textContent =
+                isSignup
+                    ? "ثبت‌نام"
+                    : "ورود";
 
         }
 
     }
+);
 
 
-    authButton.disabled = false;
+/* =====================================================
+   ENTER KEY
+===================================================== */
 
-});
+emailInput.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            passwordInput.focus();
+
+        }
+
+    }
+);
+
+
+passwordInput.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            authButton.click();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   CHECK EXISTING SESSION
+===================================================== */
+
+async function checkExistingSession(){
+
+    try{
+
+        const {
+            data
+        } =
+        await supabaseClient.auth.getSession();
+
+
+        if(data.session){
+
+            console.log(
+                "Existing VENSIZ session:",
+                data.session.user.email
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "SESSION CHECK ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+checkExistingSession();
+
+
+/* =====================================================
+   AUTH STATE LISTENER
+===================================================== */
+
+supabaseClient.auth.onAuthStateChange(
+    function(event, session){
+
+        console.log(
+            "VENSIZ AUTH EVENT:",
+            event
+        );
+
+        if(session){
+
+            console.log(
+                "Logged in:",
+                session.user.email
+            );
+
+        }
+
+    }
+);
 
 </script>
 
 </body>
-
 </html>
+```
