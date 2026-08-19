@@ -8,6 +8,7 @@
 
 <title>VENSIZ ADMIN LOGIN</title>
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
@@ -31,15 +32,10 @@ align-items:center;
 
 justify-content:center;
 
-
 background:
-
 linear-gradient(rgba(0,255,100,.03) 1px,transparent 1px),
-
 linear-gradient(90deg,rgba(0,255,100,.03) 1px,transparent 1px),
-
 #020403;
-
 
 background-size:50px 50px;
 
@@ -55,35 +51,29 @@ width:380px;
 
 background:#071008;
 
-border:
-
-1px solid rgba(0,255,100,.15);
+border:1px solid rgba(0,255,100,.2);
 
 border-radius:20px;
 
-padding:30px;
+padding:35px;
 
 box-shadow:
-0 0 30px rgba(0,255,100,.08);
+0 0 30px rgba(0,255,100,.1);
 
 }
 
 
 
-.logo{
+h1{
 
 text-align:center;
 
-font-size:32px;
-
-font-weight:bold;
-
 color:#00ff66;
+
+margin-bottom:30px;
 
 text-shadow:
 0 0 20px #00ff66;
-
-margin-bottom:30px;
 
 }
 
@@ -101,21 +91,13 @@ background:#030603;
 
 border:
 
-1px solid rgba(0,255,100,.15);
+1px solid rgba(0,255,100,.2);
 
-border-radius:10px;
+border-radius:12px;
 
 color:white;
 
 outline:none;
-
-}
-
-
-
-input:focus{
-
-border-color:#00ff66;
 
 }
 
@@ -127,15 +109,15 @@ width:100%;
 
 padding:15px;
 
-background:#00d95a;
+background:#00ff66;
 
 border:none;
 
-border-radius:10px;
-
-font-weight:bold;
+border-radius:12px;
 
 cursor:pointer;
+
+font-weight:bold;
 
 }
 
@@ -143,21 +125,22 @@ cursor:pointer;
 
 button:hover{
 
-background:#00ff66;
+box-shadow:
+0 0 20px #00ff66;
 
 }
 
 
 
-.message{
+#error{
 
 margin-top:15px;
 
+color:#ff7777;
+
 text-align:center;
 
-font-size:13px;
-
-color:#ff7777;
+font-size:14px;
 
 }
 
@@ -175,40 +158,30 @@ color:#ff7777;
 <div class="login-box">
 
 
-<div class="logo">
-
+<h1>
 VENSIZ ADMIN
-
-</div>
-
+</h1>
 
 
-<input 
-id="username"
-placeholder="Username">
+<input id="username" placeholder="نام کاربری">
 
 
-
-<input 
-id="password"
-type="password"
-placeholder="Password">
+<input id="password" type="password" placeholder="رمز عبور">
 
 
-
-<button onclick="loginAdmin()">
+<button onclick="login()">
 
 ورود
 
 </button>
 
 
-
-<div id="message" class="message"></div>
-
+<div id="error"></div>
 
 
 </div>
+
+
 
 
 
@@ -233,80 +206,42 @@ SUPABASE_KEY
 
 
 
-async function loginAdmin(){
-
+async function login(){
 
 
 let username =
-document
-.getElementById("username")
-.value.trim();
-
+document.getElementById("username").value;
 
 
 let password =
-document
-.getElementById("password")
-.value.trim();
+document.getElementById("password").value;
 
 
 
-let msg =
-document
-.getElementById("message");
-
-
-
-if(!username || !password){
-
-msg.innerHTML =
-"همه فیلدها را پر کنید";
-
-return;
-
-}
-
-
-
-const {
-
-data,
-
-error
-
-}=
-
+const {data,error} =
 await db
-
 .from("admins")
-
 .select("*")
-
 .eq(
 "username",
 username
 )
-
 .eq(
 "password",
 password
 )
-
-.maybeSingle();
-
-
+.single();
 
 
 
 if(error || !data){
 
 
-msg.innerHTML =
+document.getElementById("error").innerHTML =
 "یوزرنیم یا رمز عبور اشتباه است";
 
 
 return;
-
 
 }
 
