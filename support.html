@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>پشتیبانی | VENSIZ</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+
+    background:
+    radial-gradient(
+        circle at center,
+        rgba(0,255,100,.08),
+        transparent 45%
+    ),
+    #050805;
+
+    color:#fff;
+
+    font-family:
+    Tahoma,
+    Arial,
+    sans-serif;
+}
+
+
+/* ================= HEADER ================= */
+
+header{
+
+    position:fixed;
+
+    top:0;
+    right:0;
+    left:0;
+
+    height:78px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 6%;
+
+    background:rgba(3,8,4,.95);
+
+    border-bottom:1px solid rgba(0,255,100,.15);
+
+    backdrop-filter:blur(15px);
+
+    z-index:1000;
+
+}
+
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    color:#00ff66;
+
+    text-decoration:none;
+
+    font-size:27px;
+
+    font-weight:bold;
+
+    text-shadow:
+    0 0 20px rgba(0,255,100,.5);
+
+}
+
+
+.logo-box{
+
+    width:42px;
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:2px solid #00ff66;
+
+    border-radius:10px;
+
+    box-shadow:
+    0 0 18px rgba(0,255,100,.35);
+
+}
+
+
+nav{
+
+    display:flex;
+
+    gap:22px;
+
+}
+
+
+nav a{
+
+    color:#aaa;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    transition:.3s;
+
+}
+
+
+nav a:hover,
+nav a.active{
+
+    color:#00ff66;
+
+}
+
+
+/* ================= PAGE ================= */
+
+.page{
+
+    min-height:100vh;
+
+    padding:
+
+    135px 20px 70px;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+
+/* ================= CONTAINER ================= */
+
+.container{
+
+    width:100%;
+
+    max-width:900px;
+
+}
+
+
+/* ================= TITLE ================= */
+
+.title{
+
+    text-align:center;
+
+    margin-bottom:45px;
+
+}
+
+
+.title h1{
+
+    font-size:36px;
+
+    margin-bottom:12px;
+
+}
+
+
+.title h1 span{
+
+    color:#00ff66;
+
+}
+
+
+.title p{
+
+    color:#777;
+
+    font-size:13px;
+
+}
+
+
+/* ================= AUTH CHECK ================= */
+
+.auth-box{
+
+    padding:45px 30px;
+
+    text-align:center;
+
+    background:#080e09;
+
+    border:1px solid rgba(0,255,100,.18);
+
+    border-radius:20px;
+
+    box-shadow:
+
+    0 20px 70px rgba(0,0,0,.45),
+
+    0 0 40px rgba(0,255,100,.03);
+
+}
+
+
+.auth-icon{
+
+    width:90px;
+    height:90px;
+
+    margin:0 auto 25px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:2px solid #00ff66;
+
+    border-radius:22px;
+
+    color:#00ff66;
+
+    font-size:40px;
+
+    box-shadow:
+    0 0 30px rgba(0,255,100,.25);
+
+}
+
+
+.auth-box h2{
+
+    margin-bottom:12px;
+
+    font-size:23px;
+
+}
+
+
+.auth-box p{
+
+    max-width:600px;
+
+    margin:auto;
+
+    color:#888;
+
+    line-height:2;
+
+    font-size:13px;
+
+}
+
+
+.auth-button{
+
+    display:inline-block;
+
+    margin-top:25px;
+
+    padding:13px 30px;
+
+    border-radius:9px;
+
+    background:#00c853;
+
+    color:#001b08;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+
+.auth-button:hover{
+
+    background:#00ff66;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 0 25px rgba(0,255,100,.3);
+
+}
+
+
+/* ================= TICKET ================= */
+
+.ticket-area{
+
+    display:none;
+
+}
+
+
+.ticket-box{
+
+    padding:35px;
+
+    background:#080e09;
+
+    border:1px solid rgba(0,255,100,.18);
+
+    border-radius:20px;
+
+}
+
+
+.ticket-header{
+
+    margin-bottom:30px;
+
+}
+
+
+.ticket-header h2{
+
+    color:#00ff66;
+
+    font-size:22px;
+
+    margin-bottom:8px;
+
+}
+
+
+.ticket-header p{
+
+    color:#777;
+
+    font-size:13px;
+
+}
+
+
+label{
+
+    display:block;
+
+    color:#aaa;
+
+    font-size:12px;
+
+    margin-bottom:8px;
+
+}
+
+
+.input,
+textarea{
+
+    width:100%;
+
+    border:1px solid rgba(0,255,100,.15);
+
+    border-radius:9px;
+
+    background:#050805;
+
+    color:#fff;
+
+    outline:none;
+
+    font-family:Tahoma,Arial,sans-serif;
+
+    font-size:13px;
+
+    padding:14px;
+
+    margin-bottom:20px;
+
+    transition:.3s;
+
+}
+
+
+.input{
+
+    height:48px;
+
+}
+
+
+textarea{
+
+    min-height:180px;
+
+    resize:vertical;
+
+    line-height:1.9;
+
+}
+
+
+.input:focus,
+textarea:focus{
+
+    border-color:#00ff66;
+
+    box-shadow:
+    0 0 15px rgba(0,255,100,.08);
+
+}
+
+
+.submit{
+
+    width:100%;
+
+    height:50px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:#00c853;
+
+    color:#001b08;
+
+    font-family:inherit;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+.submit:hover{
+
+    background:#00ff66;
+
+    transform:translateY(-2px);
+
+}
+
+
+.user-info{
+
+    margin-bottom:25px;
+
+    padding:14px;
+
+    border-radius:9px;
+
+    background:rgba(0,255,100,.04);
+
+    border:1px solid rgba(0,255,100,.12);
+
+    color:#888;
+
+    font-size:12px;
+
+}
+
+
+.user-info span{
+
+    color:#00ff66;
+
+}
+
+
+/* ================= MESSAGE ================= */
+
+.message{
+
+    margin-top:20px;
+
+    text-align:center;
+
+    color:#aaa;
+
+    font-size:12px;
+
+}
+
+
+/* ================= FOOTER ================= */
+
+footer{
+
+    padding:35px 20px;
+
+    text-align:center;
+
+    background:#030603;
+
+    border-top:1px solid rgba(0,255,100,.1);
+
+    color:#666;
+
+    font-size:12px;
+
+}
+
+
+footer strong{
+
+    color:#00ff66;
+
+    font-size:20px;
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:800px){
+
+    header{
+
+        padding:0 20px;
+
+    }
+
+
+    nav{
+
+        display:none;
+
+    }
+
+
+    .title h1{
+
+        font-size:29px;
+
+    }
+
+
+    .ticket-box{
+
+        padding:25px 20px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+
+<a href="index.html" class="logo">
+
+<div class="logo-box">
+V
+</div>
+
+VENSIZ
+
+</a>
+
+
+<nav>
+
+<a href="rules.html">
+قوانین
+</a>
+
+<a href="updates.html">
+بروزرسانی‌ها
+</a>
+
+<a href="download.html">
+دانلود
+</a>
+
+<a href="about.html">
+درباره ما
+</a>
+
+<a href="shop.html">
+فروشگاه
+</a>
+
+<a href="support.html" class="active">
+پشتیبانی
+</a>
+
+<a href="login.html">
+🔐 احراز هویت
+</a>
+
+</nav>
+
+</header>
+
+
+
+<!-- ================= PAGE ================= -->
+
+<main class="page">
+
+
+<div class="container">
+
+
+<div class="title">
+
+<h1>
+پشتیبانی <span>VENSIZ</span>
+</h1>
+
+<p>
+در صورت نیاز می‌توانید درخواست پشتیبانی خود را ثبت کنید.
+</p>
+
+</div>
+
+
+
+<!-- ================= AUTH REQUIRED ================= -->
+
+<div
+    id="authBox"
+    class="auth-box"
+>
+
+<div class="auth-icon">
+🔐
+</div>
+
+
+<h2>
+ابتدا احراز هویت کنید
+</h2>
+
+
+<p>
+
+برای ثبت و پیگیری تیکت پشتیبانی،
+ابتدا باید در حساب کاربری خود وارد شوید
+و احراز هویت خود را انجام دهید.
+
+</p>
+
+
+<a
+    href="login.html"
+    class="auth-button"
+>
+
+ورود / ثبت‌نام
+
+</a>
+
+</div>
+
+
+
+<!-- ================= TICKET ================= -->
+
+<div
+    id="ticketArea"
+    class="ticket-area"
+>
+
+
+<div class="ticket-box">
+
+
+<div class="ticket-header">
+
+<h2>
+ایجاد تیکت جدید
+</h2>
+
+<p>
+موضوع خود را با توضیحات کامل برای تیم پشتیبانی ارسال کنید.
+</p>
+
+</div>
+
+
+<div class="user-info">
+
+حساب واردشده:
+
+<span id="userEmail">
+در حال دریافت...
+</span>
+
+</div>
+
+
+
+<label for="subject">
+موضوع تیکت
+</label>
+
+<input
+    id="subject"
+    class="input"
+    type="text"
+    placeholder="مثلاً مشکل ورود به سرور"
+>
+
+
+
+<label for="message">
+متن درخواست
+</label>
+
+<textarea
+    id="message"
+    placeholder="مشکل یا درخواست خود را با جزئیات بنویسید..."
+></textarea>
+
+
+
+<button
+    id="submitTicket"
+    class="submit"
+    type="button"
+>
+
+ارسال تیکت
+
+</button>
+
+
+<div
+    id="ticketMessage"
+    class="message"
+></div>
+
+
+</div>
+
+</div>
+
+
+</div>
+
+</main>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<strong>
+VENSIZ
+</strong>
+
+<br><br>
+
+VENSIZ Roleplay © 2026
+
+</footer>
+
+
+
+<!-- ================= SUPABASE ================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+
+/* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+'https://gpeckwmjsgklzhtqgdso.supabase.co';
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+'sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ';
+
+
+const supabase =
+window.supabase.createClient(
+
+    SUPABASE_URL,
+
+    SUPABASE_PUBLISHABLE_KEY
+
+);
+
+
+
+/* =========================
+   CHECK AUTH
+========================= */
+
+async function checkAuth(){
+
+    const authBox =
+    document.getElementById('authBox');
+
+
+    const ticketArea =
+    document.getElementById('ticketArea');
+
+
+    const userEmail =
+    document.getElementById('userEmail');
+
+
+    try{
+
+        const {
+            data: { user },
+            error
+        } =
+        await supabase.auth.getUser();
+
+
+        if(error || !user){
+
+            authBox.style.display =
+            'block';
+
+            ticketArea.style.display =
+            'none';
+
+            return;
+
+        }
+
+
+        /*
+            کاربر وارد حساب شده
+        */
+
+        authBox.style.display =
+        'none';
+
+        ticketArea.style.display =
+        'block';
+
+
+        userEmail.textContent =
+        user.email || 'کاربر VENSIZ';
+
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        authBox.style.display =
+        'block';
+
+        ticketArea.style.display =
+        'none';
+
+    }
+
+}
+
+
+
+/* =========================
+   SUBMIT
+========================= */
+
+document
+.getElementById('submitTicket')
+.addEventListener('click', async function(){
+
+    const subject =
+    document
+    .getElementById('subject')
+    .value
+    .trim();
+
+
+    const message =
+    document
+    .getElementById('message')
+    .value
+    .trim();
+
+
+    const result =
+    document
+    .getElementById('ticketMessage');
+
+
+    if(!subject){
+
+        result.textContent =
+        'لطفاً موضوع تیکت را وارد کنید.';
+
+        return;
+
+    }
+
+
+    if(!message){
+
+        result.textContent =
+        'لطفاً متن درخواست را وارد کنید.';
+
+        return;
+
+    }
+
+
+    /*
+        فعلاً دیتابیس را وصل نکرده‌ایم.
+        در مرحله بعد این قسمت را به Supabase
+        متصل می‌کنیم.
+    */
+
+    result.textContent =
+    'فرم تیکت آماده است؛ در مرحله بعد ارسال واقعی تیکت را فعال می‌کنیم.';
+
+});
+
+
+
+/* =========================
+   START
+========================= */
+
+checkAuth();
+
+
+</script>
+
+
+</body>
+
+</html>
