@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
@@ -5,203 +6,307 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>VENSIZ | پشتیبانی</title>
+<title>پشتیبانی | VENSIZ</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-html{
-    scroll-behavior:smooth;
-}
-
 body{
+    min-height:100vh;
     background:#050805;
     color:#fff;
     font-family:Tahoma,Arial,sans-serif;
-    min-height:100vh;
 }
 
-header{
-    height:80px;
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+        linear-gradient(rgba(0,255,100,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,255,100,.025) 1px,transparent 1px);
+    background-size:55px 55px;
+}
+
+/* NAVBAR */
+
+.navbar{
+    position:relative;
+    z-index:10;
+
+    height:86px;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 6%;
-    background:rgba(3,8,4,.95);
-    border-bottom:1px solid rgba(0,255,100,.15);
-    backdrop-filter:blur(15px);
+
+    padding:0 7%;
+
+    border-bottom:1px solid rgba(0,255,100,.12);
+
+    background:rgba(3,7,4,.92);
 }
 
 .logo{
     display:flex;
     align-items:center;
-    gap:12px;
-    color:#00ff66;
-    text-decoration:none;
+    gap:10px;
+
+    color:#fff;
+
     font-size:28px;
     font-weight:bold;
-    text-shadow:0 0 20px rgba(0,255,100,.7);
+
+    text-decoration:none;
 }
 
 .logo-box{
-    width:42px;
-    height:42px;
+    width:46px;
+    height:46px;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     border:2px solid #00ff66;
-    border-radius:10px;
-    font-size:24px;
-    box-shadow:
-        0 0 15px rgba(0,255,100,.5),
-        inset 0 0 15px rgba(0,255,100,.15);
+    border-radius:12px;
+
+    color:#00ff66;
+
+    font-size:27px;
+
+    box-shadow:0 0 20px rgba(0,255,100,.25);
 }
 
-nav{
+.nav-links{
     display:flex;
-    gap:28px;
+    align-items:center;
+    gap:34px;
 }
 
-nav a{
+.nav-links a{
     color:#ddd;
     text-decoration:none;
     font-size:14px;
-    transition:.3s;
+    transition:.25s;
 }
 
-nav a:hover{
+.nav-links a:hover{
     color:#00ff66;
-    text-shadow:0 0 10px #00ff66;
 }
 
-.page{
-    min-height:calc(100vh - 80px);
-    padding:90px 20px;
-    position:relative;
-    overflow:hidden;
-}
-
-.page::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-
-    background-image:
-        linear-gradient(
-            rgba(0,255,100,.025) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(0,255,100,.025) 1px,
-            transparent 1px
-        );
-
-    background-size:50px 50px;
-}
+/* PAGE */
 
 .container{
     position:relative;
-    max-width:900px;
-    margin:auto;
+    z-index:2;
+
+    width:92%;
+    max-width:1000px;
+
+    margin:80px auto;
 }
 
 .title{
     text-align:center;
-    margin-bottom:45px;
+    margin-bottom:50px;
 }
 
 .title h1{
-    font-size:42px;
+    font-size:44px;
     margin-bottom:12px;
-    text-shadow:0 0 15px rgba(0,255,100,.5);
 }
 
-.title span{
+.title h1 span{
     color:#00ff66;
-    font-size:13px;
-    letter-spacing:2px;
+    text-shadow:0 0 25px rgba(0,255,100,.4);
 }
 
-.card{
-    background:rgba(10,17,11,.95);
-    border:1px solid rgba(0,255,100,.15);
-    border-radius:16px;
-    padding:35px;
-    box-shadow:0 0 40px rgba(0,0,0,.35);
+.title p{
+    color:#888;
+    font-size:14px;
+}
+
+/* AUTH LOADING */
+
+#loading{
+    text-align:center;
+
+    padding:60px 20px;
+
+    color:#00ff66;
+
+    font-size:18px;
+}
+
+.spinner{
+    width:35px;
+    height:35px;
+
+    margin:0 auto 20px;
+
+    border:3px solid rgba(0,255,100,.15);
+    border-top-color:#00ff66;
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* AUTH ERROR */
+
+#authRequired{
+    display:none;
+
+    background:#080e09;
+
+    border:1px solid rgba(0,255,100,.2);
+
+    border-radius:18px;
+
+    padding:55px 30px;
+
+    text-align:center;
+
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
+}
+
+#authRequired h2{
+    color:#00ff66;
+    margin-bottom:18px;
+}
+
+#authRequired p{
+    color:#999;
+    margin-bottom:28px;
+}
+
+.auth-btn{
+    display:inline-block;
+
+    padding:14px 32px;
+
+    border-radius:9px;
+
+    background:#00d95a;
+
+    color:#001b08;
+
+    font-weight:bold;
+
+    text-decoration:none;
+
+    transition:.25s;
+}
+
+.auth-btn:hover{
+    background:#00ff66;
+
+    box-shadow:0 0 25px rgba(0,255,100,.3);
+}
+
+/* SUPPORT */
+
+#supportContent{
+    display:none;
 }
 
 .user-box{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
+    background:#080e09;
+
+    border:1px solid rgba(0,255,100,.15);
+
+    border-radius:14px;
 
     padding:15px 20px;
+
     margin-bottom:25px;
 
-    background:#071009;
-    border:1px solid rgba(0,255,100,.12);
-    border-radius:10px;
-}
-
-.status{
-    display:flex;
-    align-items:center;
-    gap:8px;
     color:#aaa;
+
     font-size:13px;
+
+    text-align:center;
 }
 
-.dot{
-    width:9px;
-    height:9px;
-    background:#00ff66;
-    border-radius:50%;
-    box-shadow:0 0 12px #00ff66;
-}
-
-.email{
+.user-box strong{
     color:#00ff66;
-    direction:ltr;
+}
+
+.support-box{
+    background:#080e09;
+
+    border:1px solid rgba(0,255,100,.18);
+
+    border-radius:20px;
+
+    padding:35px;
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.45),
+        0 0 40px rgba(0,255,100,.04);
+}
+
+.support-box h2{
+    color:#00ff66;
+
+    margin-bottom:25px;
+
+    font-size:22px;
 }
 
 label{
     display:block;
-    margin-bottom:8px;
+
     color:#aaa;
+
     font-size:13px;
+
+    margin-bottom:8px;
 }
 
 input,
 textarea{
     width:100%;
+
     padding:14px;
+
     margin-bottom:20px;
 
     background:#050805;
-    border:1px solid rgba(0,255,100,.15);
-    border-radius:8px;
 
-    color:white;
+    color:#fff;
+
+    border:1px solid rgba(0,255,100,.15);
+
+    border-radius:9px;
+
     outline:none;
 
     font-family:Tahoma,Arial,sans-serif;
-    font-size:14px;
-    transition:.3s;
+
+    direction:rtl;
 }
 
 input:focus,
 textarea:focus{
     border-color:#00ff66;
-    box-shadow:0 0 15px rgba(0,255,100,.1);
+
+    box-shadow:0 0 15px rgba(0,255,100,.05);
 }
 
 textarea{
@@ -209,462 +314,382 @@ textarea{
     resize:vertical;
 }
 
-button{
+.submit-btn{
     width:100%;
+
     padding:15px;
 
     border:none;
-    border-radius:8px;
 
-    background:#00c853;
+    border-radius:9px;
+
+    background:#00d95a;
+
     color:#001b08;
 
     font-weight:bold;
-    font-size:15px;
+
+    font-family:Tahoma,Arial,sans-serif;
 
     cursor:pointer;
-    transition:.3s;
+
+    transition:.25s;
 }
 
-button:hover{
+.submit-btn:hover{
     background:#00ff66;
-    box-shadow:0 0 25px rgba(0,255,100,.3);
+
+    box-shadow:0 0 25px rgba(0,255,100,.25);
 }
 
-button:disabled{
+.submit-btn:disabled{
     opacity:.5;
     cursor:not-allowed;
 }
 
-.login-message{
-    text-align:center;
+.message{
+    display:none;
 
-    background:#0a110b;
-    border:1px solid rgba(0,255,100,.15);
-    border-radius:16px;
+    margin-top:18px;
 
-    padding:45px 30px;
-    box-shadow:0 0 40px rgba(0,0,0,.35);
-}
-
-.login-message h2{
-    color:#00ff66;
-    margin-bottom:15px;
-}
-
-.login-message p{
-    color:#999;
-    line-height:2;
-}
-
-.auth-btn{
-    display:inline-block;
-
-    margin-top:25px;
-    padding:13px 30px;
+    padding:12px;
 
     border-radius:8px;
 
-    background:#00c853;
-    color:#001b08;
-
-    text-decoration:none;
-    font-weight:bold;
-    transition:.3s;
-}
-
-.auth-btn:hover{
-    background:#00ff66;
-    box-shadow:0 0 25px rgba(0,255,100,.3);
-}
-
-.message{
-    padding:16px;
-    border-radius:10px;
     text-align:center;
-    line-height:2;
-    margin-top:20px;
+
+    font-size:13px;
 }
 
-.success{
-    background:rgba(0,200,83,.08);
-    border:1px solid rgba(0,255,100,.3);
+.message.success{
+    display:block;
+
     color:#00ff66;
+
+    background:rgba(0,255,100,.06);
+
+    border:1px solid rgba(0,255,100,.15);
 }
 
-.error{
-    background:rgba(255,50,50,.08);
-    border:1px solid rgba(255,50,50,.25);
-    color:#ff7777;
+.message.error{
+    display:block;
+
+    color:#ff7070;
+
+    background:rgba(255,0,0,.05);
+
+    border:1px solid rgba(255,0,0,.15);
 }
 
-.my-tickets{
-    margin-top:35px;
-}
-
-.my-tickets-title{
-    color:#00ff66;
-    margin-bottom:15px;
-    font-size:16px;
-}
-
-.ticket{
-    margin-top:15px;
-    padding:20px;
-
-    background:#071009;
-    border:1px solid rgba(0,255,100,.1);
-    border-radius:10px;
-}
-
-.ticket h3{
-    color:#00ff66;
-    margin-bottom:10px;
-}
-
-.ticket p{
-    color:#aaa;
-    line-height:1.9;
-    white-space:pre-wrap;
-}
-
-.ticket-status{
-    display:inline-block;
-
-    margin-top:12px;
-    padding:5px 10px;
-
-    border-radius:5px;
-
-    background:rgba(0,255,100,.08);
-    color:#00ff66;
-    font-size:11px;
-}
-
-.empty{
-    color:#666;
-    text-align:center;
-    padding:20px;
-}
-
-.hidden{
-    display:none !important;
-}
+/* RESPONSIVE */
 
 @media(max-width:700px){
 
-    header{
+    .navbar{
         padding:0 20px;
     }
 
-    nav{
-        display:none;
+    .nav-links{
+        gap:15px;
     }
 
-    .page{
-        padding:60px 15px;
+    .nav-links a{
+        font-size:12px;
     }
 
     .title h1{
         font-size:32px;
     }
 
-    .card{
-        padding:20px;
+    .support-box{
+        padding:25px 18px;
     }
 
-    .user-box{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-
-    .email{
-        font-size:12px;
-    }
 }
+
 </style>
 
 </head>
 
 <body>
 
-<header>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
 
 <a href="index.html" class="logo">
+    <span>VENSIZ</span>
 
-    <div class="logo-box">
+    <span class="logo-box">
         V
-    </div>
-
-    VENSIZ
-
+    </span>
 </a>
 
-<nav>
+<div class="nav-links">
 
-    <a href="rules.html">قوانین</a>
-    <a href="updates.html">بروزرسانی‌ها</a>
-    <a href="download.html">دانلود</a>
-    <a href="about.html">درباره ما</a>
-    <a href="shop.html">فروشگاه</a>
-    <a href="support.html">پشتیبانی</a>
+<a href="index.html">
+    خانه
+</a>
+
+<a href="about.html">
+    درباره ما
+</a>
+
+<a href="download.html">
+    دانلود
+</a>
+
+<a href="updates.html">
+    بروزرسانی‌ها
+</a>
+
+<a href="rules.html">
+    قوانین
+</a>
+
+<a href="shop.html">
+    فروشگاه
+</a>
+
+<a href="support.html">
+    پشتیبانی
+</a>
+
+</div>
 
 </nav>
 
-</header>
 
+<!-- MAIN -->
 
-<main class="page">
+<main class="container">
 
-<div class="container">
 
 <div class="title">
 
-    <h1>
-        پشتیبانی VENSIZ
-    </h1>
+<h1>
+    <span>VENSIZ</span> پشتیبانی
+</h1>
 
-    <span>
-        VENSIZ SUPPORT CENTER
-    </span>
-
-</div>
-
-
-<!-- LOGIN BOX -->
-
-<div id="loginBox" class="login-message hidden">
-
-    <h2>
-        🔐 ابتدا احراز هویت کنید
-    </h2>
-
-    <p>
-        برای ارسال تیکت پشتیبانی ابتدا باید وارد حساب کاربری خود شوید.
-    </p>
-
-    <a href="login.html" class="auth-btn">
-        احراز هویت
-    </a>
+<p>
+    VENSIZ SUPPORT CENTER
+</p>
 
 </div>
 
 
-<!-- SUPPORT BOX -->
+<!-- LOADING -->
 
-<div id="supportBox" class="card hidden">
+<div id="loading">
 
-    <div class="user-box">
+<div class="spinner"></div>
 
-        <div class="status">
-
-            <div class="dot"></div>
-
-            احراز هویت شده
-
-        </div>
-
-        <div id="userEmail" class="email">
-            -
-        </div>
-
-    </div>
-
-
-    <form id="ticketForm">
-
-        <label for="subject">
-            موضوع تیکت
-        </label>
-
-        <input
-            id="subject"
-            type="text"
-            placeholder="موضوع مشکل خود را وارد کنید"
-            required
-        >
-
-
-        <label for="ticketMessage">
-            توضیحات مشکل
-        </label>
-
-        <textarea
-            id="ticketMessage"
-            placeholder="مشکل خود را کامل توضیح دهید..."
-            required
-        ></textarea>
-
-
-        <button
-            id="submitBtn"
-            type="submit"
-        >
-            ارسال تیکت
-        </button>
-
-    </form>
-
-
-    <div
-        id="result"
-        class="message hidden"
-    ></div>
-
-
-    <div class="my-tickets">
-
-        <div class="my-tickets-title">
-            تیکت‌های من
-        </div>
-
-        <div id="tickets">
-
-            <div class="empty">
-                در حال دریافت تیکت‌ها...
-            </div>
-
-        </div>
-
-    </div>
+در حال بررسی حساب کاربری...
 
 </div>
 
+
+<!-- NOT AUTHENTICATED -->
+
+<div id="authRequired">
+
+<h2>
+    🔐 ابتدا احراز هویت کنید
+</h2>
+
+<p>
+    برای ارسال تیکت پشتیبانی ابتدا باید وارد حساب کاربری خود شوید.
+</p>
+
+<a href="login.html" class="auth-btn">
+    احراز هویت
+</a>
+
 </div>
+
+
+<!-- SUPPORT CONTENT -->
+
+<div id="supportContent">
+
+
+<div class="user-box">
+
+وارد شده با:
+
+<strong id="userEmail">
+    ...
+</strong>
+
+</div>
+
+
+<div class="support-box">
+
+<h2>
+    🎫 ارسال تیکت پشتیبانی
+</h2>
+
+
+<form id="ticketForm">
+
+
+<label for="subject">
+    موضوع
+</label>
+
+<input
+    type="text"
+    id="subject"
+    placeholder="موضوع درخواست خود را وارد کنید"
+    required
+>
+
+
+<label for="messageText">
+    پیام
+</label>
+
+<textarea
+    id="messageText"
+    placeholder="مشکل یا درخواست خود را کامل توضیح دهید..."
+    required
+></textarea>
+
+
+<button
+    type="submit"
+    class="submit-btn"
+    id="submitButton"
+>
+    ارسال تیکت
+</button>
+
+
+</form>
+
+
+<div
+    id="formMessage"
+    class="message"
+></div>
+
+
+</div>
+
+
+</div>
+
 
 </main>
 
 
 <script>
 
-/* =====================================================
-   SUPABASE
-===================================================== */
+/*
+==================================================
+SUPABASE CONFIG
+==================================================
+*/
 
 const SUPABASE_URL =
-    "https://gpeckwmjsgklzhtgqdso.supabase.co";
+"https://gpeckwmjsgklzhtgqdso.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
+"sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
 
 
 /*
-   مهم:
-   این storageKey باید دقیقاً با login.html یکی باشد.
+==================================================
+CREATE SUPABASE CLIENT
+==================================================
 */
 
 const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY,
-        {
-            auth:{
-                storageKey:"vensiz-auth-session",
-                persistSession:true,
-                autoRefreshToken:true,
-                detectSessionInUrl:true
-            }
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY,
+    {
+        auth:{
+            persistSession:true,
+            autoRefreshToken:true,
+            detectSessionInUrl:true
         }
-    );
+    }
+);
 
 
-/* =====================================================
-   ELEMENTS
-===================================================== */
+/*
+==================================================
+ELEMENTS
+==================================================
+*/
 
-const loginBox =
-    document.getElementById("loginBox");
+const loading =
+document.getElementById("loading");
 
-const supportBox =
-    document.getElementById("supportBox");
+const authRequired =
+document.getElementById("authRequired");
+
+const supportContent =
+document.getElementById("supportContent");
 
 const userEmail =
-    document.getElementById("userEmail");
+document.getElementById("userEmail");
 
 const ticketForm =
-    document.getElementById("ticketForm");
+document.getElementById("ticketForm");
 
-const submitBtn =
-    document.getElementById("submitBtn");
+const submitButton =
+document.getElementById("submitButton");
 
-const result =
-    document.getElementById("result");
-
-const tickets =
-    document.getElementById("tickets");
+const formMessage =
+document.getElementById("formMessage");
 
 
-/* =====================================================
-   UI
-===================================================== */
+/*
+==================================================
+SHOW FORM MESSAGE
+==================================================
+*/
 
-function showLogin(){
+function showFormMessage(text,type){
 
-    loginBox.classList.remove("hidden");
+    formMessage.textContent = text;
 
-    supportBox.classList.add("hidden");
-
-}
-
-
-function showSupport(user){
-
-    loginBox.classList.add("hidden");
-
-    supportBox.classList.remove("hidden");
-
-    if(user && user.email){
-
-        userEmail.textContent =
-            user.email;
-
-    }else{
-
-        userEmail.textContent =
-            "کاربر وارد شده";
-
-    }
-
-    if(user && user.id){
-
-        loadTickets(user.id);
-
-    }
-
-}
-
-
-function showResult(text,type){
-
-    result.textContent = text;
-
-    result.className =
+    formMessage.className =
         "message " + type;
-
-    result.classList.remove("hidden");
-
 }
 
 
-/* =====================================================
-   CHECK AUTH
-===================================================== */
+/*
+==================================================
+CHECK LOGIN
+==================================================
+*/
 
-async function checkAuth(){
+async function checkAuthentication(){
 
     try{
+
+        /*
+        مهم:
+        ابتدا صبر می‌کنیم Supabase
+        سشن ذخیره‌شده را بخواند.
+        */
 
         const {
             data,
             error
         } =
-            await supabaseClient.auth.getSession();
+        await supabaseClient.auth.getSession();
 
 
         if(error){
 
             console.error(
-                "SESSION ERROR:",
+                "GET SESSION ERROR:",
                 error
             );
 
@@ -679,27 +704,36 @@ async function checkAuth(){
 
 
         console.log(
-            "CURRENT SESSION:",
+            "SUPABASE SESSION:",
             session
         );
 
 
-        if(session && session.user){
-
-            showSupport(
-                session.user
-            );
-
-        }else{
+        if(
+            !session ||
+            !session.user
+        ){
 
             showLogin();
 
+            return;
         }
 
-    }catch(error){
+
+        /*
+        کاربر واقعاً لاگین است
+        */
+
+        showSupport(
+            session.user
+        );
+
+    }
+
+    catch(error){
 
         console.error(
-            "AUTH ERROR:",
+            "AUTH CHECK ERROR:",
             error
         );
 
@@ -710,27 +744,84 @@ async function checkAuth(){
 }
 
 
-/* =====================================================
-   AUTH STATE
-===================================================== */
+/*
+==================================================
+SHOW LOGIN
+==================================================
+*/
+
+function showLogin(){
+
+    loading.style.display =
+        "none";
+
+    supportContent.style.display =
+        "none";
+
+    authRequired.style.display =
+        "block";
+
+}
+
+
+/*
+==================================================
+SHOW SUPPORT
+==================================================
+*/
+
+function showSupport(user){
+
+    loading.style.display =
+        "none";
+
+    authRequired.style.display =
+        "none";
+
+    supportContent.style.display =
+        "block";
+
+
+    userEmail.textContent =
+        user.email || "کاربر";
+
+
+    console.log(
+        "USER AUTHENTICATED:",
+        user.id
+    );
+
+}
+
+
+/*
+==================================================
+AUTH STATE LISTENER
+==================================================
+*/
 
 supabaseClient.auth.onAuthStateChange(
-    function(event,session){
+    (event, session)=>{
 
         console.log(
             "AUTH EVENT:",
-            event,
-            session
+            event
         );
 
 
-        if(session && session.user){
+        if(
+            session &&
+            session.user
+        ){
 
             showSupport(
                 session.user
             );
 
-        }else{
+        }
+        else if(
+            event === "SIGNED_OUT"
+        ){
 
             showLogin();
 
@@ -740,9 +831,11 @@ supabaseClient.auth.onAuthStateChange(
 );
 
 
-/* =====================================================
-   SEND TICKET
-===================================================== */
+/*
+==================================================
+SEND TICKET
+==================================================
+*/
 
 ticketForm.addEventListener(
     "submit",
@@ -751,60 +844,66 @@ ticketForm.addEventListener(
         event.preventDefault();
 
 
-        submitBtn.disabled = true;
+        submitButton.disabled =
+            true;
 
-        submitBtn.textContent =
+        submitButton.textContent =
             "در حال ارسال...";
-
-        result.classList.add("hidden");
 
 
         try{
 
-            /* Get current user */
+            /*
+            دوباره سشن را می‌گیریم
+            تا مطمئن شویم user واقعی است.
+            */
 
             const {
                 data,
-                error
+                error:sessionError
             } =
-                await supabaseClient.auth.getUser();
+            await supabaseClient.auth.getSession();
 
 
-            if(error || !data.user){
+            if(
+                sessionError ||
+                !data.session ||
+                !data.session.user
+            ){
 
-                showResult(
-                    "احراز هویت شما معتبر نیست. لطفاً دوباره وارد شوید.",
+                showFormMessage(
+                    "جلسه ورود شما منقضی شده است. دوباره وارد حساب شوید.",
                     "error"
                 );
+
+                showLogin();
 
                 return;
             }
 
 
             const user =
-                data.user;
+                data.session.user;
 
-
-            /* Form data */
 
             const subject =
                 document
-                    .getElementById("subject")
-                    .value
-                    .trim();
+                .getElementById("subject")
+                .value
+                .trim();
 
 
-            const message =
+            const messageText =
                 document
-                    .getElementById("ticketMessage")
-                    .value
-                    .trim();
+                .getElementById("messageText")
+                .value
+                .trim();
 
 
-            if(!subject || !message){
+            if(!subject || !messageText){
 
-                showResult(
-                    "لطفاً موضوع و توضیحات را وارد کنید.",
+                showFormMessage(
+                    "موضوع و پیام را وارد کنید.",
                     "error"
                 );
 
@@ -812,34 +911,36 @@ ticketForm.addEventListener(
             }
 
 
-            /* Insert */
+            /*
+            INSERT TICKET
+            */
 
             const {
-                error:insertError
+                error
             } =
-                await supabaseClient
-                    .from("tickets")
-                    .insert({
+            await supabaseClient
+                .from("tickets")
+                .insert({
 
-                        user_id:user.id,
+                    user_id:user.id,
 
-                        subject:subject,
+                    subject:subject,
 
-                        message:message
+                    message:messageText
 
-                    });
+                });
 
 
-            if(insertError){
+            if(error){
 
                 console.error(
-                    "INSERT ERROR:",
-                    insertError
+                    "TICKET ERROR:",
+                    error
                 );
 
-
-                showResult(
-                    "ارسال تیکت انجام نشد. خطای دیتابیس دریافت شد.",
+                showFormMessage(
+                    "خطا در ارسال تیکت: " +
+                    error.message,
                     "error"
                 );
 
@@ -847,38 +948,36 @@ ticketForm.addEventListener(
             }
 
 
-            ticketForm.reset();
-
-
-            showResult(
-                "✅ تیکت شما با موفقیت ارسال شد.",
+            showFormMessage(
+                "تیکت شما با موفقیت ارسال شد. ✅",
                 "success"
             );
 
 
-            await loadTickets(
-                user.id
-            );
+            ticketForm.reset();
 
+        }
 
-        }catch(error){
+        catch(error){
 
             console.error(
-                "TICKET ERROR:",
+                "SUBMIT ERROR:",
                 error
             );
 
-
-            showResult(
-                "خطایی هنگام ارسال تیکت رخ داد.",
+            showFormMessage(
+                "یک خطای غیرمنتظره رخ داد.",
                 "error"
             );
 
-        }finally{
+        }
 
-            submitBtn.disabled = false;
+        finally{
 
-            submitBtn.textContent =
+            submitButton.disabled =
+                false;
+
+            submitButton.textContent =
                 "ارسال تیکت";
 
         }
@@ -887,144 +986,17 @@ ticketForm.addEventListener(
 );
 
 
-/* =====================================================
-   LOAD USER TICKETS
-===================================================== */
+/*
+==================================================
+START
+==================================================
+*/
 
-async function loadTickets(userId){
-
-    tickets.innerHTML =
-        '<div class="empty">در حال دریافت تیکت‌ها...</div>';
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from("tickets")
-                .select(
-                    "id, subject, message, status, created_at"
-                )
-                .eq(
-                    "user_id",
-                    userId
-                )
-                .order(
-                    "created_at",
-                    {
-                        ascending:false
-                    }
-                );
-
-
-        if(error){
-
-            console.error(
-                "LOAD ERROR:",
-                error
-            );
-
-
-            tickets.innerHTML =
-                '<div class="empty">امکان دریافت تیکت‌ها وجود ندارد.</div>';
-
-            return;
-        }
-
-
-        if(!data || data.length === 0){
-
-            tickets.innerHTML =
-                '<div class="empty">هنوز هیچ تیکتی ارسال نکرده‌اید.</div>';
-
-            return;
-        }
-
-
-        tickets.innerHTML = "";
-
-
-        data.forEach(
-            function(ticket){
-
-                const box =
-                    document.createElement(
-                        "div"
-                    );
-
-                box.className =
-                    "ticket";
-
-
-                const title =
-                    document.createElement(
-                        "h3"
-                    );
-
-                title.textContent =
-                    ticket.subject;
-
-
-                const text =
-                    document.createElement(
-                        "p"
-                    );
-
-                text.textContent =
-                    ticket.message;
-
-
-                const status =
-                    document.createElement(
-                        "div"
-                    );
-
-                status.className =
-                    "ticket-status";
-
-                status.textContent =
-                    ticket.status || "open";
-
-
-                box.appendChild(title);
-
-                box.appendChild(text);
-
-                box.appendChild(status);
-
-
-                tickets.appendChild(box);
-
-            }
-        );
-
-
-    }catch(error){
-
-        console.error(
-            "TICKETS ERROR:",
-            error
-        );
-
-
-        tickets.innerHTML =
-            '<div class="empty">خطایی هنگام دریافت تیکت‌ها رخ داد.</div>';
-
-    }
-
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-checkAuth();
+checkAuthentication();
 
 </script>
 
 </body>
+
 </html>
+```
