@@ -8,6 +8,8 @@
 
 <title>VENSIZ ADMIN</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 
 *{
@@ -16,6 +18,7 @@
     box-sizing:border-box;
     font-family:tahoma;
 }
+
 
 body{
 
@@ -27,9 +30,11 @@ body{
     background-size:50px 50px;
 
     color:white;
+
     min-height:100vh;
 
 }
+
 
 
 /* HEADER */
@@ -66,7 +71,6 @@ header{
     0 0 20px #00ff66;
 
 }
-
 
 
 .admin-info{
@@ -116,8 +120,6 @@ header{
 
     margin-bottom:25px;
 
-    font-size:14px;
-
 }
 
 
@@ -150,12 +152,12 @@ header{
 
 .menu button:hover{
 
-    background:
-    rgba(0,255,100,.08);
+    background:rgba(0,255,100,.08);
 
     border-color:#00ff66;
 
 }
+
 
 
 
@@ -172,7 +174,8 @@ header{
 
 
 
-.dashboard{
+.dashboard,
+.section{
 
     background:#071008;
 
@@ -188,32 +191,9 @@ header{
 
 
 
-.dashboard h1{
-
-    color:#00ff66;
-
-    margin-bottom:15px;
-
-}
-
-
-
-/* SECTIONS */
-
-
 .section{
 
     display:none;
-
-    background:#071008;
-
-    border:
-
-    1px solid rgba(0,255,100,.15);
-
-    border-radius:18px;
-
-    padding:25px;
 
 }
 
@@ -227,18 +207,31 @@ header{
 
 
 
+.dashboard h1{
+
+    color:#00ff66;
+
+    margin-bottom:15px;
+
+}
+
+
+
 .close{
 
     float:left;
 
-    cursor:pointer;
-
     color:#ff7777;
+
+    cursor:pointer;
 
     font-size:22px;
 
 }
 
+
+
+/* CARD */
 
 
 .card{
@@ -259,6 +252,126 @@ header{
 
 
 
+/* TICKETS */
+
+
+.ticket-layout{
+
+    display:grid;
+
+    grid-template-columns:350px 1fr;
+
+    gap:20px;
+
+    margin-top:25px;
+
+}
+
+
+
+.ticket-list,
+.ticket-view{
+
+    background:#030603;
+
+    border:
+
+    1px solid rgba(0,255,100,.15);
+
+    border-radius:15px;
+
+    padding:20px;
+
+    min-height:500px;
+
+}
+
+
+
+.ticket-item{
+
+    padding:15px;
+
+    margin-bottom:10px;
+
+    background:#081108;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    border:
+
+    1px solid rgba(255,255,255,.05);
+
+}
+
+
+
+.ticket-item:hover{
+
+    border-color:#00ff66;
+
+}
+
+
+
+.ticket-item h3{
+
+    color:#00ff66;
+
+    font-size:14px;
+
+}
+
+
+
+.ticket-item p{
+
+    color:#aaa;
+
+    font-size:12px;
+
+    margin-top:8px;
+
+}
+
+
+
+.ticket-view h2{
+
+    color:#00ff66;
+
+}
+
+
+
+@media(max-width:900px){
+
+.layout{
+
+    display:block;
+
+}
+
+
+.sidebar{
+
+    width:100%;
+
+}
+
+
+.ticket-layout{
+
+    grid-template-columns:1fr;
+
+}
+
+}
+
+
+
 </style>
 
 </head>
@@ -268,7 +381,6 @@ header{
 
 
 <header>
-
 
 <div class="logo">
 VENSIZ ADMIN
@@ -286,9 +398,7 @@ VENSIZ ADMIN
 
 
 
-
 <div class="layout">
-
 
 
 <aside class="sidebar">
@@ -299,6 +409,7 @@ VENSIZ ADMIN
 MENU
 
 </div>
+
 
 
 <div class="menu">
@@ -327,7 +438,6 @@ MENU
 </button>
 
 
-
 </div>
 
 
@@ -335,9 +445,7 @@ MENU
 
 
 
-
 <main class="content">
-
 
 
 <div id="home" class="dashboard">
@@ -349,51 +457,57 @@ MENU
 
 
 <p>
-به پنل مدیریت VENSIZ خوش آمدید
+پنل مدیریت VENSIZ
 </p>
 
 
-<div class="card">
-
-از منوی سمت راست بخش مورد نظر را انتخاب کنید.
-
 </div>
-
-
-</div>
-
-
-
-
 
 <div id="tickets" class="section">
 
 
-<span class="close"
-onclick="closeSection('tickets')">
-
+<span class="close" onclick="closeSection('tickets')">
 ✖
-
 </span>
 
 
 <h2>
-
 🎫 مدیریت تیکت‌ها
-
 </h2>
 
 
-<div class="card">
 
-سیستم تیکت اینجا قرار می‌گیرد.
+<div class="ticket-layout">
+
+
+<div 
+id="ticketList"
+class="ticket-list"
+>
+
+در حال دریافت تیکت‌ها...
 
 </div>
 
 
+
+
+<div 
+id="ticketView"
+class="ticket-view"
+>
+
+یک تیکت را انتخاب کنید.
+
 </div>
 
 
+
+</div>
+
+
+
+</div>
 
 
 
@@ -402,31 +516,24 @@ onclick="closeSection('tickets')">
 <div id="admins" class="section">
 
 
-<span class="close"
-onclick="closeSection('admins')">
-
+<span class="close" onclick="closeSection('admins')">
 ✖
-
 </span>
 
 
 <h2>
-
 👥 مدیریت ادمین‌ها
-
 </h2>
 
 
 <div class="card">
 
-رمز مدیریت ادمین‌ها اینجا قرار می‌گیرد.
+رمز مدیریت ادمین‌ها بعداً اضافه می‌شود.
 
 </div>
 
 
 </div>
-
-
 
 
 
@@ -435,24 +542,19 @@ onclick="closeSection('admins')">
 <div id="shop" class="section">
 
 
-<span class="close"
-onclick="closeSection('shop')">
-
+<span class="close" onclick="closeSection('shop')">
 ✖
-
 </span>
 
 
 <h2>
-
 🛒 مدیریت فروشگاه
-
 </h2>
 
 
 <div class="card">
 
-رمز مدیریت فروشگاه اینجا قرار می‌گیرد.
+مدیریت فروشگاه بعداً اضافه می‌شود.
 
 </div>
 
@@ -469,7 +571,36 @@ onclick="closeSection('shop')">
 
 
 
+
 <script>
+
+
+/* ================================
+   SUPABASE
+================================ */
+
+
+const SUPABASE_URL =
+"https://gpeckwmjsgklzhtgqdso.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
+
+
+
+const db =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+
+
+/* ================================
+   OPEN CLOSE SECTION
+================================ */
 
 
 function openSection(id){
@@ -480,10 +611,16 @@ document
 .style.display="none";
 
 
+
 document
 .querySelectorAll(".section")
 .forEach(
-x=>x.classList.remove("active")
+function(section){
+
+section.classList.remove("active");
+
+}
+
 );
 
 
@@ -493,7 +630,16 @@ document
 .classList.add("active");
 
 
+
+if(id==="tickets"){
+
+loadAdminTickets();
+
 }
+
+
+}
+
 
 
 
@@ -513,8 +659,355 @@ document
 }
 
 
-</script>
 
+
+
+/* ================================
+   LOAD TICKETS
+================================ */
+
+
+async function loadAdminTickets(){
+
+
+const list =
+document.getElementById(
+"ticketList"
+);
+
+
+
+const {
+data,
+error
+}
+=
+await db
+.from("tickets")
+.select("*")
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+
+
+
+if(error){
+
+
+list.innerHTML =
+`
+خطا در دریافت تیکت‌ها
+<br>
+${error.message}
+`;
+
+console.log(error);
+
+return;
+
+}
+
+
+
+
+
+if(
+!data ||
+data.length===0
+){
+
+
+list.innerHTML =
+"هنوز تیکتی وجود ندارد";
+
+
+return;
+
+
+}
+
+
+
+
+
+list.innerHTML="";
+
+
+
+data.forEach(
+function(ticket){
+
+
+
+const item =
+document.createElement(
+"div"
+);
+
+
+
+item.className =
+"ticket-item";
+
+
+
+item.innerHTML =
+`
+
+<h3>
+
+${ticket.ticket_number}
+
+</h3>
+
+
+<p>
+
+👤 ${ticket.user_name}
+
+</p>
+
+
+<p>
+
+📌 ${ticket.subject}
+
+</p>
+
+
+<p>
+
+📂 ${ticket.department}
+
+</p>
+
+
+<p>
+
+وضعیت:
+${ticket.status}
+
+</p>
+
+
+`;
+
+
+
+item.onclick =
+function(){
+
+
+openAdminTicket(ticket);
+
+
+};
+
+
+
+list.appendChild(item);
+
+
+
+});
+
+
+}
+
+
+
+
+/* ================================
+   OPEN TICKET
+================================ */
+
+
+function openAdminTicket(ticket){
+
+
+const view =
+document.getElementById(
+"ticketView"
+);
+
+
+
+view.innerHTML =
+
+`
+
+<h2>
+
+🎫 ${ticket.ticket_number}
+
+</h2>
+
+
+
+<div class="card">
+
+
+<p>
+
+👤 کاربر:
+
+${ticket.user_name}
+
+</p>
+
+
+<br>
+
+
+<p>
+
+📌 موضوع:
+
+${ticket.subject}
+
+</p>
+
+
+<br>
+
+
+<p>
+
+📂 بخش:
+
+${ticket.department}
+
+</p>
+
+
+<br>
+
+
+<p>
+
+📅 تاریخ:
+
+${new Date(ticket.created_at)
+.toLocaleString("fa-IR")}
+
+</p>
+
+
+
+</div>
+
+
+
+
+<div class="card">
+
+
+<h3 style="color:#00ff66">
+
+پیام کاربر
+
+</h3>
+
+
+<br>
+
+
+<p style="line-height:2">
+
+${escapeHtml(ticket.message)}
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h3 style="color:#00ff66">
+
+چت تیکت
+
+</h3>
+
+
+<br>
+
+
+<p style="color:#777">
+
+مرحله بعد: سیستم پاسخ ادمین اضافه می‌شود.
+
+</p>
+
+
+</div>
+
+
+
+`;
+
+
+
+}
+
+
+
+
+
+/* ================================
+   SECURITY
+================================ */
+
+
+
+function escapeHtml(text){
+
+
+return String(text)
+
+.replaceAll(
+"&",
+"&amp;"
+)
+
+.replaceAll(
+"<",
+"&lt;"
+)
+
+.replaceAll(
+">",
+"&gt;"
+)
+
+.replaceAll(
+'"',
+"&quot;"
+)
+
+.replaceAll(
+"'",
+"&#039;"
+);
+
+
+}
+
+
+
+
+
+</script>
 
 
 </body>
