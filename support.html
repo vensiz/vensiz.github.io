@@ -20,8 +20,6 @@ box-sizing:border-box;
 
 body{
 
-min-height:100vh;
-
 background:
 linear-gradient(rgba(0,255,100,.03) 1px,transparent 1px),
 linear-gradient(90deg,rgba(0,255,100,.03) 1px,transparent 1px),
@@ -29,9 +27,11 @@ linear-gradient(90deg,rgba(0,255,100,.03) 1px,transparent 1px),
 
 background-size:50px 50px;
 
-font-family:tahoma,Arial;
+min-height:100vh;
 
 color:white;
+
+font-family:tahoma;
 
 }
 
@@ -74,7 +74,7 @@ color:#aaa;
 
 text-decoration:none;
 
-margin:0 12px;
+margin:0 10px;
 
 font-size:13px;
 
@@ -100,13 +100,12 @@ padding:20px;
 }
 
 
+
 .title{
 
 text-align:center;
 
-font-size:40px;
-
-margin-bottom:10px;
+font-size:42px;
 
 }
 
@@ -122,9 +121,9 @@ color:#00ff66;
 
 text-align:center;
 
-color:#666;
+color:#777;
 
-margin-bottom:40px;
+margin:15px 0 40px;
 
 }
 
@@ -152,8 +151,6 @@ color:#00ff66;
 
 margin-bottom:20px;
 
-font-size:20px;
-
 }
 
 
@@ -164,9 +161,9 @@ display:block;
 
 color:#aaa;
 
-font-size:13px;
-
 margin-bottom:8px;
+
+font-size:13px;
 
 }
 
@@ -176,33 +173,21 @@ input,
 textarea,
 select{
 
-
 width:100%;
 
 background:#030604;
 
 border:1px solid rgba(0,255,100,.15);
 
-border-radius:10px;
+color:white;
 
 padding:14px;
 
-color:white;
-
-font-family:tahoma;
+border-radius:10px;
 
 margin-bottom:18px;
 
-outline:none;
-
-}
-
-
-input:focus,
-textarea:focus,
-select:focus{
-
-border-color:#00ff66;
+font-family:tahoma;
 
 }
 
@@ -220,7 +205,6 @@ resize:none;
 
 button{
 
-
 width:100%;
 
 padding:14px;
@@ -230,8 +214,6 @@ border:none;
 border-radius:10px;
 
 background:#00d95a;
-
-color:#001b08;
 
 font-weight:bold;
 
@@ -245,25 +227,21 @@ button:hover{
 
 background:#00ff66;
 
-box-shadow:0 0 20px rgba(0,255,100,.3);
-
 }
 
 
 
 .message{
 
-margin-top:15px;
+display:none;
 
 padding:12px;
+
+margin-top:15px;
 
 border-radius:10px;
 
 text-align:center;
-
-display:none;
-
-font-size:13px;
 
 }
 
@@ -273,7 +251,7 @@ font-size:13px;
 
 display:block;
 
-background:rgba(0,255,100,.08);
+background:rgba(0,255,100,.1);
 
 color:#00ff66;
 
@@ -285,7 +263,7 @@ color:#00ff66;
 
 display:block;
 
-background:rgba(255,0,0,.08);
+background:rgba(255,0,0,.1);
 
 color:#ff7777;
 
@@ -323,10 +301,6 @@ border-color:#00ff66;
 
 color:#00ff66;
 
-font-size:15px;
-
-margin-bottom:8px;
-
 }
 
 
@@ -353,13 +327,13 @@ display:none;
 
 padding:15px;
 
-background:#030604;
-
 border-radius:12px;
 
-margin-bottom:10px;
+background:#030604;
 
-border:1px solid rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.06);
+
+margin-bottom:10px;
 
 }
 
@@ -367,7 +341,7 @@ border:1px solid rgba(255,255,255,.05);
 
 .msg.admin{
 
-border-color:rgba(0,255,100,.3);
+border-color:#00ff66;
 
 }
 
@@ -387,11 +361,7 @@ margin-bottom:8px;
 
 .msg-text{
 
-color:#ddd;
-
 line-height:2;
-
-font-size:13px;
 
 }
 
@@ -404,25 +374,6 @@ text-align:center;
 padding:40px;
 
 color:#555;
-
-}
-
-
-
-@media(max-width:700px){
-
-nav{
-
-display:none;
-
-}
-
-
-.title{
-
-font-size:30px;
-
-}
 
 }
 
@@ -444,13 +395,9 @@ VENSIZ
 
 <nav>
 
-<a href="index.html">
-خانه
-</a>
+<a href="index.html">خانه</a>
 
-<a href="shop.html">
-فروشگاه
-</a>
+<a href="shop.html">فروشگاه</a>
 
 <a href="support.html">
 پشتیبانی
@@ -459,7 +406,6 @@ VENSIZ
 </nav>
 
 </header>
-
 
 
 <main>
@@ -481,14 +427,9 @@ Support
 VENSIZ ROLEPLAY SUPPORT CENTER
 
 </div>
-
-
-
-<!-- CREATE -->
-
+<!-- CREATE TICKET -->
 
 <div class="card">
-
 
 <h2>
 🎫 ارسال تیکت جدید
@@ -499,11 +440,8 @@ VENSIZ ROLEPLAY SUPPORT CENTER
 نام کامل شما در سرور
 </label>
 
-
-<input 
-id="userName"
-placeholder="مثلا Amir VENSIZ"
-/>
+<input id="userName"
+placeholder="مثلا Amir VENSIZ">
 
 
 
@@ -511,29 +449,23 @@ placeholder="مثلا Amir VENSIZ"
 انتخاب بخش
 </label>
 
-
 <select id="department">
-
 
 <option value="">
 انتخاب کنید
 </option>
 
-
-<option>
+<option value="مدیریت ادمین">
 مدیریت ادمین
 </option>
 
-
-<option>
+<option value="انتقادات و شکایات">
 انتقادات و شکایات
 </option>
 
-
-<option>
+<option value="فروشگاه">
 فروشگاه
 </option>
-
 
 </select>
 
@@ -543,11 +475,8 @@ placeholder="مثلا Amir VENSIZ"
 موضوع
 </label>
 
-
-<input
-id="subject"
-placeholder="موضوع تیکت"
-/>
+<input id="subject"
+placeholder="موضوع تیکت">
 
 
 
@@ -555,20 +484,14 @@ placeholder="موضوع تیکت"
 توضیحات مشکل
 </label>
 
-
-<textarea
-id="message"
-placeholder="مشکل خود را کامل توضیح دهید..."
-></textarea>
+<textarea id="message"
+placeholder="مشکل خود را کامل توضیح دهید..."></textarea>
 
 
 
 <button id="sendTicket">
-
 ارسال تیکت
-
 </button>
-
 
 
 <div id="result" class="message"></div>
@@ -579,11 +502,10 @@ placeholder="مشکل خود را کامل توضیح دهید..."
 
 
 
-<!-- LIST -->
+<!-- TICKETS -->
 
 
 <div class="card">
-
 
 <h2>
 📋 تیکت‌های شما
@@ -602,6 +524,7 @@ placeholder="مشکل خود را کامل توضیح دهید..."
 
 
 
+
 <!-- CHAT -->
 
 
@@ -609,9 +532,7 @@ placeholder="مشکل خود را کامل توضیح دهید..."
 
 
 <h2 id="chatTitle">
-
 چت تیکت
-
 </h2>
 
 
@@ -622,15 +543,11 @@ placeholder="مشکل خود را کامل توضیح دهید..."
 
 
 <textarea id="replyMessage"
-placeholder="پیام خود را بنویسید">
-</textarea>
-
+placeholder="پیام خود را بنویسید"></textarea>
 
 
 <button id="sendReply">
-
 ارسال پیام
-
 </button>
 
 
@@ -653,7 +570,11 @@ VENSIZ
 VENSIZ Roleplay © 2026
 
 </footer>
+
+
+
 <script>
+
 
 const SUPABASE_URL =
 "https://gpeckwmjsgklzhtgqdso.supabase.co";
@@ -672,13 +593,12 @@ SUPABASE_KEY
 
 
 /*
-==============================
 BROWSER ID
-==============================
 */
 
 
 function getBrowserId(){
+
 
 let id =
 localStorage.getItem(
@@ -687,6 +607,7 @@ localStorage.getItem(
 
 
 if(!id){
+
 
 id =
 "VZ-" +
@@ -698,13 +619,14 @@ localStorage.setItem(
 id
 );
 
+
 }
 
 
 return id;
 
-}
 
+}
 
 
 const browserId =
@@ -712,15 +634,10 @@ getBrowserId();
 
 
 
-let currentTicket = null;
+let currentTicket=null;
 
+let channel=null;
 
-
-/*
-==============================
-ELEMENTS
-==============================
-*/
 
 
 const sendTicket =
@@ -742,77 +659,46 @@ document.getElementById(
 
 
 
-/*
-==============================
-MESSAGE
-==============================
-*/
 
+function showResult(text,type){
 
-function showResult(
-text,
-type
-){
+result.innerHTML=text;
 
-result.innerHTML =
-text;
-
-
-result.className =
-"message " + type;
+result.className=
+"message "+type;
 
 }
 
 
 
+
 /*
-==============================
 CREATE TICKET
-==============================
 */
 
 
 sendTicket.onclick =
-async function(){
+async()=>{
 
 
-const userName =
-document
-.getElementById(
-"userName"
-)
-.value
-.trim();
+let userName =
+document.getElementById("userName")
+.value.trim();
 
 
-
-const department =
-document
-.getElementById(
-"department"
-)
+let department =
+document.getElementById("department")
 .value;
 
 
-
-const subject =
-document
-.getElementById(
-"subject"
-)
-.value
-.trim();
+let subject =
+document.getElementById("subject")
+.value.trim();
 
 
-
-const message =
-document
-.getElementById(
-"message"
-)
-.value
-.trim();
-
+let message =
+document.getElementById("message")
+.value.trim();
 
 
 
@@ -823,10 +709,12 @@ if(
 !message
 ){
 
+
 showResult(
-"همه بخش‌ها را کامل کنید",
+"لطفا همه بخش‌ها را کامل کنید",
 "error"
 );
+
 
 return;
 
@@ -834,22 +722,13 @@ return;
 
 
 
-sendTicket.disabled =
-true;
+sendTicket.disabled=true;
 
 
-sendTicket.innerText =
-"در حال ارسال...";
-
-
-
-try{
-
-
-const number =
-"VS-" +
+let number =
+"VZ-" +
 Math.floor(
-100000 +
+100000+
 Math.random()*900000
 );
 
@@ -861,36 +740,19 @@ await db
 .from("tickets")
 .insert({
 
-
-user_id:null,
-
-
 ticket_number:number,
-
 
 user_name:userName,
 
-
 browser_id:browserId,
-
 
 department:department,
 
-
 subject:subject,
-
 
 message:message,
 
-
-status:"open",
-
-
-assigned_admin:null,
-
-
-admin_rank:null
-
+status:"open"
 
 })
 .select()
@@ -901,14 +763,14 @@ admin_rank:null
 
 if(error){
 
-console.log(error);
-
 
 showResult(
-"خطا: "+error.message,
+error.message,
 "error"
 );
 
+
+sendTicket.disabled=false;
 
 return;
 
@@ -916,82 +778,31 @@ return;
 
 
 
-
 showResult(
-"✅ تیکت شما ثبت شد : "+number,
+"✅ تیکت ساخته شد : "+number,
 "success"
 );
 
 
 
-document
-.getElementById(
-"userName"
-)
-.value="";
-
-
-document
-.getElementById(
-"subject"
-)
-.value="";
-
-
-document
-.getElementById(
-"message"
-)
-.value="";
-
-
-await loadTickets();
+document.getElementById("userName").value="";
+document.getElementById("subject").value="";
+document.getElementById("message").value="";
 
 
 
-if(data){
-
-openTicket(
-data
-);
-
-}
+loadTickets();
 
 
 
-}
-catch(e){
+openTicket(data);
 
-console.log(e);
-
-
-showResult(
-"خطای سیستم",
-"error"
-);
-
-
-}
-
-
-finally{
 
 
 sendTicket.disabled=false;
 
 
-sendTicket.innerText=
-"ارسال تیکت";
-
-
-}
-
-
 };
-
-
-
-
 /*
 ==============================
 LOAD TICKETS
@@ -1005,16 +816,12 @@ async function loadTickets(){
 const {data,error}=
 
 await db
-
 .from("tickets")
-
 .select("*")
-
 .eq(
 "browser_id",
 browserId
 )
-
 .order(
 "created_at",
 {
@@ -1024,10 +831,9 @@ ascending:false
 
 
 
-
 if(error){
 
-ticketsBox.innerHTML =
+ticketsBox.innerHTML=
 "خطا در دریافت تیکت‌ها";
 
 return;
@@ -1036,13 +842,10 @@ return;
 
 
 
-if(
-!data ||
-data.length===0
-){
+if(!data || data.length===0){
 
-ticketsBox.innerHTML =
-"هنوز تیکتی ندارید";
+ticketsBox.innerHTML=
+"هنوز تیکتی ثبت نکرده‌اید";
 
 return;
 
@@ -1054,30 +857,25 @@ ticketsBox.innerHTML="";
 
 
 
-data.forEach(
-ticket=>{
+data.forEach(ticket=>{
 
 
-const div =
-document.createElement(
-"div"
-);
+let div=
+document.createElement("div");
 
 
 
-div.className =
+div.className=
 "ticket";
 
 
 
-div.innerHTML =
+div.innerHTML=
 
 `
 
 <h3>
-
 ${ticket.ticket_number}
-
 </h3>
 
 
@@ -1101,31 +899,21 @@ ${ticket.status}
 
 
 
-div.onclick =
-function(){
+div.onclick=()=>{
 
-openTicket(
-ticket
-);
+openTicket(ticket);
 
 };
 
 
 
-ticketsBox.appendChild(
-div
-);
+ticketsBox.appendChild(div);
 
 
-
-}
-
-
-);
+});
 
 
 }
-
 
 
 
@@ -1137,47 +925,40 @@ OPEN TICKET
 */
 
 
-function openTicket(ticket){
+async function openTicket(ticket){
 
 
-currentTicket =
-ticket;
-
-
-
-document
-.getElementById(
-"chatBox"
-)
-.style.display=
-"block";
+currentTicket=ticket;
 
 
 
 document
-.getElementById(
-"chatTitle"
-)
-.innerHTML =
+.getElementById("chatBox")
+.style.display="block";
+
+
+
+document
+.getElementById("chatTitle")
+.innerHTML=
 
 `
 چت تیکت
 ${ticket.ticket_number}
-
 `;
 
 
 
-loadMessages(
-ticket.id
-);
+await loadMessages(ticket.id);
+
+
+
+startRealtime(ticket.id);
 
 
 
 document
-.getElementById(
-"chatBox"
-)
+.getElementById("chatBox")
 .scrollIntoView({
 behavior:"smooth"
 });
@@ -1188,12 +969,8 @@ behavior:"smooth"
 
 
 
-loadTickets();
 
-
-
-</script>
- /*
+/*
 ==============================
 LOAD MESSAGES
 ==============================
@@ -1204,25 +981,19 @@ async function loadMessages(ticketId){
 
 
 const box =
-document.getElementById(
-"messages"
-);
+document.getElementById("messages");
 
 
 
 const {data,error}=
 
 await db
-
 .from("ticket_messages")
-
 .select("*")
-
 .eq(
 "ticket_id",
 ticketId
 )
-
 .order(
 "created_at",
 {
@@ -1234,7 +1005,7 @@ ascending:true
 
 if(error){
 
-box.innerHTML =
+box.innerHTML=
 "خطا در دریافت پیام‌ها";
 
 return;
@@ -1247,12 +1018,10 @@ box.innerHTML="";
 
 
 
-if(
-!data ||
-data.length===0
-){
+if(!data || data.length===0){
 
-box.innerHTML =
+box.innerHTML=
+
 `
 <div class="msg">
 هنوز پیامی وجود ندارد
@@ -1265,14 +1034,9 @@ return;
 
 
 
-data.forEach(
-msg=>{
+data.forEach(msg=>{
 
-
-addMessage(
-msg
-);
-
+addMessage(msg);
 
 });
 
@@ -1282,9 +1046,10 @@ msg
 
 
 
+
 /*
 ==============================
-ADD MESSAGE UI
+SHOW MESSAGE
 ==============================
 */
 
@@ -1293,21 +1058,17 @@ function addMessage(msg){
 
 
 const box =
-document.getElementById(
-"messages"
-);
+document.getElementById("messages");
 
 
 
-const div =
-document.createElement(
-"div"
-);
+let div =
+document.createElement("div");
 
 
 
-div.className =
-"msg " +
+div.className=
+"msg "+
 (
 msg.sender_type==="admin"
 ?
@@ -1318,7 +1079,7 @@ msg.sender_type==="admin"
 
 
 
-div.innerHTML =
+div.innerHTML=
 
 `
 
@@ -1329,15 +1090,13 @@ msg.sender_type==="admin"
 
 ?
 
-"🛡 "+
-msg.sender_name+
+"🛡 "+msg.sender_name+
 " | "+
 (msg.sender_rank || "")
 
 :
 
-"👤 "+
-msg.sender_name
+"👤 "+msg.sender_name
 
 }
 
@@ -1354,17 +1113,18 @@ ${escapeHtml(msg.message)}
 
 
 
-box.appendChild(
-div
-);
+box.appendChild(div);
 
 
 
-box.scrollTop =
+box.scrollTop=
 box.scrollHeight;
 
 
 }
+
+
+
 
 
 
@@ -1377,52 +1137,39 @@ SEND USER MESSAGE
 
 
 document
-.getElementById(
-"sendReply"
-)
-.onclick =
+.getElementById("sendReply")
+.onclick=
 
-async function(){
+async()=>{
 
 
-
-if(!currentTicket){
-
+if(!currentTicket)
 return;
 
-}
 
 
-
-const input =
+let input =
 document.getElementById(
 "replyMessage"
 );
 
 
 
-const text =
+let text =
 input.value.trim();
 
 
 
-if(!text){
-
+if(!text)
 return;
-
-}
-
 
 
 
 const {error}=
 
 await db
-
 .from("ticket_messages")
-
 .insert({
-
 
 ticket_id:
 currentTicket.id,
@@ -1436,24 +1183,18 @@ sender_name:
 currentTicket.user_name,
 
 
-sender_rank:
-null,
+sender_rank:null,
 
 
-message:
-text
-
+message:text
 
 });
 
 
 
-
 if(error){
 
-alert(
-error.message
-);
+alert(error.message);
 
 return;
 
@@ -1464,8 +1205,7 @@ return;
 input.value="";
 
 
-
-loadMessages(
+await loadMessages(
 currentTicket.id
 );
 
@@ -1483,31 +1223,23 @@ REALTIME CHAT
 */
 
 
-let channel=null;
-
-
-
-function realtimeChat(ticketId){
+function startRealtime(ticketId){
 
 
 
 if(channel){
 
-db.removeChannel(
-channel
-);
+db.removeChannel(channel);
 
 }
 
 
 
-
-channel =
+channel=
 
 db
-
 .channel(
-"ticket-"+ticketId
+"vensiz-ticket-"+ticketId
 )
 
 
@@ -1527,6 +1259,7 @@ filter:
 "ticket_id=eq."+ticketId
 
 },
+
 
 (payload)=>{
 
@@ -1549,70 +1282,6 @@ payload.new
 
 
 
-/*
-==============================
-UPDATE OPEN TICKET
-==============================
-*/
-
-
-const oldOpenTicket =
-openTicket;
-
-
-
-openTicket =
-
-async function(ticket){
-
-
-currentTicket =
-ticket;
-
-
-
-document
-.getElementById(
-"chatBox"
-)
-.style.display=
-"block";
-
-
-
-document
-.getElementById(
-"chatTitle"
-)
-.innerHTML=
-
-`
-
-چت تیکت
-
-${ticket.ticket_number}
-
-`;
-
-
-
-await loadMessages(
-ticket.id
-);
-
-
-
-realtimeChat(
-ticket.id
-);
-
-
-
-};
-
-
-
-
 
 /*
 ==============================
@@ -1623,34 +1292,37 @@ ESCAPE
 
 function escapeHtml(text){
 
+
 return String(text)
 
-.replaceAll(
-"&",
-"&amp;"
-)
+.replaceAll("&","&amp;")
 
-.replaceAll(
-"<",
-"&lt;"
-)
+.replaceAll("<","&lt;")
 
-.replaceAll(
-">",
-"&gt;"
-)
+.replaceAll(">","&gt;")
 
-.replaceAll(
-'"',
-"&quot;"
-)
+.replaceAll('"',"&quot;")
 
-.replaceAll(
-"'",
-"&#039;"
-);
+.replaceAll("'","&#039;");
+
 
 }
 
 
+
+
+
+/*
+START
+*/
+
+
+loadTickets();
+
+
 </script>
+
+
+</body>
+
+</html>
