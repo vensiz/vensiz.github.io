@@ -1,552 +1,92 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ورود | VENSIZ</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:
-    radial-gradient(
-        circle at center,
-        rgba(0,255,100,.10),
-        transparent 45%
-    ),
-    #050805;
-
-    color:#fff;
-    font-family:Tahoma,Arial,sans-serif;
-}
-
-.auth-box{
-
-    width:100%;
-    max-width:430px;
-
-    padding:40px 30px;
-
-    background:#080e09;
-
-    border:1px solid rgba(0,255,100,.18);
-
-    border-radius:20px;
-
-    box-shadow:
-    0 20px 70px rgba(0,0,0,.5),
-    0 0 40px rgba(0,255,100,.04);
-
-    text-align:center;
-}
-
-.logo{
-
-    width:75px;
-    height:75px;
-
-    margin:0 auto 20px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border:2px solid #00ff66;
-    border-radius:18px;
-
-    color:#00ff66;
-
-    font-size:40px;
-    font-weight:bold;
-
-    box-shadow:0 0 25px rgba(0,255,100,.25);
-}
-
-h1{
-    margin-bottom:8px;
-}
-
-h1 span{
-    color:#00ff66;
-}
-
-.subtitle{
-    color:#777;
-    font-size:13px;
-    margin-bottom:30px;
-}
-
-.tabs{
-    display:flex;
-    gap:10px;
-    margin-bottom:25px;
-}
-
-.tab{
-
-    flex:1;
-
-    padding:12px;
-
-    border:1px solid rgba(0,255,100,.15);
-
-    border-radius:8px;
-
-    background:#0a110b;
-
-    color:#888;
-
-    cursor:pointer;
-}
-
-.tab.active{
-
-    background:rgba(0,255,100,.10);
-
-    color:#00ff66;
-
-    border-color:#00ff66;
-}
-
-.form{
-    display:none;
-}
-
-.form.active{
-    display:block;
-}
-
-.input{
-
-    width:100%;
-
-    padding:14px;
-
-    margin-bottom:14px;
-
-    border:1px solid rgba(0,255,100,.15);
-
-    border-radius:8px;
-
-    background:#050805;
-
-    color:#fff;
-
-    outline:none;
-
-    direction:ltr;
-
-    text-align:left;
-}
-
-.input:focus{
-    border-color:#00ff66;
-}
-
-.button{
-
-    width:100%;
-
-    padding:14px;
-
-    border:0;
-
-    border-radius:8px;
-
-    background:#00c853;
-
-    color:#001b08;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:.3s;
-}
-
-.button:hover{
-    background:#00ff66;
-}
-
-.message{
-
-    min-height:24px;
-
-    margin-top:18px;
-
-    color:#aaa;
-
-    font-size:13px;
-
-    line-height:1.8;
-}
-
-.back{
-
-    display:inline-block;
-
-    margin-top:25px;
-
-    color:#00ff66;
-
-    text-decoration:none;
-
-    font-size:13px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-
-<div class="auth-box">
-
-<div class="logo">
-V
-</div>
-
-<h1>
-VENSIZ <span>ROLEPLAY</span>
-</h1>
-
-<div class="subtitle">
-ورود به حساب کاربری
-</div>
-
-
-<div class="tabs">
-
-<button class="tab active" onclick="showForm('login')">
-ورود
-</button>
-
-<button class="tab" onclick="showForm('signup')">
-ثبت‌نام
-</button>
-
-</div>
-
-
-<!-- LOGIN -->
-
-<div id="loginForm" class="form active">
-
-<input
-    id="loginEmail"
-    class="input"
-    type="email"
-    placeholder="ایمیل"
->
-
-<input
-    id="loginPassword"
-    class="input"
-    type="password"
-    placeholder="رمز عبور"
->
-
-<button class="button" onclick="login()">
-ورود به حساب
-</button>
-
-</div>
-
-
-<!-- SIGNUP -->
-
-<div id="signupForm" class="form">
-
-<input
-    id="signupEmail"
-    class="input"
-    type="email"
-    placeholder="ایمیل"
->
-
-<input
-    id="signupPassword"
-    class="input"
-    type="password"
-    placeholder="رمز عبور"
->
-
-<input
-    id="signupPassword2"
-    class="input"
-    type="password"
-    placeholder="تکرار رمز عبور"
->
-
-<button class="button" onclick="signup()">
-ساخت حساب
-</button>
-
-</div>
-
-
-<div id="message" class="message"></div>
-
-
-<a href="index.html" class="back">
-← بازگشت به سایت
-</a>
-
-</div>
-
-
-<!-- SUPABASE -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-
-const SUPABASE_URL =
-"https://gpeckwmjsgklzhtqgdso.supabase.co";
+const SUPABASE_URL = 'https://gpeckwmjsgklzhtqgdso.supabase.co';
 
 const SUPABASE_PUBLISHABLE_KEY =
-"کلید_خودت_را_اینجا_بگذار";
+    'sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ';
 
-const supabase =
-window.supabase.createClient(
+const supabase = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
 );
 
 
-// =========================
-// SWITCH FORMS
-// =========================
+/* =========================
+   LOGIN
+========================= */
 
-function showForm(type){
+async function loginUser(email, password) {
 
-    document
-    .getElementById("loginForm")
-    .classList
-    .remove("active");
-
-    document
-    .getElementById("signupForm")
-    .classList
-    .remove("active");
-
-    document
-    .querySelectorAll(".tab")
-    .forEach(tab => {
-        tab.classList.remove("active");
-    });
-
-
-    if(type === "login"){
-
-        document
-        .getElementById("loginForm")
-        .classList
-        .add("active");
-
-        document
-        .querySelectorAll(".tab")[0]
-        .classList
-        .add("active");
-
-    }else{
-
-        document
-        .getElementById("signupForm")
-        .classList
-        .add("active");
-
-        document
-        .querySelectorAll(".tab")[1]
-        .classList
-        .add("active");
-
-    }
-
-    clearMessage();
-}
-
-
-// =========================
-// MESSAGE
-// =========================
-
-function message(text){
-
-    document
-    .getElementById("message")
-    .textContent = text;
-
-}
-
-function clearMessage(){
-
-    document
-    .getElementById("message")
-    .textContent = "";
-
-}
-
-
-// =========================
-// SIGN UP
-// =========================
-
-async function signup(){
-
-    const email =
-    document
-    .getElementById("signupEmail")
-    .value
-    .trim();
-
-    const password =
-    document
-    .getElementById("signupPassword")
-    .value;
-
-    const password2 =
-    document
-    .getElementById("signupPassword2")
-    .value;
-
-
-    if(!email || !password){
-
-        message("ایمیل و رمز عبور را وارد کنید.");
-
-        return;
-    }
-
-
-    if(password !== password2){
-
-        message("تکرار رمز عبور صحیح نیست.");
-
-        return;
-    }
-
-
-    if(password.length < 6){
-
-        message("رمز عبور باید حداقل ۶ کاراکتر باشد.");
-
-        return;
-    }
-
-
-    message("در حال ساخت حساب...");
-
-
-    const { data, error } =
-    await supabase.auth.signUp({
-
+    const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
-
-        password: password,
-
-        options: {
-
-            emailRedirectTo:
-            "https://vensiz.github.io/"
-
-        }
-
-    });
-
-
-    if(error){
-
-        message(error.message);
-
-        return;
-    }
-
-
-    message(
-        "حساب ساخته شد. ایمیل خود را باز کنید و روی لینک تأیید کلیک کنید."
-    );
-
-}
-
-
-// =========================
-// LOGIN
-// =========================
-
-async function login(){
-
-    const email =
-    document
-    .getElementById("loginEmail")
-    .value
-    .trim();
-
-    const password =
-    document
-    .getElementById("loginPassword")
-    .value;
-
-
-    if(!email || !password){
-
-        message("ایمیل و رمز عبور را وارد کنید.");
-
-        return;
-    }
-
-
-    message("در حال ورود...");
-
-
-    const { data, error } =
-    await supabase.auth.signInWithPassword({
-
-        email: email,
-
         password: password
-
     });
 
+    if (error) {
+        console.error('Login Error:', error.message);
+        alert('ورود ناموفق بود: ' + error.message);
+        return false;
+    }
 
-    if(error){
+    console.log('User logged in:', data.user);
 
-        message(error.message);
+    return true;
+}
 
+
+/* =========================
+   REGISTER
+========================= */
+
+async function registerUser(email, password) {
+
+    const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password
+    });
+
+    if (error) {
+        console.error('Register Error:', error.message);
+        alert('ثبت‌نام ناموفق بود: ' + error.message);
+        return false;
+    }
+
+    alert('ثبت‌نام انجام شد. ایمیل خود را تأیید کنید.');
+
+    console.log('User registered:', data.user);
+
+    return true;
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function logoutUser() {
+
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+        console.error('Logout Error:', error.message);
         return;
     }
 
-
-    message("ورود موفق بود. در حال انتقال...");
-
-
-    setTimeout(() => {
-
-        window.location.href =
-        "index.html";
-
-    }, 700);
-
+    window.location.href = 'index.html';
 }
 
+
+/* =========================
+   CHECK USER
+========================= */
+
+async function getCurrentUser() {
+
+    const {
+        data: { user }
+    } = await supabase.auth.getUser();
+
+    return user;
+}
 </script>
-
-
-</body>
-
-</html>
