@@ -740,6 +740,8 @@ await db
 .from("tickets")
 .insert({
 
+user_id:null,
+
 ticket_number:number,
 
 user_name:userName,
@@ -754,7 +756,7 @@ message:message,
 
 status:"open"
 
-})
+});
 .select()
 .single();
 
