@@ -5,7 +5,7 @@
 <script>
 
 const SUPABASE_URL =
-"https://gpeckwmjsgklzhtqgdso.supabase.co";
+"https://gpeckwmjsgklzhtgqdso.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
@@ -13,12 +13,19 @@ const SUPABASE_PUBLISHABLE_KEY =
 const supabaseClient =
 window.supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
+    SUPABASE_PUBLISHABLE_KEY,
+    {
+        auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+        }
+    }
 );
 
 
 /* =========================
-   CHECK AUTH
+   AUTH CHECK
 ========================= */
 
 async function checkAuth(){
@@ -32,6 +39,7 @@ async function checkAuth(){
     const userEmail =
         document.getElementById("userEmail");
 
+
     const {
         data: { session },
         error
@@ -39,7 +47,11 @@ async function checkAuth(){
     await supabaseClient.auth.getSession();
 
 
-    if(error || !session){
+    console.log("VENSIZ SESSION:", session);
+    console.log("VENSIZ AUTH ERROR:", error);
+
+
+    if(!session){
 
         authBox.style.display = "block";
         ticketArea.style.display = "none";
@@ -60,30 +72,43 @@ async function checkAuth(){
 
 
 /* =========================
-   LOGIN STATE CHANGE
+   AUTH STATE
 ========================= */
 
 supabaseClient.auth.onAuthStateChange(
     (event, session) => {
 
+        console.log(
+            "AUTH EVENT:",
+            event,
+            session
+        );
+
+        const authBox =
+            document.getElementById("authBox");
+
+        const ticketArea =
+            document.getElementById("ticketArea");
+
+        const userEmail =
+            document.getElementById("userEmail");
+
+
         if(session){
 
-            document.getElementById("authBox").style.display =
-                "none";
+            authBox.style.display = "none";
 
-            document.getElementById("ticketArea").style.display =
-                "block";
+            ticketArea.style.display = "block";
 
-            document.getElementById("userEmail").textContent =
+            userEmail.textContent =
                 session.user.email || "کاربر VENSIZ";
 
         }else{
 
-            document.getElementById("authBox").style.display =
-                "block";
+            authBox.style.display = "block";
 
-            document.getElementById("ticketArea").style.display =
-                "none";
+            ticketArea.style.display = "none";
+
         }
 
     }
@@ -99,19 +124,28 @@ document
 .addEventListener("click", async function(){
 
     const subject =
-        document.getElementById("subject").value.trim();
+        document
+        .getElementById("subject")
+        .value
+        .trim();
+
 
     const message =
-        document.getElementById("message").value.trim();
+        document
+        .getElementById("message")
+        .value
+        .trim();
+
 
     const result =
-        document.getElementById("ticketMessage");
+        document
+        .getElementById("ticketMessage");
 
 
     if(!subject){
 
         result.textContent =
-            "لطفاً موضوع تیکت را وارد کنید.";
+        "لطفاً موضوع تیکت را وارد کنید.";
 
         return;
     }
@@ -120,7 +154,7 @@ document
     if(!message){
 
         result.textContent =
-            "لطفاً متن درخواست را وارد کنید.";
+        "لطفاً متن درخواست را وارد کنید.";
 
         return;
     }
@@ -135,39 +169,43 @@ document
     if(!session){
 
         result.textContent =
-            "ابتدا احراز هویت کنید.";
+        "ابتدا احراز هویت کنید.";
 
         return;
     }
 
 
     const { error } =
-        await supabaseClient
-        .from("tickets")
-        .insert({
+    await supabaseClient
+    .from("tickets")
+    .insert({
 
-            user_id: session.user.id,
+        user_id: session.user.id,
 
-            subject: subject,
+        subject: subject,
 
-            message: message
+        message: message
 
-        });
+    });
 
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "TICKET ERROR:",
+            error
+        );
 
         result.textContent =
-            "خطا در ارسال تیکت.";
+        "خطا در ارسال تیکت: " +
+        error.message;
 
         return;
     }
 
 
     result.textContent =
-        "تیکت شما با موفقیت ارسال شد. ✅";
+    "تیکت شما با موفقیت ارسال شد. ✅";
 
 
     document.getElementById("subject").value = "";
@@ -184,3 +222,6 @@ document
 checkAuth();
 
 </script>
+
+</body>
+</html>
