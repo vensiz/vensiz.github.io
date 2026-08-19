@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VENSIZ ADMIN LOGIN</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:tahoma;
+}
+
+
+body{
+
+min-height:100vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+background:
+
+linear-gradient(rgba(0,255,100,.03) 1px,transparent 1px),
+
+linear-gradient(90deg,rgba(0,255,100,.03) 1px,transparent 1px),
+
+#020403;
+
+
+background-size:50px 50px;
+
+color:white;
+
+}
+
+
+
+.login-box{
+
+width:380px;
+
+background:#071008;
+
+border:
+
+1px solid rgba(0,255,100,.15);
+
+border-radius:20px;
+
+padding:30px;
+
+box-shadow:
+0 0 30px rgba(0,255,100,.08);
+
+}
+
+
+
+.logo{
+
+text-align:center;
+
+font-size:32px;
+
+font-weight:bold;
+
+color:#00ff66;
+
+text-shadow:
+0 0 20px #00ff66;
+
+margin-bottom:30px;
+
+}
+
+
+
+input{
+
+width:100%;
+
+padding:15px;
+
+margin-bottom:15px;
+
+background:#030603;
+
+border:
+
+1px solid rgba(0,255,100,.15);
+
+border-radius:10px;
+
+color:white;
+
+outline:none;
+
+}
+
+
+
+input:focus{
+
+border-color:#00ff66;
+
+}
+
+
+
+button{
+
+width:100%;
+
+padding:15px;
+
+background:#00d95a;
+
+border:none;
+
+border-radius:10px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+background:#00ff66;
+
+}
+
+
+
+.message{
+
+margin-top:15px;
+
+text-align:center;
+
+font-size:13px;
+
+color:#ff7777;
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="login-box">
+
+
+<div class="logo">
+
+VENSIZ ADMIN
+
+</div>
+
+
+
+<input 
+id="username"
+placeholder="Username">
+
+
+
+<input 
+id="password"
+type="password"
+placeholder="Password">
+
+
+
+<button onclick="loginAdmin()">
+
+ورود
+
+</button>
+
+
+
+<div id="message" class="message"></div>
+
+
+
+</div>
+
+
+
+<script>
+
+
+const SUPABASE_URL =
+"https://gpeckwmjsgklzhtgqdso.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
+
+
+
+const db =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+
+
+async function loginAdmin(){
+
+
+
+let username =
+document
+.getElementById("username")
+.value.trim();
+
+
+
+let password =
+document
+.getElementById("password")
+.value.trim();
+
+
+
+let msg =
+document
+.getElementById("message");
+
+
+
+if(!username || !password){
+
+msg.innerHTML =
+"همه فیلدها را پر کنید";
+
+return;
+
+}
+
+
+
+const {
+
+data,
+
+error
+
+}=
+
+await db
+
+.from("admins")
+
+.select("*")
+
+.eq(
+"username",
+username
+)
+
+.eq(
+"password",
+password
+)
+
+.maybeSingle();
+
+
+
+
+
+if(error || !data){
+
+
+msg.innerHTML =
+"یوزرنیم یا رمز عبور اشتباه است";
+
+
+return;
+
+
+}
+
+
+
+
+localStorage.setItem(
+
+"vensiz_admin",
+
+JSON.stringify(data)
+
+);
+
+
+
+window.location.href =
+"admin.html";
+
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
