@@ -1,227 +1,901 @@
-<!-- ================= SUPABASE ================= -->
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>پشتیبانی | VENSIZ</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+min-height:100vh;
+
+background:
+radial-gradient(
+circle at center,
+rgba(0,255,100,.08),
+transparent 45%
+),
+#050805;
+
+color:#fff;
+
+font-family:
+Tahoma,
+Arial,
+sans-serif;
+
+}
+
+header{
+
+position:fixed;
+
+top:0;
+right:0;
+left:0;
+
+height:78px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 6%;
+
+background:rgba(3,8,4,.95);
+
+border-bottom:
+1px solid rgba(0,255,100,.15);
+
+backdrop-filter:blur(15px);
+
+z-index:1000;
+
+}
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+color:#00ff66;
+
+text-decoration:none;
+
+font-size:27px;
+
+font-weight:bold;
+
+}
+
+.logo-box{
+
+width:42px;
+height:42px;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+border:2px solid #00ff66;
+
+border-radius:10px;
+
+}
+
+nav{
+
+display:flex;
+
+gap:22px;
+
+}
+
+nav a{
+
+color:#aaa;
+
+text-decoration:none;
+
+font-size:13px;
+
+}
+
+nav a:hover{
+
+color:#00ff66;
+
+}
+
+.page{
+
+min-height:100vh;
+
+padding:
+135px 20px 70px;
+
+display:flex;
+
+justify-content:center;
+
+}
+
+.container{
+
+width:100%;
+
+max-width:900px;
+
+}
+
+.title{
+
+text-align:center;
+
+margin-bottom:45px;
+
+}
+
+.title h1{
+
+font-size:36px;
+
+margin-bottom:12px;
+
+}
+
+.title h1 span{
+
+color:#00ff66;
+
+}
+
+.title p{
+
+color:#777;
+
+font-size:13px;
+
+}
+
+.box{
+
+padding:40px 30px;
+
+background:#080e09;
+
+border:
+1px solid rgba(0,255,100,.18);
+
+border-radius:20px;
+
+box-shadow:
+0 20px 70px rgba(0,0,0,.45);
+
+}
+
+.auth-box{
+
+text-align:center;
+
+}
+
+.auth-icon{
+
+font-size:50px;
+
+margin-bottom:20px;
+
+}
+
+.auth-box h2{
+
+margin-bottom:15px;
+
+}
+
+.auth-box p{
+
+color:#888;
+
+line-height:2;
+
+font-size:13px;
+
+}
+
+.button{
+
+display:inline-block;
+
+margin-top:25px;
+
+padding:13px 30px;
+
+border-radius:9px;
+
+background:#00c853;
+
+color:#001b08;
+
+text-decoration:none;
+
+font-weight:bold;
+
+}
+
+#ticketArea{
+
+display:none;
+
+}
+
+.user-info{
+
+margin-bottom:25px;
+
+padding:14px;
+
+border-radius:9px;
+
+background:rgba(0,255,100,.04);
+
+border:
+1px solid rgba(0,255,100,.12);
+
+color:#888;
+
+font-size:12px;
+
+}
+
+.user-info span{
+
+color:#00ff66;
+
+}
+
+label{
+
+display:block;
+
+color:#aaa;
+
+font-size:12px;
+
+margin-bottom:8px;
+
+}
+
+input,
+textarea{
+
+width:100%;
+
+border:
+1px solid rgba(0,255,100,.15);
+
+border-radius:9px;
+
+background:#050805;
+
+color:#fff;
+
+outline:none;
+
+font-family:Tahoma,Arial,sans-serif;
+
+font-size:13px;
+
+padding:14px;
+
+margin-bottom:20px;
+
+}
+
+input{
+
+height:48px;
+
+}
+
+textarea{
+
+min-height:180px;
+
+resize:vertical;
+
+line-height:1.9;
+
+}
+
+.submit{
+
+width:100%;
+
+height:50px;
+
+border:0;
+
+border-radius:9px;
+
+background:#00c853;
+
+color:#001b08;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+.message{
+
+margin-top:20px;
+
+text-align:center;
+
+font-size:13px;
+
+color:#aaa;
+
+}
+
+.error{
+
+color:#ff5555;
+
+}
+
+.success{
+
+color:#00ff66;
+
+}
+
+footer{
+
+padding:35px 20px;
+
+text-align:center;
+
+background:#030603;
+
+border-top:
+1px solid rgba(0,255,100,.1);
+
+color:#666;
+
+}
+
+footer strong{
+
+color:#00ff66;
+
+font-size:20px;
+
+}
+
+@media(max-width:800px){
+
+header{
+
+padding:0 20px;
+
+}
+
+nav{
+
+display:none;
+
+}
+
+.title h1{
+
+font-size:29px;
+
+}
+
+.box{
+
+padding:25px 20px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<a href="index.html" class="logo">
+
+<div class="logo-box">V</div>
+
+VENSIZ
+
+</a>
+
+<nav>
+
+<a href="rules.html">قوانین</a>
+
+<a href="updates.html">بروزرسانی‌ها</a>
+
+<a href="download.html">دانلود</a>
+
+<a href="about.html">درباره ما</a>
+
+<a href="shop.html">فروشگاه</a>
+
+<a href="support.html">پشتیبانی</a>
+
+<a href="login.html">🔐 احراز هویت</a>
+
+</nav>
+
+</header>
+
+
+<main class="page">
+
+<div class="container">
+
+<div class="title">
+
+<h1>
+
+پشتیبانی <span>VENSIZ</span>
+
+</h1>
+
+<p>
+
+برای ارتباط با تیم پشتیبانی تیکت خود را ثبت کنید.
+
+</p>
+
+</div>
+
+
+<!-- AUTH -->
+
+<div id="authBox" class="box auth-box">
+
+<div class="auth-icon">
+
+🔐
+
+</div>
+
+<h2>
+
+ابتدا احراز هویت کنید
+
+</h2>
+
+<p>
+
+برای ارسال تیکت باید ابتدا وارد حساب کاربری خود شوید.
+
+</p>
+
+<a href="login.html" class="button">
+
+ورود / ثبت‌نام
+
+</a>
+
+</div>
+
+
+<!-- TICKET -->
+
+<div id="ticketArea" class="box">
+
+<h2 style="color:#00ff66;margin-bottom:10px">
+
+ایجاد تیکت جدید
+
+</h2>
+
+<p style="color:#777;font-size:13px;margin-bottom:25px">
+
+درخواست خود را برای تیم پشتیبانی ارسال کنید.
+
+</p>
+
+
+<div class="user-info">
+
+حساب واردشده:
+
+<span id="userEmail">
+
+در حال بررسی...
+
+</span>
+
+</div>
+
+
+<label>
+
+موضوع تیکت
+
+</label>
+
+<input
+id="subject"
+type="text"
+placeholder="مثلاً مشکل ورود به سرور"
+>
+
+
+<label>
+
+متن درخواست
+
+</label>
+
+<textarea
+id="message"
+placeholder="مشکل یا درخواست خود را بنویسید..."
+></textarea>
+
+
+<button
+id="submitTicket"
+class="submit"
+>
+
+ارسال تیکت
+
+</button>
+
+
+<div
+id="ticketMessage"
+class="message"
+></div>
+
+</div>
+
+
+<!-- ERROR -->
+
+<div
+id="errorBox"
+class="box"
+style="
+display:none;
+margin-top:20px;
+text-align:center;
+"
+>
+
+<div
+class="error"
+id="errorText"
+></div>
+
+</div>
+
+
+</div>
+
+</main>
+
+
+<footer>
+
+<strong>VENSIZ</strong>
+
+<br><br>
+
+VENSIZ Roleplay © 2026
+
+</footer>
+
+
+<script
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+
 
 <script>
 
 const SUPABASE_URL =
-"https://gpeckwmjsgklzhtgqdso.supabase.co";
+"https://gpeckwmjsgklzhtqgdso.supabase.co";
+
 
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
 
+
 const supabaseClient =
 window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY,
-    {
-        auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-            detectSessionInUrl: true
-        }
-    }
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY,
+{
+auth:{
+persistSession:true,
+autoRefreshToken:true,
+detectSessionInUrl:true
+}
+}
 );
 
 
-/* =========================
-   AUTH CHECK
-========================= */
+const authBox =
+document.getElementById("authBox");
+
+const ticketArea =
+document.getElementById("ticketArea");
+
+const errorBox =
+document.getElementById("errorBox");
+
+const errorText =
+document.getElementById("errorText");
+
+const userEmail =
+document.getElementById("userEmail");
+
 
 async function checkAuth(){
 
-    const authBox =
-        document.getElementById("authBox");
+try{
 
-    const ticketArea =
-        document.getElementById("ticketArea");
-
-    const userEmail =
-        document.getElementById("userEmail");
-
-
-    const {
-        data: { session },
-        error
-    } =
-    await supabaseClient.auth.getSession();
+const {
+data,
+error
+} =
+await supabaseClient.auth.getSession();
 
 
-    console.log("VENSIZ SESSION:", session);
-    console.log("VENSIZ AUTH ERROR:", error);
-
-
-    if(!session){
-
-        authBox.style.display = "block";
-        ticketArea.style.display = "none";
-
-        return;
-    }
-
-
-    /* کاربر وارد شده */
-
-    authBox.style.display = "none";
-
-    ticketArea.style.display = "block";
-
-    userEmail.textContent =
-        session.user.email || "کاربر VENSIZ";
-}
-
-
-/* =========================
-   AUTH STATE
-========================= */
-
-supabaseClient.auth.onAuthStateChange(
-    (event, session) => {
-
-        console.log(
-            "AUTH EVENT:",
-            event,
-            session
-        );
-
-        const authBox =
-            document.getElementById("authBox");
-
-        const ticketArea =
-            document.getElementById("ticketArea");
-
-        const userEmail =
-            document.getElementById("userEmail");
-
-
-        if(session){
-
-            authBox.style.display = "none";
-
-            ticketArea.style.display = "block";
-
-            userEmail.textContent =
-                session.user.email || "کاربر VENSIZ";
-
-        }else{
-
-            authBox.style.display = "block";
-
-            ticketArea.style.display = "none";
-
-        }
-
-    }
+console.log(
+"VENSIZ SESSION:",
+data.session
 );
 
 
-/* =========================
-   SEND TICKET
-========================= */
+if(error){
 
-document
-.getElementById("submitTicket")
-.addEventListener("click", async function(){
+throw error;
 
-    const subject =
-        document
-        .getElementById("subject")
-        .value
-        .trim();
+}
 
 
-    const message =
-        document
-        .getElementById("message")
-        .value
-        .trim();
+if(!data.session){
+
+authBox.style.display =
+"block";
+
+ticketArea.style.display =
+"none";
+
+return;
+
+}
 
 
-    const result =
-        document
-        .getElementById("ticketMessage");
+/* کاربر وارد شده */
+
+authBox.style.display =
+"none";
+
+ticketArea.style.display =
+"block";
+
+userEmail.textContent =
+data.session.user.email ||
+"کاربر VENSIZ";
+
+}
+catch(error){
+
+console.error(
+"VENSIZ AUTH ERROR:",
+error
+);
 
 
-    if(!subject){
+/* صفحه سفید نشود */
 
-        result.textContent =
-        "لطفاً موضوع تیکت را وارد کنید.";
+authBox.style.display =
+"block";
 
-        return;
-    }
+ticketArea.style.display =
+"none";
 
+errorBox.style.display =
+"block";
 
-    if(!message){
+errorText.textContent =
+"خطا در بررسی احراز هویت: " +
+error.message;
 
-        result.textContent =
-        "لطفاً متن درخواست را وارد کنید.";
+}
 
-        return;
-    }
-
-
-    const {
-        data: { session }
-    } =
-    await supabaseClient.auth.getSession();
+}
 
 
-    if(!session){
+supabaseClient.auth.onAuthStateChange(
+(event, session)=>{
 
-        result.textContent =
-        "ابتدا احراز هویت کنید.";
+console.log(
+"AUTH EVENT:",
+event
+);
 
-        return;
-    }
+if(session){
 
+authBox.style.display =
+"none";
 
-    const { error } =
-    await supabaseClient
-    .from("tickets")
-    .insert({
+ticketArea.style.display =
+"block";
 
-        user_id: session.user.id,
+userEmail.textContent =
+session.user.email ||
+"کاربر VENSIZ";
 
-        subject: subject,
+}
+else{
 
-        message: message
+authBox.style.display =
+"block";
 
-    });
+ticketArea.style.display =
+"none";
 
-
-    if(error){
-
-        console.error(
-            "TICKET ERROR:",
-            error
-        );
-
-        result.textContent =
-        "خطا در ارسال تیکت: " +
-        error.message;
-
-        return;
-    }
-
-
-    result.textContent =
-    "تیکت شما با موفقیت ارسال شد. ✅";
-
-
-    document.getElementById("subject").value = "";
-
-    document.getElementById("message").value = "";
+}
 
 });
 
 
-/* =========================
-   START
-========================= */
+document
+.getElementById("submitTicket")
+.addEventListener(
+"click",
+async ()=>{
+
+
+const subject =
+document
+.getElementById("subject")
+.value
+.trim();
+
+
+const message =
+document
+.getElementById("message")
+.value
+.trim();
+
+
+const result =
+document
+.getElementById("ticketMessage");
+
+
+if(!subject){
+
+result.textContent =
+"موضوع تیکت را وارد کنید.";
+
+return;
+
+}
+
+
+if(!message){
+
+result.textContent =
+"متن درخواست را وارد کنید.";
+
+return;
+
+}
+
+
+const {
+data,
+error
+} =
+await supabaseClient.auth.getSession();
+
+
+if(error || !data.session){
+
+result.textContent =
+"ابتدا احراز هویت کنید.";
+
+return;
+
+}
+
+
+const { error: ticketError } =
+await supabaseClient
+.from("tickets")
+.insert({
+
+user_id:
+data.session.user.id,
+
+subject:
+subject,
+
+message:
+message
+
+});
+
+
+if(ticketError){
+
+console.error(
+ticketError
+);
+
+result.textContent =
+"خطا در ارسال تیکت: " +
+ticketError.message;
+
+return;
+
+}
+
+
+result.textContent =
+"تیکت شما با موفقیت ارسال شد. ✅";
+
+
+document
+.getElementById("subject")
+.value = "";
+
+
+document
+.getElementById("message")
+.value = "";
+
+});
+
 
 checkAuth();
 
 </script>
 
+
 </body>
+
 </html>
