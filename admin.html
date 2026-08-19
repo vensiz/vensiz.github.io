@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
@@ -56,6 +57,33 @@ header{
     color:#00ff66;
     text-decoration:none;
     font-size:13px;
+}
+
+.live-status{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    color:#00ff66;
+    font-size:11px;
+}
+
+.live-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#00ff66;
+    box-shadow:0 0 10px #00ff66;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:.3;
+    }
 }
 
 .container{
@@ -124,6 +152,7 @@ h1 span{
 .ticket-item p{
     color:#777;
     font-size:11px;
+    margin-top:4px;
 }
 
 .status{
@@ -142,6 +171,20 @@ h1 span{
 .status.closed{
     color:#ff7777;
     background:rgba(255,0,0,.08);
+}
+
+.new-ticket{
+    animation:newTicket .7s ease;
+}
+
+@keyframes newTicket{
+    0%{
+        background:rgba(0,255,100,.25);
+    }
+
+    100%{
+        background:transparent;
+    }
 }
 
 .empty{
@@ -203,12 +246,14 @@ h1 span{
 }
 
 .replies{
-    max-height:300px;
+    max-height:380px;
     overflow-y:auto;
     margin-bottom:20px;
+    padding:4px;
 }
 
 .reply{
+    max-width:85%;
     padding:15px;
     margin-bottom:12px;
     border-radius:12px;
@@ -217,7 +262,13 @@ h1 span{
 }
 
 .reply.admin{
+    margin-right:auto;
     border-color:rgba(0,255,100,.2);
+    background:rgba(0,255,100,.04);
+}
+
+.reply.user{
+    margin-left:auto;
 }
 
 .reply-author{
@@ -226,7 +277,7 @@ h1 span{
     margin-bottom:8px;
 }
 
-.reply-user{
+.reply.user .reply-author{
     color:#aaa;
 }
 
@@ -235,12 +286,29 @@ h1 span{
     font-size:13px;
     line-height:1.9;
     white-space:pre-wrap;
+    word-break:break-word;
 }
 
 .reply-date{
     color:#555;
     font-size:9px;
     margin-top:8px;
+}
+
+.new-reply{
+    animation:newReply .5s ease;
+}
+
+@keyframes newReply{
+    0%{
+        transform:translateY(8px);
+        opacity:0;
+    }
+
+    100%{
+        transform:translateY(0);
+        opacity:1;
+    }
 }
 
 textarea{
@@ -284,6 +352,11 @@ button{
 
 .reply-button:hover{
     background:#00ff66;
+}
+
+.reply-button:disabled{
+    opacity:.5;
+    cursor:not-allowed;
 }
 
 .close-button{
@@ -373,6 +446,14 @@ button{
     .admin-email{
         display:none;
     }
+
+    .live-status{
+        display:none;
+    }
+
+    .reply{
+        max-width:95%;
+    }
 }
 
 </style>
@@ -388,6 +469,11 @@ button{
     </div>
 
     <div class="header-right">
+
+        <div class="live-status">
+            <span class="live-dot"></span>
+            LIVE
+        </div>
 
         <div class="admin-email">
             amirkhoz3823@gmail.com
@@ -420,21 +506,25 @@ button{
 </div>
 
 
-<main id="adminPanel" class="container" style="display:none;">
+<main
+    id="adminPanel"
+    class="container"
+    style="display:none;"
+>
 
     <h1>
         مدیریت <span>تیکت‌ها</span>
     </h1>
 
     <div class="subtitle">
-        VENSIZ SUPPORT ADMIN PANEL
+        VENSIZ SUPPORT ADMIN PANEL — REALTIME
     </div>
 
 
     <div class="layout">
 
 
-        <!-- TICKET LIST -->
+        <!-- ================= TICKET LIST ================= -->
 
         <div class="panel">
 
@@ -442,7 +532,10 @@ button{
                 تیکت‌های کاربران
             </div>
 
-            <div id="ticketList" class="ticket-list">
+            <div
+                id="ticketList"
+                class="ticket-list"
+            >
 
                 <div class="empty">
                     در حال دریافت تیکت‌ها...
@@ -453,11 +546,14 @@ button{
         </div>
 
 
-        <!-- TICKET VIEW -->
+        <!-- ================= TICKET VIEW ================= -->
 
         <div class="panel">
 
-            <div id="ticketView" class="ticket-view">
+            <div
+                id="ticketView"
+                class="ticket-view"
+            >
 
                 <div class="no-ticket">
                     یک تیکت را از لیست انتخاب کنید.
@@ -466,7 +562,6 @@ button{
             </div>
 
         </div>
-
 
     </div>
 
@@ -488,16 +583,28 @@ const SUPABASE_KEY =
 
 const supabaseClient =
 window.supabase.createClient(
+
     SUPABASE_URL,
+
     SUPABASE_KEY,
+
     {
+
         auth:{
+
             persistSession:true,
+
             autoRefreshToken:true,
+
             detectSessionInUrl:true,
-            storageKey:"vensiz-auth-session"
+
+            storageKey:
+                "vensiz-auth-session"
+
         }
+
     }
+
 );
 
 
@@ -523,6 +630,8 @@ document.getElementById("ticketView");
 
 let currentTicket = null;
 
+let realtimeChannel = null;
+
 
 /* =========================================
    AUTH + ADMIN CHECK
@@ -536,10 +645,16 @@ async function checkAdmin(){
             data,
             error
         } =
-        await supabaseClient.auth.getSession();
+        await supabaseClient
+            .auth
+            .getSession();
 
 
-        if(error || !data.session){
+        if(
+            error ||
+            !data ||
+            !data.session
+        ){
 
             showDenied();
 
@@ -555,11 +670,22 @@ async function checkAdmin(){
         await supabaseClient
             .from("admins")
             .select("user_id")
-            .eq("user_id",data.session.user.id)
+            .eq(
+                "user_id",
+                data.session.user.id
+            )
             .maybeSingle();
 
 
-        if(adminError || !admin){
+        if(
+            adminError ||
+            !admin
+        ){
+
+            console.error(
+                "ADMIN CHECK:",
+                adminError
+            );
 
             showDenied();
 
@@ -575,12 +701,24 @@ async function checkAdmin(){
             "block";
 
 
-        loadTickets();
+        await loadTickets();
+
+
+        /*
+           بعد از ورود ادمین،
+           گوش دادن به تمام تغییرات تیکت‌ها
+           فعال می‌شود.
+        */
+
+        subscribeToTickets();
 
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "ADMIN ERROR:",
+            error
+        );
 
         showDenied();
 
@@ -613,10 +751,6 @@ function showDenied(){
 
 async function loadTickets(){
 
-    ticketList.innerHTML =
-        `<div class="empty">در حال دریافت...</div>`;
-
-
     const {
         data,
         error
@@ -624,101 +758,195 @@ async function loadTickets(){
     await supabaseClient
         .from("tickets")
         .select("*")
-        .order("created_at",{ascending:false});
-
-
-    if(error){
-
-        console.error(error);
-
-        ticketList.innerHTML =
-            `<div class="empty">
-                خطا در دریافت تیکت‌ها
-            </div>`;
-
-        return;
-
-    }
-
-
-    if(!data || data.length === 0){
-
-        ticketList.innerHTML =
-            `<div class="empty">
-                هنوز تیکتی ثبت نشده است.
-            </div>`;
-
-        return;
-
-    }
-
-
-    ticketList.innerHTML = "";
-
-
-    data.forEach(function(ticket){
-
-        const item =
-            document.createElement("div");
-
-        item.className =
-            "ticket-item";
-
-        item.dataset.id =
-            ticket.id;
-
-
-        const status =
-            ticket.status || "open";
-
-        const statusText =
-            status === "closed"
-            ? "بسته"
-            : "باز";
-
-
-        item.innerHTML = `
-
-            <h3>
-                ${escapeHtml(ticket.subject || "بدون موضوع")}
-            </h3>
-
-            <p>
-                کاربر: ${escapeHtml(ticket.user_id || "-")}
-            </p>
-
-            <p>
-                ${formatDate(ticket.created_at)}
-            </p>
-
-            <span class="status ${status}">
-                ${statusText}
-            </span>
-
-        `;
-
-
-        item.addEventListener(
-            "click",
-            function(){
-
-                document
-                    .querySelectorAll(".ticket-item")
-                    .forEach(x =>
-                        x.classList.remove("active")
-                    );
-
-                item.classList.add("active");
-
-                openTicket(ticket);
-
+        .order(
+            "created_at",
+            {
+                ascending:false
             }
         );
 
 
-        ticketList.appendChild(item);
+    if(error){
 
-    });
+        console.error(
+            "TICKETS:",
+            error
+        );
+
+        ticketList.innerHTML =
+            `
+            <div class="empty">
+                خطا در دریافت تیکت‌ها
+                <br><br>
+                ${escapeHtml(
+                    error.message
+                )}
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    renderTicketList(
+        data || []
+    );
+
+}
+
+
+/* =========================================
+   RENDER TICKET LIST
+========================================= */
+
+function renderTicketList(data){
+
+    if(
+        !data ||
+        data.length === 0
+    ){
+
+        ticketList.innerHTML =
+            `
+            <div class="empty">
+                هنوز تیکتی ثبت نشده است.
+            </div>
+            `;
+
+        return;
+
+    }
+
+
+    ticketList.innerHTML =
+        "";
+
+
+    data.forEach(
+        function(ticket){
+
+            const item =
+                createTicketItem(
+                    ticket
+                );
+
+            ticketList.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   CREATE TICKET ITEM
+========================================= */
+
+function createTicketItem(ticket){
+
+    const item =
+        document.createElement(
+            "div"
+        );
+
+
+    item.className =
+        "ticket-item";
+
+
+    item.dataset.id =
+        String(ticket.id);
+
+
+    if(
+        currentTicket &&
+        String(currentTicket.id) ===
+        String(ticket.id)
+    ){
+
+        item.classList.add(
+            "active"
+        );
+
+    }
+
+
+    const status =
+        ticket.status || "open";
+
+
+    const statusText =
+        status === "closed"
+        ? "بسته"
+        : "باز";
+
+
+    item.innerHTML =
+
+        `
+        <h3>
+            ${escapeHtml(
+                ticket.subject ||
+                "بدون موضوع"
+            )}
+        </h3>
+
+        <p>
+            کاربر:
+            ${escapeHtml(
+                ticket.user_id ||
+                "-"
+            )}
+        </p>
+
+        <p>
+            ${formatDate(
+                ticket.created_at
+            )}
+        </p>
+
+        <span class="status ${status}">
+            ${statusText}
+        </span>
+        `;
+
+
+    item.addEventListener(
+        "click",
+        function(){
+
+            document
+                .querySelectorAll(
+                    ".ticket-item"
+                )
+                .forEach(
+                    function(x){
+
+                        x.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+            item.classList.add(
+                "active"
+            );
+
+
+            openTicket(
+                ticket
+            );
+
+        }
+    );
+
+
+    return item;
 
 }
 
@@ -729,21 +957,53 @@ async function loadTickets(){
 
 async function openTicket(ticket){
 
-    currentTicket = ticket;
+    currentTicket =
+        ticket;
 
 
-    ticketView.innerHTML = `
+    ticketView.innerHTML =
 
+        `
         <div class="ticket-header">
 
             <h2>
-                ${escapeHtml(ticket.subject || "بدون موضوع")}
+                ${escapeHtml(
+                    ticket.subject ||
+                    "بدون موضوع"
+                )}
             </h2>
 
             <div class="ticket-meta">
-                شناسه: ${escapeHtml(String(ticket.id))}<br>
-                کاربر: ${escapeHtml(ticket.user_id || "-")}<br>
-                تاریخ: ${formatDate(ticket.created_at)}
+
+                شناسه:
+                ${escapeHtml(
+                    String(ticket.id)
+                )}
+
+                <br>
+
+                کاربر:
+                ${escapeHtml(
+                    ticket.user_id ||
+                    "-"
+                )}
+
+                <br>
+
+                تاریخ:
+                ${formatDate(
+                    ticket.created_at
+                )}
+
+                <br>
+
+                وضعیت:
+                ${
+                    ticket.status === "closed"
+                    ? "بسته"
+                    : "باز"
+                }
+
             </div>
 
         </div>
@@ -752,52 +1012,78 @@ async function openTicket(ticket){
         <div class="original-message">
 
             <div class="original-message-title">
-                پیام کاربر
+                پیام اولیه کاربر
             </div>
 
             <div class="original-message-text">
-                ${escapeHtml(ticket.message || "")}
+                ${escapeHtml(
+                    ticket.message ||
+                    ""
+                )}
             </div>
 
         </div>
 
 
-        <div id="replies" class="replies">
-            در حال دریافت پاسخ‌ها...
+        <div
+            id="replies"
+            class="replies"
+        >
+
+            <div class="empty">
+                در حال دریافت پیام‌ها...
+            </div>
+
         </div>
 
 
-        <textarea
-            id="replyText"
-            placeholder="پاسخ خود را برای کاربر بنویسید..."
-        ></textarea>
+        ${
+            ticket.status === "closed"
+            ? ""
+            :
+            `
+            <textarea
+                id="replyText"
+                placeholder="پاسخ خود را برای کاربر بنویسید..."
+            ></textarea>
+            `
+        }
 
 
         <div class="actions">
 
-            <button
-                id="sendReply"
-                class="reply-button"
-            >
-                ارسال پاسخ
-            </button>
-
             ${
                 ticket.status === "closed"
+
                 ?
-                `<button
+
+                `
+                <button
                     id="openTicketButton"
                     class="open-button"
                 >
                     باز کردن تیکت
-                </button>`
+                </button>
+                `
+
                 :
-                `<button
+
+                `
+                <button
+                    id="sendReply"
+                    class="reply-button"
+                >
+                    ارسال پاسخ
+                </button>
+
+                <button
                     id="closeTicketButton"
                     class="close-button"
                 >
                     بستن تیکت
-                </button>`
+                </button>
+                `
+
             }
 
         </div>
@@ -807,16 +1093,23 @@ async function openTicket(ticket){
             id="ticketMessage"
             class="message"
         ></div>
+        `;
 
-    `;
+
+    const sendButton =
+        document.getElementById(
+            "sendReply"
+        );
 
 
-    document
-        .getElementById("sendReply")
-        .addEventListener(
+    if(sendButton){
+
+        sendButton.addEventListener(
             "click",
             sendReply
         );
+
+    }
 
 
     const closeButton =
@@ -824,12 +1117,17 @@ async function openTicket(ticket){
             "closeTicketButton"
         );
 
+
     if(closeButton){
 
         closeButton.addEventListener(
             "click",
             function(){
-                changeStatus("closed");
+
+                changeStatus(
+                    "closed"
+                );
+
             }
         );
 
@@ -841,19 +1139,35 @@ async function openTicket(ticket){
             "openTicketButton"
         );
 
+
     if(openButton){
 
         openButton.addEventListener(
             "click",
             function(){
-                changeStatus("open");
+
+                changeStatus(
+                    "open"
+                );
+
             }
         );
 
     }
 
 
-    loadReplies(ticket.id);
+    await loadReplies(
+        ticket.id
+    );
+
+
+    /*
+       اتصال Realtime مخصوص همین تیکت
+    */
+
+    subscribeToTicket(
+        ticket.id
+    );
 
 }
 
@@ -864,8 +1178,17 @@ async function openTicket(ticket){
 
 async function loadReplies(ticketId){
 
-    const replies =
-        document.getElementById("replies");
+    const repliesElement =
+        document.getElementById(
+            "replies"
+        );
+
+
+    if(!repliesElement){
+
+        return;
+
+    }
 
 
     const {
@@ -875,81 +1198,422 @@ async function loadReplies(ticketId){
     await supabaseClient
         .from("ticket_replies")
         .select("*")
-        .eq("ticket_id",ticketId)
-        .order("created_at",{ascending:true});
+        .eq(
+            "ticket_id",
+            ticketId
+        )
+        .order(
+            "created_at",
+            {
+                ascending:true
+            }
+        );
 
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "REPLIES:",
+            error
+        );
 
-        replies.innerHTML =
-            `<div class="empty">
+
+        repliesElement.innerHTML =
+            `
+            <div class="empty">
                 خطا در دریافت پاسخ‌ها
-            </div>`;
+                <br><br>
+                ${escapeHtml(
+                    error.message
+                )}
+            </div>
+            `;
 
         return;
 
     }
 
 
-    if(!data || data.length === 0){
+    repliesElement.innerHTML =
+        "";
 
-        replies.innerHTML =
-            `<div class="empty">
+
+    if(
+        !data ||
+        data.length === 0
+    ){
+
+        repliesElement.innerHTML =
+            `
+            <div class="empty">
                 هنوز پاسخی برای این تیکت وجود ندارد.
-            </div>`;
+            </div>
+            `;
 
         return;
 
     }
 
 
-    replies.innerHTML = "";
+    data.forEach(
+        function(reply){
+
+            addReply(
+                reply,
+                false
+            );
+
+        }
+    );
 
 
-    data.forEach(function(reply){
+    scrollReplies();
 
-        const div =
-            document.createElement("div");
-
-
-        div.className =
-            reply.is_admin
-            ? "reply admin"
-            : "reply";
+}
 
 
-        div.innerHTML = `
+/* =========================================
+   ADD REPLY
+========================================= */
 
-            <div class="reply-author">
+function addReply(
+    reply,
+    animate = true
+){
 
-                ${
-                    reply.is_admin
-                    ? "🛡️ پشتیبانی VENSIZ"
-                    : "👤 کاربر"
-                }
+    const repliesElement =
+        document.getElementById(
+            "replies"
+        );
 
-            </div>
 
-            <div class="reply-text">
-                ${escapeHtml(reply.message || "")}
-            </div>
+    if(!repliesElement){
 
-            <div class="reply-date">
-                ${formatDate(reply.created_at)}
-            </div>
+        return;
 
+    }
+
+
+    /*
+       جلوگیری از تکراری شدن پیام
+    */
+
+    const existing =
+        repliesElement.querySelector(
+            '[data-reply-id="' +
+            String(reply.id) +
+            '"]'
+        );
+
+
+    if(existing){
+
+        return;
+
+    }
+
+
+    /*
+       اگر پیام خالی نمایش داده شده،
+       آن را پاک می‌کنیم.
+    */
+
+    const empty =
+        repliesElement.querySelector(
+            ".empty"
+        );
+
+
+    if(empty){
+
+        empty.remove();
+
+    }
+
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.className =
+        reply.is_admin
+        ? "reply admin"
+        : "reply user";
+
+
+    if(animate){
+
+        div.classList.add(
+            "new-reply"
+        );
+
+    }
+
+
+    div.dataset.replyId =
+        String(
+            reply.id
+        );
+
+
+    div.innerHTML =
+
+        `
+        <div class="reply-author">
+
+            ${
+                reply.is_admin
+                ? "🛡️ پشتیبانی VENSIZ"
+                : "👤 کاربر"
+            }
+
+        </div>
+
+        <div class="reply-text">
+
+            ${escapeHtml(
+                reply.message ||
+                ""
+            )}
+
+        </div>
+
+        <div class="reply-date">
+
+            ${formatDate(
+                reply.created_at
+            )}
+
+        </div>
         `;
 
 
-        replies.appendChild(div);
+    repliesElement.appendChild(
+        div
+    );
 
-    });
+
+    scrollReplies();
+
+}
 
 
-    replies.scrollTop =
-        replies.scrollHeight;
+/* =========================================
+   REALTIME — ALL TICKETS
+========================================= */
+
+function subscribeToTickets(){
+
+    /*
+       گوش دادن به ایجاد تیکت جدید،
+       تغییر وضعیت و غیره.
+    */
+
+    const channel =
+        supabaseClient
+            .channel(
+                "vensiz-admin-tickets"
+            );
+
+
+    channel.on(
+
+        "postgres_changes",
+
+        {
+            event:"INSERT",
+            schema:"public",
+            table:"tickets"
+        },
+
+        function(payload){
+
+            console.log(
+                "NEW TICKET:",
+                payload.new
+            );
+
+
+            loadTickets();
+
+
+            /*
+               اگر تیکت جدید است،
+               پیام بصری کوچک نمایش می‌دهیم.
+            */
+
+            showBrowserNotice(
+                "🎫 تیکت جدید دریافت شد"
+            );
+
+        }
+
+    );
+
+
+    channel.on(
+
+        "postgres_changes",
+
+        {
+            event:"UPDATE",
+            schema:"public",
+            table:"tickets"
+        },
+
+        function(payload){
+
+            console.log(
+                "TICKET UPDATED:",
+                payload.new
+            );
+
+
+            /*
+               اگر همان تیکت باز است،
+               اطلاعات آن را به‌روز می‌کنیم.
+            */
+
+            if(
+                currentTicket &&
+                String(currentTicket.id) ===
+                String(payload.new.id)
+            ){
+
+                currentTicket =
+                    payload.new;
+
+            }
+
+
+            loadTickets();
+
+        }
+
+    );
+
+
+    channel.subscribe(
+        function(status){
+
+            console.log(
+                "ADMIN TICKETS REALTIME:",
+                status
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   REALTIME — CURRENT TICKET
+========================================= */
+
+function subscribeToTicket(ticketId){
+
+    /*
+       اتصال قبلی را قطع می‌کنیم.
+    */
+
+    if(realtimeChannel){
+
+        supabaseClient
+            .removeChannel(
+                realtimeChannel
+            );
+
+        realtimeChannel =
+            null;
+
+    }
+
+
+    console.log(
+        "SUBSCRIBE TICKET:",
+        ticketId
+    );
+
+
+    realtimeChannel =
+        supabaseClient
+            .channel(
+                "vensiz-admin-ticket-" +
+                String(ticketId) +
+                "-" +
+                Date.now()
+            );
+
+
+    realtimeChannel.on(
+
+        "postgres_changes",
+
+        {
+            event:"INSERT",
+
+            schema:"public",
+
+            table:"ticket_replies",
+
+            filter:
+                "ticket_id=eq." +
+                String(ticketId)
+
+        },
+
+        function(payload){
+
+            console.log(
+                "REALTIME MESSAGE:",
+                payload.new
+            );
+
+
+            /*
+               پیام جدید کاربر یا ادمین
+               همان لحظه به چت اضافه می‌شود.
+            */
+
+            addReply(
+                payload.new,
+                true
+            );
+
+
+            /*
+               اگر پیام از کاربر بود،
+               به ادمین اطلاع می‌دهیم.
+            */
+
+            if(
+                payload.new.is_admin === false
+            ){
+
+                showBrowserNotice(
+                    "💬 پیام جدید از کاربر"
+                );
+
+            }
+
+        }
+
+    );
+
+
+    realtimeChannel.subscribe(
+        function(status){
+
+            console.log(
+                "ADMIN TICKET REALTIME:",
+                status
+            );
+
+        }
+    );
 
 }
 
@@ -968,16 +1632,20 @@ async function sendReply(){
 
 
     const textarea =
-        document.getElementById("replyText");
+        document.getElementById(
+            "replyText"
+        );
+
+
+    if(!textarea){
+
+        return;
+
+    }
+
 
     const text =
         textarea.value.trim();
-
-
-    const message =
-        document.getElementById(
-            "ticketMessage"
-        );
 
 
     if(!text){
@@ -995,10 +1663,15 @@ async function sendReply(){
     const {
         data:sessionData
     } =
-    await supabaseClient.auth.getSession();
+    await supabaseClient
+        .auth
+        .getSession();
 
 
-    if(!sessionData.session){
+    if(
+        !sessionData ||
+        !sessionData.session
+    ){
 
         showTicketMessage(
             "نشست ادمین منقضی شده است.",
@@ -1019,58 +1692,107 @@ async function sendReply(){
             "sendReply"
         );
 
-    button.disabled = true;
+
+    button.disabled =
+        true;
 
 
-    const {
-        error
-    } =
-    await supabaseClient
-        .from("ticket_replies")
-        .insert({
-
-            ticket_id:currentTicket.id,
-
-            user_id:adminId,
-
-            message:text,
-
-            is_admin:true
-
-        });
+    button.textContent =
+        "در حال ارسال...";
 
 
-    if(error){
+    try{
 
-        console.error(error);
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("ticket_replies")
+            .insert({
+
+                ticket_id:
+                    currentTicket.id,
+
+                user_id:
+                    adminId,
+
+                message:
+                    text,
+
+                is_admin:
+                    true
+
+            })
+            .select()
+            .single();
+
+
+        if(error){
+
+            console.error(
+                "ADMIN REPLY:",
+                error
+            );
+
+
+            showTicketMessage(
+                error.message,
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        textarea.value =
+            "";
+
+
+        /*
+           پیام خودمان را فوراً نمایش می‌دهیم.
+           Realtime هم اگر آن را برگرداند،
+           addReply از تکراری شدن جلوگیری می‌کند.
+        */
+
+        if(data){
+
+            addReply(
+                data,
+                true
+            );
+
+        }
+
 
         showTicketMessage(
-            error.message,
+            "پاسخ با موفقیت ارسال شد.",
+            "success"
+        );
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+
+        showTicketMessage(
+            "خطایی هنگام ارسال پاسخ رخ داد.",
             "error"
         );
 
-        button.disabled = false;
+    }finally{
 
-        return;
+        button.disabled =
+            false;
+
+        button.textContent =
+            "ارسال پاسخ";
 
     }
-
-
-    textarea.value = "";
-
-
-    showTicketMessage(
-        "پاسخ با موفقیت ارسال شد.",
-        "success"
-    );
-
-
-    await loadReplies(
-        currentTicket.id
-    );
-
-
-    button.disabled = false;
 
 }
 
@@ -1094,17 +1816,28 @@ async function changeStatus(status){
     await supabaseClient
         .from("tickets")
         .update({
-            status:status
+
+            status:
+                status
+
         })
-        .eq("id",currentTicket.id);
+        .eq(
+            "id",
+            currentTicket.id
+        );
 
 
     if(error){
 
-        console.error(error);
+        console.error(
+            "STATUS:",
+            error
+        );
 
-        alert(
-            "خطا: " + error.message
+
+        showTicketMessage(
+            error.message,
+            "error"
         );
 
         return;
@@ -1116,18 +1849,37 @@ async function changeStatus(status){
         status;
 
 
+    showTicketMessage(
+        status === "closed"
+        ? "تیکت بسته شد."
+        : "تیکت دوباره باز شد.",
+        "success"
+    );
+
+
     await loadTickets();
 
-    openTicket(currentTicket);
+
+    /*
+       صفحه تیکت را دوباره می‌سازیم
+       تا دکمه مناسب نمایش داده شود.
+    */
+
+    await openTicket(
+        currentTicket
+    );
 
 }
 
 
 /* =========================================
-   MESSAGE
+   TICKET MESSAGE
 ========================================= */
 
-function showTicketMessage(text,type){
+function showTicketMessage(
+    text,
+    type
+){
 
     const message =
         document.getElementById(
@@ -1146,7 +1898,72 @@ function showTicketMessage(text,type){
         text;
 
     message.className =
-        "message " + type;
+        "message " +
+        type;
+
+}
+
+
+/* =========================================
+   BROWSER NOTICE
+========================================= */
+
+function showBrowserNotice(text){
+
+    /*
+       فقط یک اطلاع کوچک داخل عنوان صفحه.
+       بدون نیاز به permission مرورگر.
+    */
+
+    const oldTitle =
+        document.title;
+
+
+    document.title =
+        text;
+
+
+    setTimeout(
+        function(){
+
+            document.title =
+                oldTitle;
+
+        },
+        2500
+    );
+
+}
+
+
+/* =========================================
+   SCROLL
+========================================= */
+
+function scrollReplies(){
+
+    const replies =
+        document.getElementById(
+            "replies"
+        );
+
+
+    if(!replies){
+
+        return;
+
+    }
+
+
+    setTimeout(
+        function(){
+
+            replies.scrollTop =
+                replies.scrollHeight;
+
+        },
+        50
+    );
 
 }
 
@@ -1158,11 +1975,31 @@ function showTicketMessage(text,type){
 function escapeHtml(value){
 
     return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 
 }
 
@@ -1193,7 +2030,7 @@ function formatDate(date){
 
     }catch{
 
-        return date;
+        return String(date);
 
     }
 
@@ -1209,4 +2046,6 @@ checkAdmin();
 </script>
 
 </body>
+
 </html>
+```
