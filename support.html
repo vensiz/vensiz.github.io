@@ -15,12 +15,18 @@
     box-sizing:border-box;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
     background:#050805;
     color:#fff;
     font-family:Tahoma,Arial,sans-serif;
     min-height:100vh;
 }
+
+/* ================= HEADER ================= */
 
 header{
     height:80px;
@@ -52,6 +58,7 @@ header{
     justify-content:center;
     border:2px solid #00ff66;
     border-radius:10px;
+    font-size:24px;
     box-shadow:
         0 0 15px rgba(0,255,100,.5),
         inset 0 0 15px rgba(0,255,100,.15);
@@ -66,48 +73,91 @@ nav a{
     color:#ddd;
     text-decoration:none;
     font-size:14px;
+    transition:.3s;
 }
 
 nav a:hover{
     color:#00ff66;
+    text-shadow:0 0 10px #00ff66;
+}
+
+/* ================= PAGE ================= */
+
+.page{
+    min-height:calc(100vh - 80px);
+    padding:90px 20px;
+    position:relative;
+    overflow:hidden;
+}
+
+.page::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+
+    background-image:
+        linear-gradient(
+            rgba(0,255,100,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,255,100,.025) 1px,
+            transparent 1px
+        );
+
+    background-size:50px 50px;
 }
 
 .container{
+    position:relative;
     max-width:900px;
-    margin:0 auto;
-    padding:100px 20px;
+    margin:auto;
 }
+
+/* ================= TITLE ================= */
 
 .title{
     text-align:center;
-    margin-bottom:50px;
+    margin-bottom:45px;
 }
 
 .title h1{
     font-size:42px;
     margin-bottom:12px;
+    text-shadow:
+        0 0 15px rgba(0,255,100,.5);
 }
 
 .title span{
     color:#00ff66;
-    font-size:14px;
+    font-size:13px;
+    letter-spacing:2px;
 }
 
+/* ================= CARD ================= */
+
 .card{
-    background:#0a110b;
+    background:rgba(10,17,11,.95);
     border:1px solid rgba(0,255,100,.15);
     border-radius:16px;
     padding:35px;
-    box-shadow:0 0 40px rgba(0,0,0,.35);
+    box-shadow:
+        0 0 40px rgba(0,0,0,.35);
 }
+
+/* ================= AUTH STATUS ================= */
 
 .user-box{
     display:flex;
     align-items:center;
     justify-content:space-between;
     gap:20px;
+
     padding:15px 20px;
     margin-bottom:25px;
+
     background:#071009;
     border:1px solid rgba(0,255,100,.12);
     border-radius:10px;
@@ -117,6 +167,7 @@ nav a:hover{
     display:flex;
     align-items:center;
     gap:8px;
+
     color:#aaa;
     font-size:13px;
 }
@@ -124,8 +175,10 @@ nav a:hover{
 .dot{
     width:9px;
     height:9px;
+
     background:#00ff66;
     border-radius:50%;
+
     box-shadow:0 0 12px #00ff66;
 }
 
@@ -133,6 +186,8 @@ nav a:hover{
     color:#00ff66;
     direction:ltr;
 }
+
+/* ================= FORM ================= */
 
 label{
     display:block;
@@ -144,20 +199,29 @@ label{
 input,
 textarea{
     width:100%;
+
     padding:14px;
     margin-bottom:20px;
+
     background:#050805;
     border:1px solid rgba(0,255,100,.15);
     border-radius:8px;
+
     color:white;
     outline:none;
+
     font-family:Tahoma,Arial,sans-serif;
+    font-size:14px;
+
+    transition:.3s;
 }
 
 input:focus,
 textarea:focus{
     border-color:#00ff66;
-    box-shadow:0 0 15px rgba(0,255,100,.1);
+
+    box-shadow:
+        0 0 15px rgba(0,255,100,.1);
 }
 
 textarea{
@@ -165,22 +229,32 @@ textarea{
     resize:vertical;
 }
 
+/* ================= BUTTON ================= */
+
 button{
     width:100%;
+
     padding:15px;
+
     border:none;
     border-radius:8px;
+
     background:#00c853;
     color:#001b08;
+
     font-weight:bold;
     font-size:15px;
+
     cursor:pointer;
+
     transition:.3s;
 }
 
 button:hover{
     background:#00ff66;
-    box-shadow:0 0 25px rgba(0,255,100,.3);
+
+    box-shadow:
+        0 0 25px rgba(0,255,100,.3);
 }
 
 button:disabled{
@@ -188,16 +262,21 @@ button:disabled{
     cursor:not-allowed;
 }
 
-.message{
-    padding:20px;
-    border-radius:10px;
-    text-align:center;
-    line-height:2;
-}
+/* ================= LOGIN ================= */
 
 .login-message{
+    text-align:center;
+
     background:#0a110b;
+
     border:1px solid rgba(0,255,100,.15);
+
+    border-radius:16px;
+
+    padding:45px 30px;
+
+    box-shadow:
+        0 0 40px rgba(0,0,0,.35);
 }
 
 .login-message h2{
@@ -205,15 +284,49 @@ button:disabled{
     margin-bottom:15px;
 }
 
+.login-message p{
+    color:#999;
+    line-height:2;
+}
+
 .auth-btn{
     display:inline-block;
-    margin-top:20px;
+
+    margin-top:25px;
+
     padding:13px 30px;
+
     border-radius:8px;
+
     background:#00c853;
     color:#001b08;
+
     text-decoration:none;
+
     font-weight:bold;
+
+    transition:.3s;
+}
+
+.auth-btn:hover{
+    background:#00ff66;
+
+    box-shadow:
+        0 0 25px rgba(0,255,100,.3);
+}
+
+/* ================= RESULT ================= */
+
+.message{
+    padding:16px;
+
+    border-radius:10px;
+
+    text-align:center;
+
+    line-height:2;
+
+    margin-top:20px;
 }
 
 .success{
@@ -228,15 +341,27 @@ button:disabled{
     color:#ff7777;
 }
 
-.hidden{
-    display:none;
+/* ================= TICKETS ================= */
+
+.my-tickets{
+    margin-top:35px;
+}
+
+.my-tickets-title{
+    color:#00ff66;
+    margin-bottom:15px;
+    font-size:16px;
 }
 
 .ticket{
-    margin-top:25px;
+    margin-top:15px;
+
     padding:20px;
+
     background:#071009;
+
     border:1px solid rgba(0,255,100,.1);
+
     border-radius:10px;
 }
 
@@ -247,8 +372,39 @@ button:disabled{
 
 .ticket p{
     color:#aaa;
-    line-height:1.8;
+    line-height:1.9;
+    white-space:pre-wrap;
 }
+
+.ticket-status{
+    display:inline-block;
+
+    margin-top:12px;
+
+    padding:5px 10px;
+
+    border-radius:5px;
+
+    background:rgba(0,255,100,.08);
+
+    color:#00ff66;
+
+    font-size:11px;
+}
+
+.empty{
+    color:#666;
+    text-align:center;
+    padding:20px;
+}
+
+/* ================= HIDDEN ================= */
+
+.hidden{
+    display:none !important;
+}
+
+/* ================= MOBILE ================= */
 
 @media(max-width:700px){
 
@@ -260,7 +416,7 @@ button:disabled{
         display:none;
     }
 
-    .container{
+    .page{
         padding:60px 15px;
     }
 
@@ -276,47 +432,79 @@ button:disabled{
         flex-direction:column;
         align-items:flex-start;
     }
+
+    .email{
+        font-size:12px;
+    }
 }
 </style>
 </head>
 
 <body>
 
+<!-- ================= HEADER ================= -->
+
 <header>
 
 <a href="index.html" class="logo">
-    <div class="logo-box">V</div>
+
+    <div class="logo-box">
+        V
+    </div>
+
     VENSIZ
+
 </a>
 
 <nav>
+
     <a href="rules.html">قوانین</a>
+
     <a href="updates.html">بروزرسانی‌ها</a>
+
     <a href="download.html">دانلود</a>
+
     <a href="about.html">درباره ما</a>
+
     <a href="shop.html">فروشگاه</a>
+
     <a href="support.html">پشتیبانی</a>
+
 </nav>
 
 </header>
 
 
+<!-- ================= PAGE ================= -->
+
+<main class="page">
+
 <div class="container">
 
+
 <div class="title">
-    <h1>پشتیبانی VENSIZ</h1>
-    <span>VENSIZ SUPPORT CENTER</span>
+
+    <h1>
+        پشتیبانی VENSIZ
+    </h1>
+
+    <span>
+        VENSIZ SUPPORT CENTER
+    </span>
+
 </div>
 
 
-<!-- پیام ورود -->
+<!-- ================= LOGIN MESSAGE ================= -->
 
-<div id="loginBox" class="message login-message hidden">
+<div id="loginBox" class="login-message hidden">
 
-    <h2>🔐 ابتدا احراز هویت کنید</h2>
+    <h2>
+        🔐 ابتدا احراز هویت کنید
+    </h2>
 
     <p>
-        برای ارسال تیکت پشتیبانی باید ابتدا وارد حساب کاربری خود شوید.
+        برای ارسال تیکت پشتیبانی ابتدا باید وارد حساب کاربری خود شوید.
     </p>
 
     <a href="login.html" class="auth-btn">
@@ -326,16 +514,21 @@ button:disabled{
 </div>
 
 
-<!-- پنل پشتیبانی -->
+<!-- ================= SUPPORT ================= -->
 
 <div id="supportBox" class="card hidden">
+
 
     <div class="user-box">
 
         <div class="status">
+
             <div class="dot"></div>
+
             احراز هویت شده
+
         </div>
+
 
         <div id="userEmail" class="email">
             -
@@ -343,6 +536,8 @@ button:disabled{
 
     </div>
 
+
+    <!-- FORM -->
 
     <form id="ticketForm">
 
@@ -359,7 +554,7 @@ button:disabled{
 
 
         <label for="message">
-            توضیحات
+            توضیحات مشکل
         </label>
 
         <textarea
@@ -369,38 +564,65 @@ button:disabled{
         ></textarea>
 
 
-        <button id="submitBtn" type="submit">
+        <button
+            id="submitBtn"
+            type="submit"
+        >
             ارسال تیکت
         </button>
 
     </form>
 
 
-    <div id="result" class="message hidden" style="margin-top:20px;"></div>
+    <!-- RESULT -->
+
+    <div
+        id="result"
+        class="message hidden"
+    ></div>
 
 
-    <div id="tickets"></div>
+    <!-- MY TICKETS -->
+
+    <div class="my-tickets">
+
+        <div class="my-tickets-title">
+            تیکت‌های من
+        </div>
+
+        <div id="tickets">
+
+            <div class="empty">
+                در حال دریافت تیکت‌ها...
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 </div>
+
+</main>
 
 
 <script>
 
-/* =========================================
-   SUPABASE
-========================================= */
+/* =====================================================
+   SUPABASE CONFIG
+===================================================== */
 
-/*
-   این دو مقدار را از پروژه Supabase خودت بگذار.
-*/
-
-const SUPABASE_URL = "PROJECT_URL_HERE";
+const SUPABASE_URL =
+    "https://gpeckwmijsgklzhtgqdso.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-"YOUR_PUBLISHABLE_KEY_HERE";
+    "sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
 
+
+/* =====================================================
+   CREATE SUPABASE CLIENT
+===================================================== */
 
 const supabaseClient =
     window.supabase.createClient(
@@ -409,9 +631,9 @@ const supabaseClient =
     );
 
 
-/* =========================================
-   DOM
-========================================= */
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
 const loginBox =
     document.getElementById("loginBox");
@@ -435,73 +657,9 @@ const tickets =
     document.getElementById("tickets");
 
 
-/* =========================================
-   نمایش پیام
-========================================= */
-
-function showResult(text, type){
-
-    result.textContent = text;
-
-    result.className =
-        "message " + type;
-
-}
-
-
-/* =========================================
-   بررسی کاربر
-========================================= */
-
-async function checkAuth(){
-
-    try{
-
-        const {
-            data,
-            error
-        } = await supabaseClient.auth.getSession();
-
-
-        if(error){
-            console.error(error);
-            showLogin();
-            return;
-        }
-
-
-        const session = data.session;
-
-
-        if(!session){
-
-            showLogin();
-
-            return;
-
-        }
-
-
-        showSupport(session.user);
-
-
-    }catch(error){
-
-        console.error(
-            "AUTH ERROR:",
-            error
-        );
-
-        showLogin();
-
-    }
-
-}
-
-
-/* =========================================
-   حالت بدون ورود
-========================================= */
+/* =====================================================
+   SHOW LOGIN
+===================================================== */
 
 function showLogin(){
 
@@ -512,15 +670,16 @@ function showLogin(){
 }
 
 
-/* =========================================
-   حالت وارد شده
-========================================= */
+/* =====================================================
+   SHOW SUPPORT
+===================================================== */
 
 function showSupport(user){
 
     loginBox.classList.add("hidden");
 
     supportBox.classList.remove("hidden");
+
 
     if(user && user.email){
 
@@ -540,9 +699,112 @@ function showSupport(user){
 }
 
 
-/* =========================================
-   ارسال تیکت
-========================================= */
+/* =====================================================
+   RESULT
+===================================================== */
+
+function showResult(text,type){
+
+    result.textContent = text;
+
+    result.className =
+        "message " + type;
+
+    result.classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   CHECK AUTH
+===================================================== */
+
+async function checkAuth(){
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient.auth.getSession();
+
+
+        if(error){
+
+            console.error(
+                "SESSION ERROR:",
+                error
+            );
+
+            showLogin();
+
+            return;
+
+        }
+
+
+        const session =
+            data.session;
+
+
+        if(session){
+
+            showSupport(
+                session.user
+            );
+
+        }else{
+
+            showLogin();
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "AUTH ERROR:",
+            error
+        );
+
+        showLogin();
+
+    }
+
+}
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+supabaseClient.auth.onAuthStateChange(
+    function(event,session){
+
+        console.log(
+            "AUTH EVENT:",
+            event
+        );
+
+
+        if(session){
+
+            showSupport(
+                session.user
+            );
+
+        }else{
+
+            showLogin();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   SEND TICKET
+===================================================== */
 
 ticketForm.addEventListener(
     "submit",
@@ -557,7 +819,12 @@ ticketForm.addEventListener(
             "در حال ارسال...";
 
 
+        result.classList.add("hidden");
+
+
         try{
+
+            /* Get current user */
 
             const {
                 data,
@@ -568,7 +835,7 @@ ticketForm.addEventListener(
             if(error || !data.user){
 
                 showResult(
-                    "جلسه شما منقضی شده است. دوباره وارد شوید.",
+                    "احراز هویت شما معتبر نیست. لطفاً دوباره وارد شوید.",
                     "error"
                 );
 
@@ -576,6 +843,12 @@ ticketForm.addEventListener(
 
             }
 
+
+            const user =
+                data.user;
+
+
+            /* Get form data */
 
             const subject =
                 document
@@ -594,7 +867,7 @@ ticketForm.addEventListener(
             if(!subject || !message){
 
                 showResult(
-                    "لطفاً همه فیلدها را تکمیل کنید.",
+                    "لطفاً موضوع و توضیحات را وارد کنید.",
                     "error"
                 );
 
@@ -602,6 +875,8 @@ ticketForm.addEventListener(
 
             }
 
+
+            /* Insert ticket */
 
             const {
                 error: insertError
@@ -609,11 +884,14 @@ ticketForm.addEventListener(
                 .from("tickets")
                 .insert({
 
-                    user_id: data.user.id,
+                    user_id:
+                        user.id,
 
-                    subject: subject,
+                    subject:
+                        subject,
 
-                    message: message
+                    message:
+                        message
 
                 });
 
@@ -621,18 +899,24 @@ ticketForm.addEventListener(
             if(insertError){
 
                 console.error(
-                    "TICKET ERROR:",
+                    "INSERT ERROR:",
                     insertError
                 );
 
+
                 showResult(
-                    "ارسال تیکت انجام نشد. تنظیمات دیتابیس را بررسی کنید.",
+                    "ارسال تیکت انجام نشد. خطای دیتابیس دریافت شد.",
                     "error"
                 );
 
                 return;
 
             }
+
+
+            /* Success */
+
+            ticketForm.reset();
 
 
             showResult(
@@ -641,18 +925,21 @@ ticketForm.addEventListener(
             );
 
 
-            ticketForm.reset();
-
-
-            loadTickets(data.user.id);
+            await loadTickets(
+                user.id
+            );
 
 
         }catch(error){
 
-            console.error(error);
+            console.error(
+                "TICKET ERROR:",
+                error
+            );
+
 
             showResult(
-                "خطایی در ارسال تیکت رخ داد.",
+                "خطایی هنگام ارسال تیکت رخ داد.",
                 "error"
             );
 
@@ -669,109 +956,149 @@ ticketForm.addEventListener(
 );
 
 
-/* =========================================
-   نمایش تیکت‌های کاربر
-========================================= */
+/* =====================================================
+   LOAD USER TICKETS
+===================================================== */
 
 async function loadTickets(userId){
 
-    tickets.innerHTML = "";
+    tickets.innerHTML =
+        '<div class="empty">در حال دریافت تیکت‌ها...</div>';
 
 
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("tickets")
-        .select("*")
-        .eq("user_id", userId)
-        .order("created_at", {
-            ascending:false
-        });
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("tickets")
+            .select(
+                "id, subject, message, status, created_at"
+            )
+            .eq(
+                "user_id",
+                userId
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
 
 
-    if(error){
+        if(error){
+
+            console.error(
+                "LOAD ERROR:",
+                error
+            );
+
+            tickets.innerHTML =
+                '<div class="empty">امکان دریافت تیکت‌ها وجود ندارد.</div>';
+
+            return;
+
+        }
+
+
+        if(!data || data.length === 0){
+
+            tickets.innerHTML =
+                '<div class="empty">هنوز هیچ تیکتی ارسال نکرده‌اید.</div>';
+
+            return;
+
+        }
+
+
+        tickets.innerHTML = "";
+
+
+        data.forEach(
+            function(ticket){
+
+                const box =
+                    document.createElement(
+                        "div"
+                    );
+
+                box.className =
+                    "ticket";
+
+
+                const title =
+                    document.createElement(
+                        "h3"
+                    );
+
+                title.textContent =
+                    ticket.subject;
+
+
+                const text =
+                    document.createElement(
+                        "p"
+                    );
+
+                text.textContent =
+                    ticket.message;
+
+
+                const status =
+                    document.createElement(
+                        "div"
+                    );
+
+                status.className =
+                    "ticket-status";
+
+
+                status.textContent =
+                    ticket.status ||
+                    "open";
+
+
+                box.appendChild(
+                    title
+                );
+
+                box.appendChild(
+                    text
+                );
+
+                box.appendChild(
+                    status
+                );
+
+
+                tickets.appendChild(
+                    box
+                );
+
+            }
+        );
+
+
+    }catch(error){
 
         console.error(
-            "LOAD TICKETS ERROR:",
+            "TICKETS ERROR:",
             error
         );
 
-        return;
+        tickets.innerHTML =
+            '<div class="empty">خطایی هنگام دریافت تیکت‌ها رخ داد.</div>';
 
     }
-
-
-    if(!data || data.length === 0){
-
-        return;
-
-    }
-
-
-    data.forEach(function(ticket){
-
-        const div =
-            document.createElement("div");
-
-        div.className = "ticket";
-
-
-        const title =
-            document.createElement("h3");
-
-        title.textContent =
-            ticket.subject;
-
-
-        const text =
-            document.createElement("p");
-
-        text.textContent =
-            ticket.message;
-
-
-        div.appendChild(title);
-
-        div.appendChild(text);
-
-        tickets.appendChild(div);
-
-    });
 
 }
 
 
-/* =========================================
-   تغییر وضعیت احراز هویت
-========================================= */
-
-supabaseClient.auth.onAuthStateChange(
-    function(event, session){
-
-        console.log(
-            "AUTH EVENT:",
-            event
-        );
-
-
-        if(session){
-
-            showSupport(session.user);
-
-        }else{
-
-            showLogin();
-
-        }
-
-    }
-);
-
-
-/* =========================================
-   شروع
-========================================= */
+/* =====================================================
+   START
+===================================================== */
 
 checkAuth();
 
