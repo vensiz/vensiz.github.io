@@ -756,7 +756,10 @@ message:message,
 
 status:"open"
 
-});
+})
+.select()
+.single();
+
 
 
 if(error){
@@ -765,14 +768,29 @@ alert(error.message);
 
 console.log(error);
 
+sendTicket.disabled=false;
+
 return;
 
 }
 
 
+
 alert("تیکت با موفقیت ثبت شد");
-.select()
-.single();
+
+
+showResult(
+"✅ تیکت ساخته شد : "+number,
+"success"
+);
+
+
+document.getElementById("userName").value="";
+document.getElementById("subject").value="";
+document.getElementById("message").value="";
+
+
+load
 
 
 
