@@ -1,444 +1,587 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<title>VENSIZ | پشتیبانی</title>
 
-<title>پشتیبانی | VENSIZ</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-
-min-height:100vh;
-
-background:
-radial-gradient(
-circle at center,
-rgba(0,255,100,.08),
-transparent 45%
-),
-#050805;
-
-color:#fff;
-
-font-family:
-Tahoma,
-Arial,
-sans-serif;
-
+    background:#050805;
+    color:#fff;
+    font-family:Tahoma, Arial, sans-serif;
+    min-height:100vh;
 }
 
+/* ================= HEADER ================= */
+
 header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:80px;
 
-position:fixed;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-top:0;
-right:0;
-left:0;
+    padding:0 6%;
 
-height:78px;
+    background:rgba(3,8,4,.94);
+    border-bottom:1px solid rgba(0,255,100,.15);
 
-display:flex;
+    backdrop-filter:blur(15px);
 
-align-items:center;
-
-justify-content:space-between;
-
-padding:0 6%;
-
-background:rgba(3,8,4,.95);
-
-border-bottom:
-1px solid rgba(0,255,100,.15);
-
-backdrop-filter:blur(15px);
-
-z-index:1000;
-
+    z-index:1000;
 }
 
 .logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
 
-display:flex;
+    font-size:28px;
+    font-weight:bold;
 
-align-items:center;
+    color:#00ff66;
+    text-decoration:none;
 
-gap:12px;
-
-color:#00ff66;
-
-text-decoration:none;
-
-font-size:27px;
-
-font-weight:bold;
-
+    text-shadow:0 0 20px rgba(0,255,100,.7);
 }
 
 .logo-box{
+    width:42px;
+    height:42px;
 
-width:42px;
-height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-display:flex;
+    border:2px solid #00ff66;
+    border-radius:10px;
 
-align-items:center;
-justify-content:center;
+    font-size:24px;
 
-border:2px solid #00ff66;
-
-border-radius:10px;
-
+    box-shadow:
+        0 0 15px rgba(0,255,100,.5),
+        inset 0 0 15px rgba(0,255,100,.15);
 }
 
 nav{
-
-display:flex;
-
-gap:22px;
-
+    display:flex;
+    gap:28px;
+    align-items:center;
 }
 
 nav a{
-
-color:#aaa;
-
-text-decoration:none;
-
-font-size:13px;
-
+    color:#ddd;
+    text-decoration:none;
+    font-size:14px;
+    transition:.3s;
 }
 
 nav a:hover{
-
-color:#00ff66;
-
+    color:#00ff66;
+    text-shadow:0 0 10px #00ff66;
 }
+
+.auth-btn{
+    padding:10px 18px;
+    border:1px solid #00ff66;
+    border-radius:8px;
+    color:#00ff66 !important;
+    background:rgba(0,255,100,.05);
+}
+
+.auth-btn:hover{
+    background:#00ff66;
+    color:#001b08 !important;
+}
+
+/* ================= PAGE ================= */
 
 .page{
+    min-height:100vh;
+    padding:140px 20px 80px;
 
-min-height:100vh;
-
-padding:
-135px 20px 70px;
-
-display:flex;
-
-justify-content:center;
-
+    background:
+        radial-gradient(
+            circle at center top,
+            rgba(0,255,100,.10),
+            transparent 45%
+        ),
+        linear-gradient(
+            rgba(0,0,0,.2),
+            rgba(2,10,4,.98)
+        );
 }
 
+.page::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    background-image:
+        linear-gradient(
+            rgba(0,255,100,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,255,100,.025) 1px,
+            transparent 1px
+        );
+
+    background-size:50px 50px;
+
+    mask-image:linear-gradient(
+        to bottom,
+        black,
+        transparent
+    );
+}
+
+/* ================= CONTAINER ================= */
+
 .container{
-
-width:100%;
-
-max-width:900px;
-
+    position:relative;
+    width:100%;
+    max-width:900px;
+    margin:auto;
 }
 
 .title{
-
-text-align:center;
-
-margin-bottom:45px;
-
+    text-align:center;
+    margin-bottom:40px;
 }
 
 .title h1{
+    font-size:42px;
+    margin-bottom:12px;
 
-font-size:36px;
-
-margin-bottom:12px;
-
+    text-shadow:
+        0 0 15px rgba(0,255,100,.5),
+        0 0 35px rgba(0,255,100,.2);
 }
 
-.title h1 span{
-
-color:#00ff66;
-
+.title span{
+    color:#00ff66;
+    font-size:13px;
+    letter-spacing:2px;
 }
 
-.title p{
+/* ================= AUTH MESSAGE ================= */
 
-color:#777;
+.auth-message{
+    display:none;
 
-font-size:13px;
+    text-align:center;
 
-}
+    padding:50px 30px;
 
-.box{
+    background:rgba(5,15,8,.88);
 
-padding:40px 30px;
+    border:1px solid rgba(0,255,100,.18);
 
-background:#080e09;
+    border-radius:18px;
 
-border:
-1px solid rgba(0,255,100,.18);
-
-border-radius:20px;
-
-box-shadow:
-0 20px 70px rgba(0,0,0,.45);
-
-}
-
-.auth-box{
-
-text-align:center;
-
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.4),
+        inset 0 0 30px rgba(0,255,100,.02);
 }
 
 .auth-icon{
+    width:75px;
+    height:75px;
 
-font-size:50px;
+    margin:0 auto 20px;
 
-margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
+    border:2px solid #00ff66;
+    border-radius:20px;
+
+    font-size:32px;
+
+    color:#00ff66;
+
+    box-shadow:
+        0 0 25px rgba(0,255,100,.3);
 }
 
-.auth-box h2{
-
-margin-bottom:15px;
-
+.auth-message h2{
+    margin-bottom:12px;
 }
 
-.auth-box p{
-
-color:#888;
-
-line-height:2;
-
-font-size:13px;
-
+.auth-message p{
+    color:#888;
+    line-height:2;
+    margin-bottom:25px;
 }
 
-.button{
+.btn{
+    display:inline-block;
 
-display:inline-block;
+    padding:13px 30px;
 
-margin-top:25px;
+    border-radius:8px;
 
-padding:13px 30px;
+    text-decoration:none;
 
-border-radius:9px;
+    font-weight:bold;
 
-background:#00c853;
-
-color:#001b08;
-
-text-decoration:none;
-
-font-weight:bold;
-
+    transition:.3s;
 }
 
-#ticketArea{
+.btn-primary{
+    background:#00c853;
+    color:#001b08;
 
-display:none;
+    box-shadow:
+        0 0 20px rgba(0,255,100,.2);
+}
 
+.btn-primary:hover{
+    background:#00ff66;
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 0 30px rgba(0,255,100,.45);
+}
+
+/* ================= SUPPORT ================= */
+
+.support-box{
+    display:none;
+
+    background:rgba(5,15,8,.88);
+
+    border:1px solid rgba(0,255,100,.18);
+
+    border-radius:18px;
+
+    padding:35px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.4),
+        inset 0 0 30px rgba(0,255,100,.02);
 }
 
 .user-info{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-margin-bottom:25px;
+    gap:20px;
 
-padding:14px;
+    margin-bottom:30px;
 
-border-radius:9px;
+    padding:15px 18px;
 
-background:rgba(0,255,100,.04);
+    border-radius:10px;
 
-border:
-1px solid rgba(0,255,100,.12);
+    background:#091109;
 
-color:#888;
-
-font-size:12px;
-
+    border:1px solid rgba(0,255,100,.10);
 }
 
-.user-info span{
-
-color:#00ff66;
-
+.user-info-text{
+    color:#aaa;
+    font-size:13px;
 }
 
-label{
+.user-email{
+    color:#00ff66;
+    margin-top:5px;
+    direction:ltr;
+    text-align:right;
+}
 
-display:block;
+.logout-btn{
+    border:1px solid #333;
+    background:#111;
+    color:#aaa;
 
-color:#aaa;
+    padding:9px 15px;
 
-font-size:12px;
+    border-radius:7px;
 
-margin-bottom:8px;
+    cursor:pointer;
+}
 
+.logout-btn:hover{
+    border-color:#ff5555;
+    color:#ff5555;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+
+    margin-bottom:9px;
+
+    color:#ddd;
+
+    font-size:14px;
 }
 
 input,
 textarea{
+    width:100%;
 
-width:100%;
+    background:#080d09;
 
-border:
-1px solid rgba(0,255,100,.15);
+    color:#fff;
 
-border-radius:9px;
+    border:1px solid rgba(0,255,100,.15);
 
-background:#050805;
+    border-radius:9px;
 
-color:#fff;
+    padding:14px;
 
-outline:none;
+    font-family:Tahoma, Arial, sans-serif;
 
-font-family:Tahoma,Arial,sans-serif;
+    outline:none;
 
-font-size:13px;
-
-padding:14px;
-
-margin-bottom:20px;
-
+    transition:.3s;
 }
 
-input{
+input:focus,
+textarea:focus{
+    border-color:#00ff66;
 
-height:48px;
-
+    box-shadow:
+        0 0 15px rgba(0,255,100,.08);
 }
 
 textarea{
-
-min-height:180px;
-
-resize:vertical;
-
-line-height:1.9;
-
+    min-height:170px;
+    resize:vertical;
 }
 
-.submit{
+.submit-btn{
+    width:100%;
 
-width:100%;
+    padding:15px;
 
-height:50px;
+    border:0;
 
-border:0;
+    border-radius:9px;
 
-border-radius:9px;
+    background:#00c853;
 
-background:#00c853;
+    color:#001b08;
 
-color:#001b08;
+    font-size:15px;
 
-font-weight:bold;
+    font-weight:bold;
 
-cursor:pointer;
+    cursor:pointer;
 
+    transition:.3s;
 }
+
+.submit-btn:hover{
+    background:#00ff66;
+
+    box-shadow:
+        0 0 25px rgba(0,255,100,.35);
+}
+
+.submit-btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+/* ================= STATUS ================= */
 
 .message{
+    display:none;
 
-margin-top:20px;
+    margin-bottom:20px;
 
-text-align:center;
+    padding:14px;
 
-font-size:13px;
+    border-radius:8px;
 
-color:#aaa;
+    text-align:center;
 
+    font-size:13px;
 }
 
-.error{
+.message.success{
+    display:block;
 
-color:#ff5555;
+    color:#00ff66;
 
+    background:rgba(0,255,100,.07);
+
+    border:1px solid rgba(0,255,100,.2);
 }
 
-.success{
+.message.error{
+    display:block;
 
-color:#00ff66;
+    color:#ff7777;
 
+    background:rgba(255,0,0,.05);
+
+    border:1px solid rgba(255,80,80,.2);
 }
+
+/* ================= TICKETS ================= */
+
+.tickets{
+    margin-top:35px;
+}
+
+.tickets-title{
+    color:#00ff66;
+    margin-bottom:15px;
+    font-size:17px;
+}
+
+.ticket{
+    padding:18px;
+
+    margin-bottom:12px;
+
+    background:#080d09;
+
+    border:1px solid rgba(0,255,100,.10);
+
+    border-radius:10px;
+}
+
+.ticket-head{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+
+    margin-bottom:10px;
+}
+
+.ticket-subject{
+    font-weight:bold;
+}
+
+.ticket-status{
+    color:#00ff66;
+    font-size:12px;
+}
+
+.ticket-message{
+    color:#888;
+
+    line-height:1.9;
+
+    font-size:13px;
+
+    white-space:pre-wrap;
+}
+
+.ticket-date{
+    color:#555;
+    font-size:11px;
+    margin-top:12px;
+}
+
+/* ================= LOADING ================= */
+
+.loading{
+    text-align:center;
+    color:#888;
+    padding:30px;
+}
+
+/* ================= FOOTER ================= */
 
 footer{
+    padding:35px 8%;
 
-padding:35px 20px;
+    text-align:center;
 
-text-align:center;
+    background:#030603;
 
-background:#030603;
+    border-top:1px solid rgba(0,255,100,.1);
 
-border-top:
-1px solid rgba(0,255,100,.1);
-
-color:#666;
-
+    color:#666;
 }
 
 footer strong{
-
-color:#00ff66;
-
-font-size:20px;
-
+    color:#00ff66;
 }
+
+/* ================= MOBILE ================= */
 
 @media(max-width:800px){
 
-header{
+    header{
+        padding:0 20px;
+    }
 
-padding:0 20px;
+    nav{
+        display:none;
+    }
 
+    .logo{
+        font-size:22px;
+    }
+
+    .page{
+        padding-top:120px;
+    }
+
+    .title h1{
+        font-size:32px;
+    }
+
+    .support-box{
+        padding:22px;
+    }
+
+    .user-info{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .logout-btn{
+        width:100%;
+    }
 }
-
-nav{
-
-display:none;
-
-}
-
-.title h1{
-
-font-size:29px;
-
-}
-
-.box{
-
-padding:25px 20px;
-
-}
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
+<!-- ================= HEADER ================= -->
 
 <header>
 
 <a href="index.html" class="logo">
-
-<div class="logo-box">V</div>
-
-VENSIZ
-
+    <div class="logo-box">V</div>
+    VENSIZ
 </a>
 
 <nav>
@@ -455,12 +598,16 @@ VENSIZ
 
 <a href="support.html">پشتیبانی</a>
 
-<a href="login.html">🔐 احراز هویت</a>
+<a href="login.html" class="auth-btn" id="authButton">
+    🔐 احراز هویت
+</a>
 
 </nav>
 
 </header>
 
+
+<!-- ================= MAIN ================= -->
 
 <main class="page">
 
@@ -468,149 +615,133 @@ VENSIZ
 
 <div class="title">
 
-<h1>
+<h1>پشتیبانی VENSIZ</h1>
 
-پشتیبانی <span>VENSIZ</span>
-
-</h1>
-
-<p>
-
-برای ارتباط با تیم پشتیبانی تیکت خود را ثبت کنید.
-
-</p>
+<span>VENSIZ SUPPORT CENTER</span>
 
 </div>
 
 
-<!-- AUTH -->
+<!-- AUTH MESSAGE -->
 
-<div id="authBox" class="box auth-box">
+<div class="auth-message" id="authMessage">
 
 <div class="auth-icon">
-
 🔐
-
 </div>
 
-<h2>
-
-ابتدا احراز هویت کنید
-
-</h2>
+<h2>ابتدا احراز هویت کنید</h2>
 
 <p>
-
-برای ارسال تیکت باید ابتدا وارد حساب کاربری خود شوید.
-
+برای ارسال تیکت پشتیبانی باید ابتدا وارد حساب کاربری خود شوید.
+<br>
+پس از ورود می‌توانید مستقیماً از همین صفحه تیکت ارسال کنید.
 </p>
 
-<a href="login.html" class="button">
-
-ورود / ثبت‌نام
-
+<a href="login.html" class="btn btn-primary">
+ورود / احراز هویت
 </a>
 
 </div>
 
 
-<!-- TICKET -->
+<!-- SUPPORT -->
 
-<div id="ticketArea" class="box">
-
-<h2 style="color:#00ff66;margin-bottom:10px">
-
-ایجاد تیکت جدید
-
-</h2>
-
-<p style="color:#777;font-size:13px;margin-bottom:25px">
-
-درخواست خود را برای تیم پشتیبانی ارسال کنید.
-
-</p>
-
+<div class="support-box" id="supportBox">
 
 <div class="user-info">
 
-حساب واردشده:
+<div class="user-info-text">
 
-<span id="userEmail">
+<span>شما وارد شده‌اید</span>
 
-در حال بررسی...
+<div class="user-email" id="userEmail">
+-
+</div>
 
-</span>
+</div>
+
+<button class="logout-btn" id="logoutButton">
+خروج از حساب
+</button>
 
 </div>
 
 
-<label>
+<div id="messageBox" class="message"></div>
 
+
+<form id="ticketForm">
+
+<div class="form-group">
+
+<label for="subject">
 موضوع تیکت
-
 </label>
 
 <input
-id="subject"
-type="text"
-placeholder="مثلاً مشکل ورود به سرور"
+    type="text"
+    id="subject"
+    placeholder="موضوع درخواست خود را وارد کنید..."
+    required
+    maxlength="150"
 >
 
+</div>
 
-<label>
 
-متن درخواست
+<div class="form-group">
 
+<label for="ticketMessage">
+متن پیام
 </label>
 
 <textarea
-id="message"
-placeholder="مشکل یا درخواست خود را بنویسید..."
+    id="ticketMessage"
+    placeholder="مشکل یا درخواست خود را کامل توضیح دهید..."
+    required
 ></textarea>
+
+</div>
 
 
 <button
-id="submitTicket"
-class="submit"
+    type="submit"
+    class="submit-btn"
+    id="submitButton"
 >
-
 ارسال تیکت
-
 </button>
 
+</form>
 
-<div
-id="ticketMessage"
-class="message"
-></div>
+
+<!-- TICKETS -->
+
+<div class="tickets">
+
+<div class="tickets-title">
+تیکت‌های قبلی شما
+</div>
+
+<div id="ticketsList">
+
+<div class="loading">
+در حال دریافت تیکت‌ها...
+</div>
 
 </div>
 
-
-<!-- ERROR -->
-
-<div
-id="errorBox"
-class="box"
-style="
-display:none;
-margin-top:20px;
-text-align:center;
-"
->
-
-<div
-class="error"
-id="errorText"
-></div>
-
 </div>
 
+</div>
 
 </div>
 
 </main>
 
+
+<!-- ================= FOOTER ================= -->
 
 <footer>
 
@@ -623,279 +754,593 @@ VENSIZ Roleplay © 2026
 </footer>
 
 
-<script
-src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
-
-
 <script>
 
-const SUPABASE_URL =
-"https://gpeckwmjsgklzhtqgdso.supabase.co";
+/*
+====================================================
+VENSIZ SUPABASE CONFIG
+====================================================
+*/
 
+/*
+مهم:
+اسم این متغیر supabase نیست.
+به همین دلیل با کتابخانه Supabase تداخل ندارد.
+*/
+
+const SUPABASE_URL =
+    "https://gpecwmjsgklzhtgqdso.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
+    "sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
 
+
+/*
+ساخت کلاینت Supabase
+فقط یک بار
+*/
 
 const supabaseClient =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_PUBLISHABLE_KEY,
-{
-auth:{
-persistSession:true,
-autoRefreshToken:true,
-detectSessionInUrl:true
-}
-}
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
 
-const authBox =
-document.getElementById("authBox");
+/*
+====================================================
+ELEMENTS
+====================================================
+*/
 
-const ticketArea =
-document.getElementById("ticketArea");
+const authMessage =
+    document.getElementById("authMessage");
 
-const errorBox =
-document.getElementById("errorBox");
-
-const errorText =
-document.getElementById("errorText");
+const supportBox =
+    document.getElementById("supportBox");
 
 const userEmail =
-document.getElementById("userEmail");
+    document.getElementById("userEmail");
+
+const authButton =
+    document.getElementById("authButton");
+
+const logoutButton =
+    document.getElementById("logoutButton");
+
+const ticketForm =
+    document.getElementById("ticketForm");
+
+const submitButton =
+    document.getElementById("submitButton");
+
+const messageBox =
+    document.getElementById("messageBox");
+
+const ticketsList =
+    document.getElementById("ticketsList");
 
 
-async function checkAuth(){
+/*
+====================================================
+MESSAGE
+====================================================
+*/
 
-try{
+function showMessage(text, type){
 
-const {
-data,
-error
-} =
-await supabaseClient.auth.getSession();
+    messageBox.textContent = text;
+
+    messageBox.className =
+        "message " + type;
+
+}
 
 
-console.log(
-"VENSIZ SESSION:",
-data.session
+/*
+====================================================
+AUTH STATE
+====================================================
+*/
+
+async function checkUser(){
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient.auth.getUser();
+
+
+        if(error){
+            console.error(error);
+
+            showLoggedOut();
+
+            return;
+        }
+
+
+        const user = data.user;
+
+
+        if(user){
+
+            showLoggedIn(user);
+
+        }else{
+
+            showLoggedOut();
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "Auth error:",
+            error
+        );
+
+        showLoggedOut();
+
+    }
+
+}
+
+
+/*
+====================================================
+LOGGED IN
+====================================================
+*/
+
+function showLoggedIn(user){
+
+    authMessage.style.display = "none";
+
+    supportBox.style.display = "block";
+
+
+    userEmail.textContent =
+        user.email || "کاربر VENSIZ";
+
+
+    authButton.textContent =
+        "👤 حساب کاربری";
+
+    authButton.href =
+        "login.html";
+
+
+    loadTickets();
+
+}
+
+
+/*
+====================================================
+LOGGED OUT
+====================================================
+*/
+
+function showLoggedOut(){
+
+    supportBox.style.display = "none";
+
+    authMessage.style.display = "block";
+
+
+    authButton.textContent =
+        "🔐 احراز هویت";
+
+    authButton.href =
+        "login.html";
+
+}
+
+
+/*
+====================================================
+LOGOUT
+====================================================
+*/
+
+logoutButton.addEventListener(
+    "click",
+    async function(){
+
+        logoutButton.disabled = true;
+
+        const {
+            error
+        } = await supabaseClient.auth.signOut();
+
+
+        if(error){
+
+            console.error(error);
+
+            showMessage(
+                "خروج از حساب انجام نشد.",
+                "error"
+            );
+
+            logoutButton.disabled = false;
+
+            return;
+        }
+
+
+        window.location.href =
+            "login.html";
+
+    }
 );
 
 
-if(error){
+/*
+====================================================
+SEND TICKET
+====================================================
+*/
 
-throw error;
+ticketForm.addEventListener(
+    "submit",
+    async function(event){
 
-}
-
-
-if(!data.session){
-
-authBox.style.display =
-"block";
-
-ticketArea.style.display =
-"none";
-
-return;
-
-}
+        event.preventDefault();
 
 
-/* کاربر وارد شده */
+        submitButton.disabled = true;
 
-authBox.style.display =
-"none";
+        submitButton.textContent =
+            "در حال ارسال...";
 
-ticketArea.style.display =
-"block";
 
-userEmail.textContent =
-data.session.user.email ||
-"کاربر VENSIZ";
+        messageBox.className =
+            "message";
 
-}
-catch(error){
 
-console.error(
-"VENSIZ AUTH ERROR:",
-error
+        try{
+
+            /*
+            دوباره کاربر را بررسی می‌کنیم
+            */
+
+            const {
+                data,
+                error: authError
+            } = await supabaseClient.auth.getUser();
+
+
+            if(authError || !data.user){
+
+                showLoggedOut();
+
+                showMessage(
+                    "ابتدا احراز هویت کنید.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            const user =
+                data.user;
+
+
+            const subject =
+                document
+                    .getElementById("subject")
+                    .value
+                    .trim();
+
+
+            const message =
+                document
+                    .getElementById("ticketMessage")
+                    .value
+                    .trim();
+
+
+            if(!subject || !message){
+
+                showMessage(
+                    "لطفاً موضوع و متن پیام را کامل کنید.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            /*
+            ارسال تیکت به Supabase
+            */
+
+            const {
+                error
+            } = await supabaseClient
+                .from("tickets")
+                .insert({
+
+                    user_id: user.id,
+
+                    subject: subject,
+
+                    message: message
+
+                });
+
+
+            if(error){
+
+                console.error(
+                    "Ticket error:",
+                    error
+                );
+
+
+                showMessage(
+                    "ارسال تیکت انجام نشد. خطا را در Console بررسی کنید.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            /*
+            موفق
+            */
+
+            showMessage(
+                "تیکت شما با موفقیت ارسال شد ✅",
+                "success"
+            );
+
+
+            ticketForm.reset();
+
+
+            /*
+            لیست تیکت‌ها را دوباره می‌گیریم
+            */
+
+            await loadTickets();
+
+
+        }catch(error){
+
+            console.error(
+                "Unexpected error:",
+                error
+            );
+
+
+            showMessage(
+                "یک خطای غیرمنتظره رخ داد.",
+                "error"
+            );
+
+
+        }finally{
+
+            submitButton.disabled = false;
+
+            submitButton.textContent =
+                "ارسال تیکت";
+
+        }
+
+    }
 );
 
 
-/* صفحه سفید نشود */
+/*
+====================================================
+LOAD USER TICKETS
+====================================================
+*/
 
-authBox.style.display =
-"block";
+async function loadTickets(){
 
-ticketArea.style.display =
-"none";
+    ticketsList.innerHTML =
+        '<div class="loading">در حال دریافت تیکت‌ها...</div>';
 
-errorBox.style.display =
-"block";
 
-errorText.textContent =
-"خطا در بررسی احراز هویت: " +
-error.message;
+    try{
+
+        const {
+            data: userData,
+            error: userError
+        } = await supabaseClient.auth.getUser();
+
+
+        if(userError || !userData.user){
+
+            ticketsList.innerHTML =
+                '<div class="loading">ابتدا وارد حساب شوید.</div>';
+
+            return;
+        }
+
+
+        /*
+        فقط تیکت‌های کاربر فعلی
+        */
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+
+            .from("tickets")
+
+            .select(
+                "id, subject, message, status, created_at"
+            )
+
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Load tickets error:",
+                error
+            );
+
+
+            ticketsList.innerHTML =
+                '<div class="loading">دریافت تیکت‌ها انجام نشد.</div>';
+
+            return;
+        }
+
+
+        if(!data || data.length === 0){
+
+            ticketsList.innerHTML =
+                '<div class="loading">هنوز تیکتی ارسال نکرده‌اید.</div>';
+
+            return;
+        }
+
+
+        ticketsList.innerHTML = "";
+
+
+        data.forEach(function(ticket){
+
+            const ticketElement =
+                document.createElement("div");
+
+
+            ticketElement.className =
+                "ticket";
+
+
+            const date =
+                new Date(
+                    ticket.created_at
+                ).toLocaleString(
+                    "fa-IR"
+                );
+
+
+            ticketElement.innerHTML = `
+
+                <div class="ticket-head">
+
+                    <div class="ticket-subject">
+                        ${escapeHtml(ticket.subject)}
+                    </div>
+
+                    <div class="ticket-status">
+                        ${escapeHtml(ticket.status)}
+                    </div>
+
+                </div>
+
+
+                <div class="ticket-message">
+                    ${escapeHtml(ticket.message)}
+                </div>
+
+
+                <div class="ticket-date">
+                    ${date}
+                </div>
+
+            `;
+
+
+            ticketsList.appendChild(
+                ticketElement
+            );
+
+        });
+
+
+    }catch(error){
+
+        console.error(error);
+
+        ticketsList.innerHTML =
+            '<div class="loading">خطا در دریافت اطلاعات.</div>';
+
+    }
 
 }
 
+
+/*
+====================================================
+HTML ESCAPE
+====================================================
+*/
+
+function escapeHtml(text){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text ?? "";
+
+    return div.innerHTML;
+
 }
 
+
+/*
+====================================================
+AUTH STATE LISTENER
+====================================================
+*/
 
 supabaseClient.auth.onAuthStateChange(
-(event, session)=>{
+    function(event, session){
 
-console.log(
-"AUTH EVENT:",
-event
+        console.log(
+            "Auth event:",
+            event
+        );
+
+
+        if(session && session.user){
+
+            showLoggedIn(
+                session.user
+            );
+
+        }else{
+
+            showLoggedOut();
+
+        }
+
+    }
 );
 
-if(session){
 
-authBox.style.display =
-"none";
+/*
+====================================================
+START
+====================================================
+*/
 
-ticketArea.style.display =
-"block";
-
-userEmail.textContent =
-session.user.email ||
-"کاربر VENSIZ";
-
-}
-else{
-
-authBox.style.display =
-"block";
-
-ticketArea.style.display =
-"none";
-
-}
-
-});
-
-
-document
-.getElementById("submitTicket")
-.addEventListener(
-"click",
-async ()=>{
-
-
-const subject =
-document
-.getElementById("subject")
-.value
-.trim();
-
-
-const message =
-document
-.getElementById("message")
-.value
-.trim();
-
-
-const result =
-document
-.getElementById("ticketMessage");
-
-
-if(!subject){
-
-result.textContent =
-"موضوع تیکت را وارد کنید.";
-
-return;
-
-}
-
-
-if(!message){
-
-result.textContent =
-"متن درخواست را وارد کنید.";
-
-return;
-
-}
-
-
-const {
-data,
-error
-} =
-await supabaseClient.auth.getSession();
-
-
-if(error || !data.session){
-
-result.textContent =
-"ابتدا احراز هویت کنید.";
-
-return;
-
-}
-
-
-const { error: ticketError } =
-await supabaseClient
-.from("tickets")
-.insert({
-
-user_id:
-data.session.user.id,
-
-subject:
-subject,
-
-message:
-message
-
-});
-
-
-if(ticketError){
-
-console.error(
-ticketError
-);
-
-result.textContent =
-"خطا در ارسال تیکت: " +
-ticketError.message;
-
-return;
-
-}
-
-
-result.textContent =
-"تیکت شما با موفقیت ارسال شد. ✅";
-
-
-document
-.getElementById("subject")
-.value = "";
-
-
-document
-.getElementById("message")
-.value = "";
-
-});
-
-
-checkAuth();
+checkUser();
 
 </script>
 
-
 </body>
-
 </html>
