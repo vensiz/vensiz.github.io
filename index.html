@@ -1823,70 +1823,7 @@ document
     );
 
 
-/* =========================================
-   SUPPORT AUTH
-========================================= */
 
-const supportLink =
-document.querySelector(
-    'a[href="support.html"]'
-);
-
-
-if(supportLink){
-
-    supportLink.addEventListener(
-        "click",
-        async function(event){
-
-            event.preventDefault();
-
-
-            try{
-
-                const {
-                    data,
-                    error
-                } =
-                await supabaseClient
-                    .auth
-                    .getUser();
-
-
-                if(
-                    error ||
-                    !data.user
-                ){
-
-                
-
-
-                    return;
-
-                }
-
-
-                window.location.href =
-                    "support.html";
-
-
-            }catch(error){
-
-                console.error(
-                    error
-                );
-
-
-                alert(
-                    "امکان بررسی وضعیت احراز هویت وجود ندارد. لطفاً دوباره تلاش کنید."
-                );
-
-            }
-
-        }
-    );
-
-}
 
 </script>
 
