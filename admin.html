@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>پنل مدیریت | VENSIZ</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    background:#050805;
+    color:#fff;
+    font-family:Tahoma,Arial,sans-serif;
+}
+
+header{
+    height:80px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    background:#030603;
+    border-bottom:1px solid rgba(0,255,100,.15);
+}
+
+.logo{
+    color:#00ff66;
+    font-size:26px;
+    font-weight:bold;
+    text-shadow:0 0 20px rgba(0,255,100,.5);
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.admin-email{
+    color:#888;
+    font-size:12px;
+}
+
+.back{
+    color:#00ff66;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.container{
+    width:94%;
+    max-width:1300px;
+    margin:40px auto;
+}
+
+h1{
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+h1 span{
+    color:#00ff66;
+}
+
+.subtitle{
+    color:#777;
+    font-size:13px;
+    margin-bottom:35px;
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:340px 1fr;
+    gap:20px;
+}
+
+.panel{
+    background:#080e09;
+    border:1px solid rgba(0,255,100,.15);
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.panel-title{
+    padding:20px;
+    border-bottom:1px solid rgba(0,255,100,.1);
+    color:#00ff66;
+    font-weight:bold;
+}
+
+.ticket-list{
+    max-height:650px;
+    overflow-y:auto;
+}
+
+.ticket-item{
+    padding:18px;
+    border-bottom:1px solid rgba(255,255,255,.05);
+    cursor:pointer;
+    transition:.2s;
+}
+
+.ticket-item:hover,
+.ticket-item.active{
+    background:rgba(0,255,100,.06);
+}
+
+.ticket-item h3{
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.ticket-item p{
+    color:#777;
+    font-size:11px;
+}
+
+.status{
+    display:inline-block;
+    margin-top:10px;
+    padding:5px 9px;
+    border-radius:6px;
+    font-size:10px;
+}
+
+.status.open{
+    color:#00ff66;
+    background:rgba(0,255,100,.08);
+}
+
+.status.closed{
+    color:#ff7777;
+    background:rgba(255,0,0,.08);
+}
+
+.empty{
+    padding:40px 20px;
+    text-align:center;
+    color:#666;
+    font-size:13px;
+}
+
+.ticket-view{
+    min-height:650px;
+    padding:25px;
+}
+
+.no-ticket{
+    height:600px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#555;
+}
+
+.ticket-header{
+    padding-bottom:20px;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    margin-bottom:20px;
+}
+
+.ticket-header h2{
+    color:#00ff66;
+    margin-bottom:10px;
+}
+
+.ticket-meta{
+    color:#777;
+    font-size:11px;
+    line-height:2;
+}
+
+.original-message{
+    background:#050805;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.original-message-title{
+    color:#00ff66;
+    font-size:12px;
+    margin-bottom:12px;
+}
+
+.original-message-text{
+    color:#bbb;
+    font-size:13px;
+    line-height:2;
+    white-space:pre-wrap;
+}
+
+.replies{
+    max-height:300px;
+    overflow-y:auto;
+    margin-bottom:20px;
+}
+
+.reply{
+    padding:15px;
+    margin-bottom:12px;
+    border-radius:12px;
+    background:#0b120c;
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.reply.admin{
+    border-color:rgba(0,255,100,.2);
+}
+
+.reply-author{
+    color:#00ff66;
+    font-size:11px;
+    margin-bottom:8px;
+}
+
+.reply-user{
+    color:#aaa;
+}
+
+.reply-text{
+    color:#ccc;
+    font-size:13px;
+    line-height:1.9;
+    white-space:pre-wrap;
+}
+
+.reply-date{
+    color:#555;
+    font-size:9px;
+    margin-top:8px;
+}
+
+textarea{
+    width:100%;
+    min-height:120px;
+    resize:vertical;
+    background:#050805;
+    color:#fff;
+    border:1px solid rgba(0,255,100,.15);
+    border-radius:10px;
+    padding:14px;
+    outline:none;
+    font-family:Tahoma,Arial,sans-serif;
+    direction:rtl;
+}
+
+textarea:focus{
+    border-color:#00ff66;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+}
+
+button{
+    border:none;
+    border-radius:9px;
+    padding:12px 20px;
+    cursor:pointer;
+    font-family:Tahoma,Arial,sans-serif;
+    font-weight:bold;
+}
+
+.reply-button{
+    background:#00d95a;
+    color:#001b08;
+    flex:1;
+}
+
+.reply-button:hover{
+    background:#00ff66;
+}
+
+.close-button{
+    background:#171d18;
+    color:#aaa;
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.close-button:hover{
+    color:#fff;
+}
+
+.open-button{
+    background:#12351d;
+    color:#00ff66;
+}
+
+.message{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    border-radius:8px;
+    text-align:center;
+    font-size:12px;
+}
+
+.message.success{
+    display:block;
+    color:#00ff66;
+    background:rgba(0,255,100,.05);
+    border:1px solid rgba(0,255,100,.15);
+}
+
+.message.error{
+    display:block;
+    color:#ff7777;
+    background:rgba(255,0,0,.05);
+    border:1px solid rgba(255,0,0,.15);
+}
+
+#loading{
+    text-align:center;
+    padding:100px 20px;
+    color:#00ff66;
+}
+
+#denied{
+    display:none;
+    max-width:500px;
+    margin:100px auto;
+    text-align:center;
+    padding:40px;
+    background:#080e09;
+    border:1px solid rgba(255,0,0,.2);
+    border-radius:18px;
+}
+
+#denied h2{
+    color:#ff7777;
+    margin-bottom:15px;
+}
+
+#denied p{
+    color:#777;
+    font-size:13px;
+    line-height:2;
+}
+
+@media(max-width:850px){
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .ticket-list{
+        max-height:300px;
+    }
+
+    .ticket-view{
+        min-height:500px;
+    }
+
+    .no-ticket{
+        height:300px;
+    }
+
+    .admin-email{
+        display:none;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        VENSIZ ADMIN
+    </div>
+
+    <div class="header-right">
+
+        <div class="admin-email">
+            amirkhoz3823@gmail.com
+        </div>
+
+        <a href="index.html" class="back">
+            ← بازگشت به سایت
+        </a>
+
+    </div>
+
+</header>
+
+
+<div id="loading">
+    در حال بررسی دسترسی ادمین...
+</div>
+
+
+<div id="denied">
+
+    <h2>
+        دسترسی غیرمجاز
+    </h2>
+
+    <p>
+        این بخش فقط برای مدیر سایت قابل دسترسی است.
+    </p>
+
+</div>
+
+
+<main id="adminPanel" class="container" style="display:none;">
+
+    <h1>
+        مدیریت <span>تیکت‌ها</span>
+    </h1>
+
+    <div class="subtitle">
+        VENSIZ SUPPORT ADMIN PANEL
+    </div>
+
+
+    <div class="layout">
+
+
+        <!-- TICKET LIST -->
+
+        <div class="panel">
+
+            <div class="panel-title">
+                تیکت‌های کاربران
+            </div>
+
+            <div id="ticketList" class="ticket-list">
+
+                <div class="empty">
+                    در حال دریافت تیکت‌ها...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TICKET VIEW -->
+
+        <div class="panel">
+
+            <div id="ticketView" class="ticket-view">
+
+                <div class="no-ticket">
+                    یک تیکت را از لیست انتخاب کنید.
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<script>
+
+/* =========================================
+   SUPABASE
+========================================= */
+
+const SUPABASE_URL =
+"https://gpeckwmjsgklzhtgqdso.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
+
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+        auth:{
+            persistSession:true,
+            autoRefreshToken:true,
+            detectSessionInUrl:true,
+            storageKey:"vensiz-auth-session"
+        }
+    }
+);
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const loading =
+document.getElementById("loading");
+
+const denied =
+document.getElementById("denied");
+
+const adminPanel =
+document.getElementById("adminPanel");
+
+const ticketList =
+document.getElementById("ticketList");
+
+const ticketView =
+document.getElementById("ticketView");
+
+
+let currentTicket = null;
+
+
+/* =========================================
+   AUTH + ADMIN CHECK
+========================================= */
+
+async function checkAdmin(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.auth.getSession();
+
+
+        if(error || !data.session){
+
+            showDenied();
+
+            return;
+
+        }
+
+
+        const {
+            data:admin,
+            error:adminError
+        } =
+        await supabaseClient
+            .from("admins")
+            .select("user_id")
+            .eq("user_id",data.session.user.id)
+            .maybeSingle();
+
+
+        if(adminError || !admin){
+
+            showDenied();
+
+            return;
+
+        }
+
+
+        loading.style.display =
+            "none";
+
+        adminPanel.style.display =
+            "block";
+
+
+        loadTickets();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        showDenied();
+
+    }
+
+}
+
+
+/* =========================================
+   DENIED
+========================================= */
+
+function showDenied(){
+
+    loading.style.display =
+        "none";
+
+    adminPanel.style.display =
+        "none";
+
+    denied.style.display =
+        "block";
+
+}
+
+
+/* =========================================
+   LOAD TICKETS
+========================================= */
+
+async function loadTickets(){
+
+    ticketList.innerHTML =
+        `<div class="empty">در حال دریافت...</div>`;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("tickets")
+        .select("*")
+        .order("created_at",{ascending:false});
+
+
+    if(error){
+
+        console.error(error);
+
+        ticketList.innerHTML =
+            `<div class="empty">
+                خطا در دریافت تیکت‌ها
+            </div>`;
+
+        return;
+
+    }
+
+
+    if(!data || data.length === 0){
+
+        ticketList.innerHTML =
+            `<div class="empty">
+                هنوز تیکتی ثبت نشده است.
+            </div>`;
+
+        return;
+
+    }
+
+
+    ticketList.innerHTML = "";
+
+
+    data.forEach(function(ticket){
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "ticket-item";
+
+        item.dataset.id =
+            ticket.id;
+
+
+        const status =
+            ticket.status || "open";
+
+        const statusText =
+            status === "closed"
+            ? "بسته"
+            : "باز";
+
+
+        item.innerHTML = `
+
+            <h3>
+                ${escapeHtml(ticket.subject || "بدون موضوع")}
+            </h3>
+
+            <p>
+                کاربر: ${escapeHtml(ticket.user_id || "-")}
+            </p>
+
+            <p>
+                ${formatDate(ticket.created_at)}
+            </p>
+
+            <span class="status ${status}">
+                ${statusText}
+            </span>
+
+        `;
+
+
+        item.addEventListener(
+            "click",
+            function(){
+
+                document
+                    .querySelectorAll(".ticket-item")
+                    .forEach(x =>
+                        x.classList.remove("active")
+                    );
+
+                item.classList.add("active");
+
+                openTicket(ticket);
+
+            }
+        );
+
+
+        ticketList.appendChild(item);
+
+    });
+
+}
+
+
+/* =========================================
+   OPEN TICKET
+========================================= */
+
+async function openTicket(ticket){
+
+    currentTicket = ticket;
+
+
+    ticketView.innerHTML = `
+
+        <div class="ticket-header">
+
+            <h2>
+                ${escapeHtml(ticket.subject || "بدون موضوع")}
+            </h2>
+
+            <div class="ticket-meta">
+                شناسه: ${escapeHtml(String(ticket.id))}<br>
+                کاربر: ${escapeHtml(ticket.user_id || "-")}<br>
+                تاریخ: ${formatDate(ticket.created_at)}
+            </div>
+
+        </div>
+
+
+        <div class="original-message">
+
+            <div class="original-message-title">
+                پیام کاربر
+            </div>
+
+            <div class="original-message-text">
+                ${escapeHtml(ticket.message || "")}
+            </div>
+
+        </div>
+
+
+        <div id="replies" class="replies">
+            در حال دریافت پاسخ‌ها...
+        </div>
+
+
+        <textarea
+            id="replyText"
+            placeholder="پاسخ خود را برای کاربر بنویسید..."
+        ></textarea>
+
+
+        <div class="actions">
+
+            <button
+                id="sendReply"
+                class="reply-button"
+            >
+                ارسال پاسخ
+            </button>
+
+            ${
+                ticket.status === "closed"
+                ?
+                `<button
+                    id="openTicketButton"
+                    class="open-button"
+                >
+                    باز کردن تیکت
+                </button>`
+                :
+                `<button
+                    id="closeTicketButton"
+                    class="close-button"
+                >
+                    بستن تیکت
+                </button>`
+            }
+
+        </div>
+
+
+        <div
+            id="ticketMessage"
+            class="message"
+        ></div>
+
+    `;
+
+
+    document
+        .getElementById("sendReply")
+        .addEventListener(
+            "click",
+            sendReply
+        );
+
+
+    const closeButton =
+        document.getElementById(
+            "closeTicketButton"
+        );
+
+    if(closeButton){
+
+        closeButton.addEventListener(
+            "click",
+            function(){
+                changeStatus("closed");
+            }
+        );
+
+    }
+
+
+    const openButton =
+        document.getElementById(
+            "openTicketButton"
+        );
+
+    if(openButton){
+
+        openButton.addEventListener(
+            "click",
+            function(){
+                changeStatus("open");
+            }
+        );
+
+    }
+
+
+    loadReplies(ticket.id);
+
+}
+
+
+/* =========================================
+   LOAD REPLIES
+========================================= */
+
+async function loadReplies(ticketId){
+
+    const replies =
+        document.getElementById("replies");
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("ticket_replies")
+        .select("*")
+        .eq("ticket_id",ticketId)
+        .order("created_at",{ascending:true});
+
+
+    if(error){
+
+        console.error(error);
+
+        replies.innerHTML =
+            `<div class="empty">
+                خطا در دریافت پاسخ‌ها
+            </div>`;
+
+        return;
+
+    }
+
+
+    if(!data || data.length === 0){
+
+        replies.innerHTML =
+            `<div class="empty">
+                هنوز پاسخی برای این تیکت وجود ندارد.
+            </div>`;
+
+        return;
+
+    }
+
+
+    replies.innerHTML = "";
+
+
+    data.forEach(function(reply){
+
+        const div =
+            document.createElement("div");
+
+
+        div.className =
+            reply.is_admin
+            ? "reply admin"
+            : "reply";
+
+
+        div.innerHTML = `
+
+            <div class="reply-author">
+
+                ${
+                    reply.is_admin
+                    ? "🛡️ پشتیبانی VENSIZ"
+                    : "👤 کاربر"
+                }
+
+            </div>
+
+            <div class="reply-text">
+                ${escapeHtml(reply.message || "")}
+            </div>
+
+            <div class="reply-date">
+                ${formatDate(reply.created_at)}
+            </div>
+
+        `;
+
+
+        replies.appendChild(div);
+
+    });
+
+
+    replies.scrollTop =
+        replies.scrollHeight;
+
+}
+
+
+/* =========================================
+   SEND ADMIN REPLY
+========================================= */
+
+async function sendReply(){
+
+    if(!currentTicket){
+
+        return;
+
+    }
+
+
+    const textarea =
+        document.getElementById("replyText");
+
+    const text =
+        textarea.value.trim();
+
+
+    const message =
+        document.getElementById(
+            "ticketMessage"
+        );
+
+
+    if(!text){
+
+        showTicketMessage(
+            "پاسخ را وارد کنید.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const {
+        data:sessionData
+    } =
+    await supabaseClient.auth.getSession();
+
+
+    if(!sessionData.session){
+
+        showTicketMessage(
+            "نشست ادمین منقضی شده است.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const adminId =
+        sessionData.session.user.id;
+
+
+    const button =
+        document.getElementById(
+            "sendReply"
+        );
+
+    button.disabled = true;
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("ticket_replies")
+        .insert({
+
+            ticket_id:currentTicket.id,
+
+            user_id:adminId,
+
+            message:text,
+
+            is_admin:true
+
+        });
+
+
+    if(error){
+
+        console.error(error);
+
+        showTicketMessage(
+            error.message,
+            "error"
+        );
+
+        button.disabled = false;
+
+        return;
+
+    }
+
+
+    textarea.value = "";
+
+
+    showTicketMessage(
+        "پاسخ با موفقیت ارسال شد.",
+        "success"
+    );
+
+
+    await loadReplies(
+        currentTicket.id
+    );
+
+
+    button.disabled = false;
+
+}
+
+
+/* =========================================
+   CHANGE STATUS
+========================================= */
+
+async function changeStatus(status){
+
+    if(!currentTicket){
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("tickets")
+        .update({
+            status:status
+        })
+        .eq("id",currentTicket.id);
+
+
+    if(error){
+
+        console.error(error);
+
+        alert(
+            "خطا: " + error.message
+        );
+
+        return;
+
+    }
+
+
+    currentTicket.status =
+        status;
+
+
+    await loadTickets();
+
+    openTicket(currentTicket);
+
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+function showTicketMessage(text,type){
+
+    const message =
+        document.getElementById(
+            "ticketMessage"
+        );
+
+
+    if(!message){
+
+        return;
+
+    }
+
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message " + type;
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================
+   DATE
+========================================= */
+
+function formatDate(date){
+
+    if(!date){
+
+        return "-";
+
+    }
+
+
+    try{
+
+        return new Date(date)
+            .toLocaleString(
+                "fa-IR",
+                {
+                    dateStyle:"short",
+                    timeStyle:"short"
+                }
+            );
+
+    }catch{
+
+        return date;
+
+    }
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+checkAdmin();
+
+</script>
+
+</body>
+</html>
