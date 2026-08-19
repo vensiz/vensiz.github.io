@@ -10,115 +10,95 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:tahoma;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:tahoma;
 }
 
 
 body{
 
-    background:
-    linear-gradient(rgba(0,255,100,.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,255,100,.03) 1px,transparent 1px),
-    #020403;
+background:
+linear-gradient(rgba(0,255,100,.03) 1px,transparent 1px),
+linear-gradient(90deg,rgba(0,255,100,.03) 1px,transparent 1px),
+#020403;
 
-    background-size:50px 50px;
+background-size:50px 50px;
 
-    color:white;
+color:white;
 
-    min-height:100vh;
+min-height:100vh;
 
 }
 
 
-
-/* HEADER */
 
 header{
 
-    height:75px;
+height:75px;
 
-    background:#030603;
+background:#030603;
 
-    border-bottom:
-    1px solid rgba(0,255,100,.15);
+border-bottom:1px solid rgba(0,255,100,.15);
 
-    display:flex;
+display:flex;
 
-    align-items:center;
+align-items:center;
 
-    justify-content:space-between;
+justify-content:space-between;
 
-    padding:0 30px;
+padding:0 30px;
 
 }
+
 
 
 .logo{
 
-    color:#00ff66;
+color:#00ff66;
 
-    font-size:28px;
+font-size:28px;
 
-    font-weight:bold;
+font-weight:bold;
 
-    text-shadow:
-    0 0 20px #00ff66;
+text-shadow:0 0 20px #00ff66;
 
 }
+
 
 
 .admin-info{
 
-    color:#aaa;
-
-    font-size:13px;
+color:#aaa;
 
 }
 
-
-
-/* LAYOUT */
 
 
 .layout{
 
-    display:flex;
+display:flex;
 
-    min-height:calc(100vh - 75px);
+min-height:calc(100vh - 75px);
 
 }
 
-
-
-/* SIDEBAR */
 
 
 .sidebar{
 
-    width:260px;
+width:260px;
 
-    background:#050805;
+background:#050805;
 
-    border-left:
-    1px solid rgba(0,255,100,.15);
+border-left:1px solid rgba(0,255,100,.15);
 
-    padding:25px;
-
-}
-
-
-
-.menu-title{
-
-    color:#00ff66;
-
-    margin-bottom:25px;
+padding:25px;
 
 }
 
@@ -126,25 +106,23 @@ header{
 
 .menu button{
 
-    width:100%;
+width:100%;
 
-    padding:15px;
+padding:15px;
 
-    margin-bottom:12px;
+margin-bottom:12px;
 
-    background:#081108;
+background:#081108;
 
-    color:white;
+color:white;
 
-    border:
+border:1px solid rgba(0,255,100,.15);
 
-    1px solid rgba(0,255,100,.15);
+border-radius:12px;
 
-    border-radius:12px;
+cursor:pointer;
 
-    cursor:pointer;
-
-    text-align:right;
+text-align:right;
 
 }
 
@@ -152,23 +130,17 @@ header{
 
 .menu button:hover{
 
-    background:rgba(0,255,100,.08);
-
-    border-color:#00ff66;
+border-color:#00ff66;
 
 }
 
 
 
-
-/* CONTENT */
-
-
 .content{
 
-    flex:1;
+flex:1;
 
-    padding:35px;
+padding:35px;
 
 }
 
@@ -177,15 +149,13 @@ header{
 .dashboard,
 .section{
 
-    background:#071008;
+background:#071008;
 
-    border:
+border:1px solid rgba(0,255,100,.15);
 
-    1px solid rgba(0,255,100,.15);
+border-radius:18px;
 
-    border-radius:18px;
-
-    padding:30px;
+padding:30px;
 
 }
 
@@ -193,7 +163,7 @@ header{
 
 .section{
 
-    display:none;
+display:none;
 
 }
 
@@ -201,17 +171,15 @@ header{
 
 .section.active{
 
-    display:block;
+display:block;
 
 }
 
 
 
-.dashboard h1{
+h1,h2{
 
-    color:#00ff66;
-
-    margin-bottom:15px;
+color:#00ff66;
 
 }
 
@@ -219,154 +187,67 @@ header{
 
 .close{
 
-    float:left;
+float:left;
 
-    color:#ff7777;
+cursor:pointer;
 
-    cursor:pointer;
+color:#ff7777;
 
-    font-size:22px;
+font-size:22px;
 
 }
 
-
-
-/* CARD */
 
 
 .card{
 
-    margin-top:25px;
+margin-top:20px;
 
-    padding:20px;
+padding:20px;
 
-    background:#030603;
+background:#030603;
 
-    border-radius:12px;
+border-radius:12px;
 
-    border:
-
-    1px solid rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.05);
 
 }
 
 
 
-/* TICKETS */
+input,textarea,select{
 
+width:100%;
 
-.ticket-layout{
+padding:12px;
 
-    display:grid;
+margin-top:10px;
 
-    grid-template-columns:350px 1fr;
+background:#020403;
 
-    gap:20px;
+color:white;
 
-    margin-top:25px;
+border:1px solid rgba(0,255,100,.2);
 
-}
-
-
-
-.ticket-list,
-.ticket-view{
-
-    background:#030603;
-
-    border:
-
-    1px solid rgba(0,255,100,.15);
-
-    border-radius:15px;
-
-    padding:20px;
-
-    min-height:500px;
+border-radius:10px;
 
 }
 
 
 
-.ticket-item{
+.action-btn{
 
-    padding:15px;
+margin-top:10px;
 
-    margin-bottom:10px;
+padding:12px 20px;
 
-    background:#081108;
+background:#00ff66;
 
-    border-radius:10px;
+border:none;
 
-    cursor:pointer;
+border-radius:10px;
 
-    border:
-
-    1px solid rgba(255,255,255,.05);
-
-}
-
-
-
-.ticket-item:hover{
-
-    border-color:#00ff66;
-
-}
-
-
-
-.ticket-item h3{
-
-    color:#00ff66;
-
-    font-size:14px;
-
-}
-
-
-
-.ticket-item p{
-
-    color:#aaa;
-
-    font-size:12px;
-
-    margin-top:8px;
-
-}
-
-
-
-.ticket-view h2{
-
-    color:#00ff66;
-
-}
-
-
-
-@media(max-width:900px){
-
-.layout{
-
-    display:block;
-
-}
-
-
-.sidebar{
-
-    width:100%;
-
-}
-
-
-.ticket-layout{
-
-    grid-template-columns:1fr;
-
-}
+cursor:pointer;
 
 }
 
@@ -387,10 +268,8 @@ VENSIZ ADMIN
 </div>
 
 
-<div class="admin-info">
-
-🛡 Amir | Owner
-
+<div class="admin-info" id="admin-info">
+در حال بررسی...
 </div>
 
 
@@ -404,37 +283,21 @@ VENSIZ ADMIN
 <aside class="sidebar">
 
 
-<div class="menu-title">
-
-MENU
-
-</div>
-
-
-
 <div class="menu">
 
 
-<button onclick="openSection('tickets')">
-
+<button onclick="openSection('tickets');loadTickets()">
 🎫 مدیریت تیکت‌ها
-
 </button>
 
 
-
-<button onclick="openSection('admins')">
-
+<button onclick="openAdminSection()">
 👥 مدیریت ادمین‌ها
-
 </button>
 
 
-
-<button onclick="openSection('shop')">
-
+<button>
 🛒 مدیریت فروشگاه
-
 </button>
 
 
@@ -463,6 +326,10 @@ MENU
 
 </div>
 
+
+
+
+
 <div id="tickets" class="section">
 
 
@@ -476,38 +343,15 @@ MENU
 </h2>
 
 
+<div id="ticket-list">
 
-<div class="ticket-layout">
-
-
-<div 
-id="ticketList"
-class="ticket-list"
->
-
-در حال دریافت تیکت‌ها...
+در حال دریافت...
 
 </div>
 
 
-
-
-<div 
-id="ticketView"
-class="ticket-view"
->
-
-یک تیکت را انتخاب کنید.
-
 </div>
 
-
-
-</div>
-
-
-
-</div>
 
 
 
@@ -526,35 +370,7 @@ class="ticket-view"
 </h2>
 
 
-<div class="card">
-
-رمز مدیریت ادمین‌ها بعداً اضافه می‌شود.
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div id="shop" class="section">
-
-
-<span class="close" onclick="closeSection('shop')">
-✖
-</span>
-
-
-<h2>
-🛒 مدیریت فروشگاه
-</h2>
-
-
-<div class="card">
-
-مدیریت فروشگاه بعداً اضافه می‌شود.
+<div id="admin-list">
 
 </div>
 
@@ -568,16 +384,7 @@ class="ticket-view"
 
 </div>
 
-
-
-
-
 <script>
-
-
-/* ================================
-   SUPABASE
-================================ */
 
 
 const SUPABASE_URL =
@@ -588,7 +395,6 @@ const SUPABASE_KEY =
 "sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
 
 
-
 const db =
 supabase.createClient(
 SUPABASE_URL,
@@ -597,13 +403,42 @@ SUPABASE_KEY
 
 
 
+let currentAdmin =
+JSON.parse(
+localStorage.getItem("vensiz_admin")
+);
 
-/* ================================
-   OPEN CLOSE SECTION
-================================ */
 
+
+if(!currentAdmin){
+
+window.location.href =
+"admin-login.html";
+
+}
+
+
+
+document.getElementById("admin-info").innerHTML =
+`
+🛡 ${currentAdmin.name}
+|
+${currentAdmin.rank}
+`;
+
+
+
+
+// باز کردن بخش‌ها
 
 function openSection(id){
+
+
+document
+.querySelectorAll(".section")
+.forEach(
+x=>x.classList.remove("active")
+);
 
 
 document
@@ -611,31 +446,9 @@ document
 .style.display="none";
 
 
-
-document
-.querySelectorAll(".section")
-.forEach(
-function(section){
-
-section.classList.remove("active");
-
-}
-
-);
-
-
-
 document
 .getElementById(id)
 .classList.add("active");
-
-
-
-if(id==="tickets"){
-
-loadAdminTickets();
-
-}
 
 
 }
@@ -662,29 +475,27 @@ document
 
 
 
-/* ================================
-   LOAD TICKETS
-================================ */
+// ======================
+// تیکت ها
+// ======================
 
 
-async function loadAdminTickets(){
+async function loadTickets(){
 
 
-const list =
-document.getElementById(
-"ticketList"
-);
+const box =
+document.getElementById("ticket-list");
 
 
 
-const {
-data,
-error
-}
-=
+const {data,error}=
+
 await db
+
 .from("tickets")
+
 .select("*")
+
 .order(
 "created_at",
 {
@@ -694,311 +505,300 @@ ascending:false
 
 
 
-
 if(error){
-
-
-list.innerHTML =
-`
-خطا در دریافت تیکت‌ها
-<br>
-${error.message}
-`;
 
 console.log(error);
 
+box.innerHTML =
+"خطا در دریافت تیکت‌ها";
+
 return;
 
 }
 
 
 
+if(!data.length){
 
-
-if(
-!data ||
-data.length===0
-){
-
-
-list.innerHTML =
-"هنوز تیکتی وجود ندارد";
-
+box.innerHTML =
+"تیکتی وجود ندارد";
 
 return;
-
 
 }
 
 
 
-
-
-list.innerHTML="";
-
-
-
-data.forEach(
-function(ticket){
+let html="";
 
 
 
-const item =
-document.createElement(
-"div"
-);
+data.forEach(ticket=>{
 
 
-
-item.className =
-"ticket-item";
+html += `
 
 
+<div class="card">
 
-item.innerHTML =
-`
 
 <h3>
-
-${ticket.ticket_number}
-
+🎫 ${ticket.ticket_number || ticket.id}
 </h3>
 
 
 <p>
-
-👤 ${ticket.user_name}
-
+👤 کاربر:
+${ticket.user_name || "-"}
 </p>
 
 
 <p>
-
-📌 ${ticket.subject}
-
+📌 موضوع:
+${ticket.subject || "-"}
 </p>
 
 
 <p>
-
-📂 ${ticket.department}
-
+🏢 بخش:
+${ticket.department || "-"}
 </p>
 
 
 <p>
-
-وضعیت:
-${ticket.status}
-
+📊 وضعیت:
+${ticket.status || "-"}
 </p>
+
+
+<p>
+🛡 ادمین مسئول:
+${ticket.assigned_admin || "-"}
+</p>
+
+
+<p>
+⭐ رنک:
+${ticket.admin_rank || "-"}
+</p>
+
+
+<button class="action-btn"
+onclick="assignTicket('${ticket.id}')">
+
+گرفتن تیکت
+
+</button>
+
+
+</div>
 
 
 `;
 
+});
 
 
-item.onclick =
-function(){
+box.innerHTML=html;
 
 
-openAdminTicket(ticket);
-
-
-};
+}
 
 
 
-list.appendChild(item);
 
+
+
+
+// گرفتن تیکت توسط ادمین
+
+
+async function assignTicket(id){
+
+
+await db
+
+.from("tickets")
+
+.update({
+
+assigned_admin:
+currentAdmin.name,
+
+admin_rank:
+currentAdmin.rank
+
+})
+
+.eq(
+"id",
+id
+);
+
+
+
+loadTickets();
+
+
+}
+
+
+
+
+
+
+
+// ======================
+// مدیریت ادمین
+// ======================
+
+
+
+async function openAdminSection(){
+
+
+
+let pass =
+prompt(
+"رمز مدیریت ادمین:"
+);
+
+
+
+if(!pass)
+return;
+
+
+
+const {data,error}=
+
+await db
+
+.from("admin_settings")
+
+.select("*")
+
+.eq(
+"id",
+1
+)
+
+.single();
+
+
+
+if(error){
+
+alert(
+"تنظیمات پیدا نشد"
+);
+
+return;
+
+}
+
+
+
+if(pass !== data.admin_password){
+
+
+alert(
+"رمز اشتباه است"
+);
+
+
+return;
+
+}
+
+
+
+openSection("admins");
+
+
+loadAdmins();
+
+
+}
+
+
+
+
+
+
+
+
+async function loadAdmins(){
+
+
+const box =
+document.getElementById("admin-list");
+
+
+
+const {data,error}=
+
+await db
+
+.from("admins")
+
+.select("*");
+
+
+
+if(error){
+
+box.innerHTML =
+"خطا";
+
+return;
+
+}
+
+
+
+let html="";
+
+
+
+data.forEach(admin=>{
+
+
+html += `
+
+
+<div class="card">
+
+
+🛡 ${admin.name}
+
+
+<br><br>
+
+
+یوزرنیم:
+${admin.username}
+
+
+<br>
+
+
+رنک:
+${admin.rank}
+
+
+
+</div>
+
+
+`;
 
 
 });
 
 
-}
 
-
-
-
-/* ================================
-   OPEN TICKET
-================================ */
-
-
-function openAdminTicket(ticket){
-
-
-const view =
-document.getElementById(
-"ticketView"
-);
-
-
-
-view.innerHTML =
-
-`
-
-<h2>
-
-🎫 ${ticket.ticket_number}
-
-</h2>
-
-
-
-<div class="card">
-
-
-<p>
-
-👤 کاربر:
-
-${ticket.user_name}
-
-</p>
-
-
-<br>
-
-
-<p>
-
-📌 موضوع:
-
-${ticket.subject}
-
-</p>
-
-
-<br>
-
-
-<p>
-
-📂 بخش:
-
-${ticket.department}
-
-</p>
-
-
-<br>
-
-
-<p>
-
-📅 تاریخ:
-
-${new Date(ticket.created_at)
-.toLocaleString("fa-IR")}
-
-</p>
-
-
-
-</div>
-
-
-
-
-<div class="card">
-
-
-<h3 style="color:#00ff66">
-
-پیام کاربر
-
-</h3>
-
-
-<br>
-
-
-<p style="line-height:2">
-
-${escapeHtml(ticket.message)}
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-<div class="card">
-
-
-<h3 style="color:#00ff66">
-
-چت تیکت
-
-</h3>
-
-
-<br>
-
-
-<p style="color:#777">
-
-مرحله بعد: سیستم پاسخ ادمین اضافه می‌شود.
-
-</p>
-
-
-</div>
-
-
-
-`;
-
-
-
-}
-
-
-
-
-
-/* ================================
-   SECURITY
-================================ */
-
-
-
-function escapeHtml(text){
-
-
-return String(text)
-
-.replaceAll(
-"&",
-"&amp;"
-)
-
-.replaceAll(
-"<",
-"&lt;"
-)
-
-.replaceAll(
-">",
-"&gt;"
-)
-
-.replaceAll(
-'"',
-"&quot;"
-)
-
-.replaceAll(
-"'",
-"&#039;"
-);
+box.innerHTML=html;
 
 
 }
@@ -1008,8 +808,3 @@ return String(text)
 
 
 </script>
-
-<script src="admin.js"></script>
-</body>
-
-</html>
