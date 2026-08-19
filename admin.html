@@ -8,137 +8,234 @@
 
 <title>VENSIZ ADMIN</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:tahoma;
 }
 
 body{
 
-background:#020403;
-color:white;
-font-family:tahoma;
-min-height:100vh;
+    background:
+    linear-gradient(rgba(0,255,100,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,100,.03) 1px,transparent 1px),
+    #020403;
+
+    background-size:50px 50px;
+
+    color:white;
+    min-height:100vh;
 
 }
 
 
-.box{
+/* HEADER */
 
-width:400px;
-max-width:90%;
+header{
 
-margin:120px auto;
+    height:75px;
 
-background:#071008;
+    background:#030603;
 
-border:1px solid rgba(0,255,100,.2);
+    border-bottom:
+    1px solid rgba(0,255,100,.15);
 
-border-radius:18px;
+    display:flex;
 
-padding:30px;
+    align-items:center;
 
-}
+    justify-content:space-between;
 
-
-
-h1{
-
-text-align:center;
-
-color:#00ff66;
-
-margin-bottom:25px;
+    padding:0 30px;
 
 }
 
 
+.logo{
 
-input{
+    color:#00ff66;
 
-width:100%;
+    font-size:28px;
 
-padding:14px;
+    font-weight:bold;
 
-margin-bottom:15px;
-
-background:#030604;
-
-border:1px solid rgba(0,255,100,.2);
-
-border-radius:10px;
-
-color:white;
+    text-shadow:
+    0 0 20px #00ff66;
 
 }
 
 
 
-button{
+.admin-info{
 
-width:100%;
+    color:#aaa;
 
-padding:14px;
-
-border:none;
-
-border-radius:10px;
-
-background:#00d95a;
-
-font-weight:bold;
-
-cursor:pointer;
+    font-size:13px;
 
 }
 
 
 
-button:hover{
-
-background:#00ff66;
-
-}
+/* LAYOUT */
 
 
+.layout{
 
-#message{
+    display:flex;
 
-text-align:center;
-
-margin-top:15px;
-
-font-size:13px;
+    min-height:calc(100vh - 75px);
 
 }
 
 
 
-.error{
+/* SIDEBAR */
 
-color:#ff7777;
+
+.sidebar{
+
+    width:260px;
+
+    background:#050805;
+
+    border-left:
+    1px solid rgba(0,255,100,.15);
+
+    padding:25px;
 
 }
 
 
-.success{
 
-color:#00ff66;
+.menu-title{
+
+    color:#00ff66;
+
+    margin-bottom:25px;
+
+    font-size:14px;
 
 }
 
 
 
-#panel{
+.menu button{
 
-display:none;
+    width:100%;
 
-padding:40px;
+    padding:15px;
+
+    margin-bottom:12px;
+
+    background:#081108;
+
+    color:white;
+
+    border:
+
+    1px solid rgba(0,255,100,.15);
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    text-align:right;
+
+}
+
+
+
+.menu button:hover{
+
+    background:
+    rgba(0,255,100,.08);
+
+    border-color:#00ff66;
+
+}
+
+
+
+/* CONTENT */
+
+
+.content{
+
+    flex:1;
+
+    padding:35px;
+
+}
+
+
+
+.dashboard{
+
+    background:#071008;
+
+    border:
+
+    1px solid rgba(0,255,100,.15);
+
+    border-radius:18px;
+
+    padding:30px;
+
+}
+
+
+
+.dashboard h1{
+
+    color:#00ff66;
+
+    margin-bottom:15px;
+
+}
+
+
+
+/* SECTIONS */
+
+
+.section{
+
+    display:none;
+
+    background:#071008;
+
+    border:
+
+    1px solid rgba(0,255,100,.15);
+
+    border-radius:18px;
+
+    padding:25px;
+
+}
+
+
+
+.section.active{
+
+    display:block;
+
+}
+
+
+
+.close{
+
+    float:left;
+
+    cursor:pointer;
+
+    color:#ff7777;
+
+    font-size:22px;
 
 }
 
@@ -146,21 +243,17 @@ padding:40px;
 
 .card{
 
-background:#071008;
+    margin-top:25px;
 
-border:1px solid rgba(0,255,100,.15);
+    padding:20px;
 
-border-radius:18px;
+    background:#030603;
 
-padding:30px;
+    border-radius:12px;
 
-}
+    border:
 
-
-
-.green{
-
-color:#00ff66;
+    1px solid rgba(255,255,255,.05);
 
 }
 
@@ -174,101 +267,204 @@ color:#00ff66;
 <body>
 
 
-
-<!-- LOGIN -->
-
-<div class="box" id="loginBox">
+<header>
 
 
-<h1>
+<div class="logo">
 VENSIZ ADMIN
-</h1>
+</div>
+
+
+<div class="admin-info">
+
+🛡 Amir | Owner
+
+</div>
+
+
+</header>
 
 
 
-<input
-id="username"
-placeholder="Username"
->
+
+<div class="layout">
 
 
 
-<input
-id="password"
-type="password"
-placeholder="Password"
->
+<aside class="sidebar">
 
 
+<div class="menu-title">
 
-<button id="login">
+MENU
 
-ورود
+</div>
+
+
+<div class="menu">
+
+
+<button onclick="openSection('tickets')">
+
+🎫 مدیریت تیکت‌ها
 
 </button>
 
 
 
-<div id="message"></div>
+<button onclick="openSection('admins')">
+
+👥 مدیریت ادمین‌ها
+
+</button>
+
+
+
+<button onclick="openSection('shop')">
+
+🛒 مدیریت فروشگاه
+
+</button>
 
 
 
 </div>
 
 
+</aside>
 
 
 
-<!-- PANEL -->
+
+<main class="content">
 
 
-<div id="panel">
+
+<div id="home" class="dashboard">
+
+
+<h1>
+خوش آمدید
+</h1>
+
+
+<p>
+به پنل مدیریت VENSIZ خوش آمدید
+</p>
 
 
 <div class="card">
 
-
-<h1>
-VENSIZ CONTROL PANEL
-</h1>
-
-
-<br>
-
-
-<p id="adminInfo"></p>
-
-
-<br><br>
-
-
-<h3 class="green">
-🎫 تیکت ها
-</h3>
-
-
-<br>
-
-
-<h3 class="green">
-🛒 فروشگاه
-</h3>
-
-
-<br>
-
-
-<h3 class="green">
-👥 مدیریت ادمین ها
-</h3>
-
-
+از منوی سمت راست بخش مورد نظر را انتخاب کنید.
 
 </div>
 
 
 </div>
 
+
+
+
+
+<div id="tickets" class="section">
+
+
+<span class="close"
+onclick="closeSection('tickets')">
+
+✖
+
+</span>
+
+
+<h2>
+
+🎫 مدیریت تیکت‌ها
+
+</h2>
+
+
+<div class="card">
+
+سیستم تیکت اینجا قرار می‌گیرد.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div id="admins" class="section">
+
+
+<span class="close"
+onclick="closeSection('admins')">
+
+✖
+
+</span>
+
+
+<h2>
+
+👥 مدیریت ادمین‌ها
+
+</h2>
+
+
+<div class="card">
+
+رمز مدیریت ادمین‌ها اینجا قرار می‌گیرد.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div id="shop" class="section">
+
+
+<span class="close"
+onclick="closeSection('shop')">
+
+✖
+
+</span>
+
+
+<h2>
+
+🛒 مدیریت فروشگاه
+
+</h2>
+
+
+<div class="card">
+
+رمز مدیریت فروشگاه اینجا قرار می‌گیرد.
+
+</div>
+
+
+</div>
+
+
+
+</main>
+
+
+</div>
 
 
 
@@ -276,212 +472,49 @@ VENSIZ CONTROL PANEL
 <script>
 
 
-const SUPABASE_URL =
-"https://gpeckwmjsgklzhtgqdso.supabase.co";
-
-
-const SUPABASE_KEY =
-"sb_publishable_L4G2SJVjpML_5NiKb4tS7A_qXc5MzTZ";
-
-
-
-const db =
-supabase.createClient(
-
-SUPABASE_URL,
-
-SUPABASE_KEY
-
-);
-
-
-
-
-
-const login =
-document.getElementById(
-"login"
-);
-
-
-
-const message =
-document.getElementById(
-"message"
-);
-
-
-
-
-
-login.onclick =
-async()=>{
-
-
-const username =
-document
-.getElementById(
-"username"
-)
-.value
-.trim();
-
-
-
-const password =
-document
-.getElementById(
-"password"
-)
-.value
-.trim();
-
-
-
-
-
-if(
-!username ||
-!password
-){
-
-message.innerHTML =
-"اطلاعات را کامل کنید";
-
-message.className =
-"error";
-
-return;
-
-}
-
-
-
-
-
-
-const {
-
-data,
-
-error
-
-}=
-
-await db
-
-.from("admins")
-
-.select("*")
-
-.eq(
-"username",
-username
-)
-
-.eq(
-"password",
-password
-)
-
-.single();
-
-
-
-
-
-
-if(error || !data){
-
-
-message.innerHTML =
-"یوزرنیم یا رمز اشتباه است";
-
-
-message.className =
-"error";
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-localStorage.setItem(
-
-"vensiz_admin",
-
-JSON.stringify(data)
-
-);
-
-
-
-
-
+function openSection(id){
 
 
 document
-.getElementById(
-"loginBox"
-)
+.getElementById("home")
 .style.display="none";
 
 
+document
+.querySelectorAll(".section")
+.forEach(
+x=>x.classList.remove("active")
+);
 
 
 
 document
-.getElementById(
-"panel"
-)
+.getElementById(id)
+.classList.add("active");
+
+
+}
+
+
+
+function closeSection(id){
+
+
+document
+.getElementById(id)
+.classList.remove("active");
+
+
+document
+.getElementById("home")
 .style.display="block";
 
 
-
-
-
-
-
-document
-.getElementById(
-"adminInfo"
-)
-.innerHTML =
-
-`
-
-ادمین:
-<b class="green">
-${data.name}
-</b>
-
-<br><br>
-
-رنک:
-<b class="green">
-${data.rank}
-</b>
-
-`;
-
-
-
-
-
-};
-
-
-
+}
 
 
 </script>
+
 
 
 </body>
