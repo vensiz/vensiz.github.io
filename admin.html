@@ -20,10 +20,10 @@ box-sizing:border-box;
 
 body{
 
-min-height:100vh;
 background:#020403;
 color:white;
 font-family:tahoma;
+min-height:100vh;
 
 }
 
@@ -32,22 +32,24 @@ font-family:tahoma;
 
 width:400px;
 max-width:90%;
+
 margin:120px auto;
 
 background:#071008;
 
 border:1px solid rgba(0,255,100,.2);
 
-border-radius:20px;
+border-radius:18px;
 
 padding:30px;
-
-text-align:center;
 
 }
 
 
+
 h1{
+
+text-align:center;
 
 color:#00ff66;
 
@@ -72,8 +74,6 @@ border:1px solid rgba(0,255,100,.2);
 border-radius:10px;
 
 color:white;
-
-outline:none;
 
 }
 
@@ -109,6 +109,8 @@ background:#00ff66;
 
 #message{
 
+text-align:center;
+
 margin-top:15px;
 
 font-size:13px;
@@ -117,18 +119,19 @@ font-size:13px;
 
 
 
+.error{
+
+color:#ff7777;
+
+}
+
+
 .success{
 
 color:#00ff66;
 
 }
 
-
-.error{
-
-color:#ff7777;
-
-}
 
 
 #panel{
@@ -149,7 +152,15 @@ border:1px solid rgba(0,255,100,.15);
 
 border-radius:18px;
 
-padding:25px;
+padding:30px;
+
+}
+
+
+
+.green{
+
+color:#00ff66;
 
 }
 
@@ -174,10 +185,12 @@ VENSIZ ADMIN
 </h1>
 
 
+
 <input
 id="username"
 placeholder="Username"
 >
+
 
 
 <input
@@ -187,14 +200,17 @@ placeholder="Password"
 >
 
 
-<button id="loginBtn">
+
+<button id="login">
 
 ورود
 
 </button>
 
 
+
 <div id="message"></div>
+
 
 
 </div>
@@ -205,6 +221,7 @@ placeholder="Password"
 
 <!-- PANEL -->
 
+
 <div id="panel">
 
 
@@ -212,25 +229,28 @@ placeholder="Password"
 
 
 <h1>
-خوش آمدید به پنل مدیریت VENSIZ
+VENSIZ CONTROL PANEL
 </h1>
-
-
-<p id="adminInfo"></p>
 
 
 <br>
 
 
-<h3>
-🎫 تیکت‌ها
+<p id="adminInfo"></p>
+
+
+<br><br>
+
+
+<h3 class="green">
+🎫 تیکت ها
 </h3>
 
 
 <br>
 
 
-<h3>
+<h3 class="green">
 🛒 فروشگاه
 </h3>
 
@@ -238,15 +258,17 @@ placeholder="Password"
 <br>
 
 
-<h3>
-👥 مدیریت ادمین‌ها
+<h3 class="green">
+👥 مدیریت ادمین ها
 </h3>
 
 
+
 </div>
 
 
 </div>
+
 
 
 
@@ -265,17 +287,20 @@ const SUPABASE_KEY =
 
 const db =
 supabase.createClient(
+
 SUPABASE_URL,
+
 SUPABASE_KEY
+
 );
 
 
 
 
 
-const loginBtn =
+const login =
 document.getElementById(
-"loginBtn"
+"login"
 );
 
 
@@ -288,7 +313,8 @@ document.getElementById(
 
 
 
-loginBtn.onclick =
+
+login.onclick =
 async()=>{
 
 
@@ -320,7 +346,7 @@ if(
 ){
 
 message.innerHTML =
-"همه بخش‌ها را پر کنید";
+"اطلاعات را کامل کنید";
 
 message.className =
 "error";
@@ -333,7 +359,14 @@ return;
 
 
 
-const {data,error}=
+
+const {
+
+data,
+
+error
+
+}=
 
 await db
 
@@ -377,6 +410,9 @@ return;
 
 
 
+
+
+
 localStorage.setItem(
 
 "vensiz_admin",
@@ -384,6 +420,9 @@ localStorage.setItem(
 JSON.stringify(data)
 
 );
+
+
+
 
 
 
@@ -396,11 +435,16 @@ document
 
 
 
+
+
 document
 .getElementById(
 "panel"
 )
 .style.display="block";
+
+
+
 
 
 
@@ -414,18 +458,25 @@ document
 `
 
 ادمین:
+<b class="green">
 ${data.name}
+</b>
 
-<br>
+<br><br>
 
 رنک:
+<b class="green">
 ${data.rank}
+</b>
 
 `;
 
 
 
+
+
 };
+
 
 
 
