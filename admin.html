@@ -13,25 +13,25 @@
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:tahoma,Arial;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:tahoma,Arial;
 }
 
 
 body{
 
-    min-height:100vh;
+min-height:100vh;
 
-    background:
-    linear-gradient(rgba(0,255,100,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,255,100,.04) 1px,transparent 1px),
-    #020403;
+background:
+linear-gradient(rgba(0,255,100,.04) 1px,transparent 1px),
+linear-gradient(90deg,rgba(0,255,100,.04) 1px,transparent 1px),
+#020403;
 
-    background-size:50px 50px;
+background-size:50px 50px;
 
-    color:white;
+color:white;
 
 }
 
@@ -41,87 +41,76 @@ body{
 
 header{
 
-    height:75px;
+height:75px;
 
-    background:#050805;
+background:#050805;
 
-    border-bottom:
-    1px solid rgba(0,255,100,.2);
+border-bottom:1px solid rgba(0,255,100,.2);
 
-    display:flex;
+display:flex;
 
-    align-items:center;
+align-items:center;
 
-    justify-content:space-between;
+justify-content:space-between;
 
-    padding:0 35px;
+padding:0 35px;
 
 }
-
 
 
 .logo{
 
-    color:#00ff66;
+color:#00ff66;
 
-    font-size:28px;
+font-size:28px;
 
-    font-weight:bold;
+font-weight:bold;
 
-    text-shadow:
-    0 0 20px #00ff66;
+text-shadow:0 0 20px #00ff66;
 
 }
 
 
-
 .admin-box{
 
-    color:#ddd;
+font-size:14px;
 
-    font-size:14px;
+color:#ddd;
 
 }
 
 
 .admin-box span{
 
-    color:#00ff66;
+color:#00ff66;
 
 }
 
 
 
 
-
-/* LAYOUT */
+/* MAIN */
 
 
 .layout{
 
-    display:flex;
+display:flex;
 
-    min-height:calc(100vh - 75px);
+min-height:calc(100vh - 75px);
 
 }
 
 
 
-
-
-/* SIDEBAR */
-
-
 .sidebar{
 
-    width:260px;
+width:260px;
 
-    background:#050805;
+background:#050805;
 
-    border-left:
-    1px solid rgba(0,255,100,.15);
+border-left:1px solid rgba(0,255,100,.15);
 
-    padding:25px;
+padding:25px;
 
 }
 
@@ -129,116 +118,113 @@ header{
 
 .menu button{
 
-    width:100%;
+width:100%;
 
-    padding:15px;
+padding:15px;
 
-    margin-bottom:15px;
+margin-bottom:15px;
 
-    background:#081108;
+background:#081108;
 
-    color:white;
+color:white;
 
-    border:
+border:1px solid rgba(0,255,100,.15);
 
-    1px solid rgba(0,255,100,.15);
+border-radius:12px;
 
-    border-radius:12px;
+cursor:pointer;
 
-    cursor:pointer;
-
-    text-align:right;
-
-    transition:.3s;
+text-align:right;
 
 }
-
 
 
 .menu button:hover{
 
-    border-color:#00ff66;
-
-    box-shadow:
-    0 0 15px rgba(0,255,100,.2);
+border-color:#00ff66;
 
 }
 
-
-
-
-
-/* CONTENT */
 
 
 .content{
 
-    flex:1;
+flex:1;
 
-    padding:35px;
+padding:35px;
 
 }
+
 
 
 
 .panel{
 
-    background:#071008;
+background:#071008;
 
-    border:
+border:1px solid rgba(0,255,100,.15);
 
-    1px solid rgba(0,255,100,.15);
+border-radius:20px;
 
-    border-radius:20px;
-
-    padding:35px;
+padding:35px;
 
 }
 
 
 
-h1,h2{
+.section{
 
-    color:#00ff66;
+display:none;
 
 }
 
+
+.section.active{
+
+display:block;
+
+}
+
+
+
+
+h1,h2,h3{
+
+color:#00ff66;
+
+}
 
 
 
 
 .cards{
 
-    display:grid;
+display:grid;
 
-    grid-template-columns:
-    repeat(3,1fr);
+grid-template-columns:repeat(3,1fr);
 
-    gap:20px;
+gap:20px;
 
-    margin-top:30px;
+margin-top:30px;
 
 }
 
 
 
+
 .card{
 
-    background:#030603;
+background:#030603;
 
-    border:
+border:1px solid rgba(0,255,100,.15);
 
-    1px solid rgba(0,255,100,.15);
+padding:30px;
 
-    border-radius:15px;
+border-radius:15px;
 
-    padding:30px;
+text-align:center;
 
-    text-align:center;
-
-    cursor:pointer;
-
-    transition:.3s;
+cursor:pointer;
 
 }
 
@@ -246,93 +232,103 @@ h1,h2{
 
 .card:hover{
 
-    transform:translateY(-5px);
-
-    border-color:#00ff66;
-
-}
-
-
-
-.card h3{
-
-    color:#00ff66;
-
-    margin-bottom:15px;
-
-}
-
-
-
-.card p{
-
-    color:#888;
-
-    font-size:13px;
+border-color:#00ff66;
 
 }
 
 
 
 
+button.action{
+
+margin-top:15px;
+
+padding:12px;
+
+width:100%;
+
+background:#00ff66;
+
+color:#001b08;
+
+border:0;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
 
 
 
-.section{
+textarea{
 
-    display:none;
+width:100%;
+
+margin-top:15px;
+
+padding:15px;
+
+background:#020403;
+
+color:white;
+
+border:1px solid #00ff66;
+
+border-radius:10px;
 
 }
 
 
 
-.section.active{
+.ticket{
 
-    display:block;
+background:#030603;
 
-}
+border:1px solid rgba(0,255,100,.15);
 
+padding:20px;
 
+border-radius:15px;
 
-
-
-.back-btn{
-
-    margin-top:20px;
-
-    padding:12px 20px;
-
-    background:#00ff66;
-
-    border:none;
-
-    border-radius:10px;
-
-    cursor:pointer;
+margin-bottom:15px;
 
 }
 
+
+
+.message{
+
+background:#071008;
+
+padding:15px;
+
+border-radius:10px;
+
+margin-bottom:10px;
+
+}
 
 
 
 
 @media(max-width:900px){
 
-    .cards{
+.cards{
 
-        grid-template-columns:1fr;
-
-    }
-
-
-    .sidebar{
-
-        width:200px;
-
-    }
+grid-template-columns:1fr;
 
 }
 
+.sidebar{
+
+width:200px;
+
+}
+
+}
 
 
 </style>
@@ -343,34 +339,22 @@ h1,h2{
 <body>
 
 
-
 <header>
 
-
 <div class="logo">
-
 VENSIZ ADMIN
-
 </div>
-
 
 
 <div class="admin-box" id="admin-info">
-
 در حال بررسی...
-
 </div>
-
 
 
 </header>
 
 
-
-
-
 <div class="layout">
-
 
 
 <aside class="sidebar">
@@ -380,30 +364,22 @@ VENSIZ ADMIN
 
 
 <button onclick="showSection('dashboard')">
-
 🏠 داشبورد
-
 </button>
 
 
 <button onclick="showSection('tickets')">
-
-🎫 مدیریت تیکت‌ها
-
+🎫 تیکت‌ها
 </button>
 
 
 <button onclick="showSection('admins')">
-
 👥 مدیریت ادمین‌ها
-
 </button>
 
 
 <button onclick="showSection('shop')">
-
-🛒 مدیریت فروشگاه
-
+🛒 فروشگاه
 </button>
 
 
@@ -413,29 +389,19 @@ VENSIZ ADMIN
 </aside>
 
 
-
-
-
-
-
 <main class="content">
-
-
+    <!-- DASHBOARD -->
 
 <div id="dashboard" class="panel section active">
 
 
 <h1>
-
 خوش آمدید
-
 </h1>
 
 
 <p style="color:#aaa;margin-top:15px">
-
 پنل مدیریت VENSIZ
-
 </p>
 
 
@@ -443,9 +409,7 @@ VENSIZ ADMIN
 <div class="cards">
 
 
-
-<div class="card"
-onclick="showSection('tickets')">
+<div class="card" onclick="showSection('tickets')">
 
 <h3>
 🎫 تیکت‌ها
@@ -459,9 +423,7 @@ onclick="showSection('tickets')">
 
 
 
-
-<div class="card"
-onclick="showSection('admins')">
+<div class="card" onclick="showSection('admins')">
 
 <h3>
 👥 ادمین‌ها
@@ -476,9 +438,7 @@ onclick="showSection('admins')">
 
 
 
-
-<div class="card"
-onclick="showSection('shop')">
+<div class="card" onclick="showSection('shop')">
 
 <h3>
 🛒 فروشگاه
@@ -501,12 +461,16 @@ onclick="showSection('shop')">
 
 
 
+<!-- TICKETS -->
+
 
 <div id="tickets" class="panel section">
+
 
 <h2>
 🎫 مدیریت تیکت‌ها
 </h2>
+
 
 
 <div id="ticketList" style="margin-top:25px">
@@ -516,68 +480,80 @@ onclick="showSection('shop')">
 </div>
 
 
-</div>
-<div id="chatBox" style="margin-top:30px;display:none;">
 
-<h2 style="color:#00ff66">
+<!-- CHAT داخل خود تیکت -->
+
+<div id="chatBox" style="display:none;margin-top:30px;">
+
+
+<h2>
 💬 گفتگوی تیکت
 </h2>
 
-<div id="messages" style="
-background:#020403;
-padding:20px;
-border-radius:15px;
+
+
+<div id="ticketInfo"
+style="
+margin-top:15px;
+color:#aaa;
+">
+</div>
+
+
+
+
+<div id="messages"
+style="
 margin-top:20px;
 min-height:200px;
 ">
 </div>
 
+
+
 <textarea
 id="replyMessage"
-style="
-width:100%;
-margin-top:20px;
-padding:15px;
-background:#020403;
-color:white;
-border:1px solid #00ff66;
-border-radius:10px;
-"
 placeholder="پاسخ خود را بنویسید">
 </textarea>
 
+
+
 <button
-onclick="sendReply()"
-style="
-margin-top:15px;
-padding:12px;
-width:100%;
-background:#00ff66;
-border:0;
-border-radius:10px;
-cursor:pointer;
-">
+class="action"
+onclick="sendReply()">
+
 ارسال پاسخ
+
 </button>
+
+
+
+</div>
+
 
 </div>
 
 
 
+
+
+
+
+<!-- ADMINS -->
 
 
 <div id="admins" class="panel section">
 
+
 <h2>
-
 👥 مدیریت ادمین‌ها
-
 </h2>
+
 
 
 <p style="color:#888;margin-top:20px">
 
-بخش مدیریت ادمین‌ها در مرحله بعد ساخته می‌شود.
+بخش مدیریت ادمین‌ها آماده توسعه است.
 
 </p>
 
@@ -588,75 +564,59 @@ cursor:pointer;
 
 
 
+
+
+
+<!-- SHOP -->
 
 
 <div id="shop" class="panel section">
 
+
 <h2>
-
 🛒 مدیریت فروشگاه
-
 </h2>
+
 
 
 <p style="color:#888;margin-top:20px">
 
-بخش فروشگاه در مرحله بعد ساخته می‌شود.
+بخش فروشگاه آماده توسعه است.
 
 </p>
 
 
 </div>
 
-
-
-
-
-
-
-</main>
-
-
-</div>
-
-
-
-
-
-
-
-
 <script>
 
 
-// گرفتن اطلاعات ادمین
+// =======================
+// CHECK ADMIN LOGIN
+// =======================
 
-const adminData =
 
-JSON.parse(
-
+const adminData = JSON.parse(
 sessionStorage.getItem("vensiz_admin")
-
 );
 
 
 
 if(!adminData){
 
-    window.location.href =
-    "admin-login.html";
+window.location.href="admin-login.html";
 
 }
 
 
 
+// نمایش نام و رنک
 
-document
-.getElementById("admin-info")
-.innerHTML =
 
-`
-🛡 
+document.getElementById("admin-info").innerHTML = `
+
+🛡
+
 <span>
 ${adminData.name || adminData.username}
 </span>
@@ -666,38 +626,54 @@ ${adminData.name || adminData.username}
 <span>
 ${adminData.rank}
 </span>
+
 `;
 
 
 
 
 
+// =======================
+// SECTION CONTROL
+// =======================
+
 
 function showSection(id){
 
 
 document
-
 .querySelectorAll(".section")
-
 .forEach(section=>{
 
-
 section.classList.remove("active");
-
 
 });
 
 
 
 document
-
 .getElementById(id)
-
 .classList.add("active");
 
 
+
+if(id==="tickets"){
+
+loadTickets();
+
 }
+
+
+}
+
+
+
+
+
+// =======================
+// SUPABASE
+// =======================
+
 
 const SUPABASE_URL =
 "https://gpeckwmjsgklzhtgqdso.supabase.co";
@@ -706,156 +682,39 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdwZWNrd21qc2drbHpodGdxZHNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwODg2MDYsImV4cCI6MjEwMjY2NDYwNn0.byZ-LzDxa884_yIMYEgh3-kvLH8r1AB5huaNvRRLspw";
 
+
 const db =
 window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
-let currentTicket = null;
 
 
-async function openTicket(id){
 
-currentTicket = id;
+let currentTicket=null;
 
-const {data,error} = await db
-.from("tickets")
-.select("*")
-.eq("id",id)
-.single();
 
-if(error){
 
-console.log(error);
 
-return;
 
-}
 
-document.getElementById("chatBox").style.display = "block";
+// =======================
+// LOAD TICKETS
+// =======================
 
-loadMessages();
 
-}
-async function loadMessages(){
-
-const {data,error} = await db
-.from("ticket_messages")
-.select("*")
-.eq("ticket_id",currentTicket)
-.order("id",{ascending:true});
-
-if(error){
-
-console.log(error);
-
-return;
-
-}
-
-const box =
-document.getElementById("messages");
-
-box.innerHTML = "";
-
-data.forEach(msg => {
-
-box.innerHTML += `
-
-<div style="
-background:#071008;
-padding:15px;
-border-radius:10px;
-margin-bottom:10px;
-">
-
-<b style="color:#00ff66">
-${msg.sender_name}
-</b>
-
-<br>
-
-<span style="color:#aaa">
-${msg.sender_rank}
-</span>
-
-<br><br>
-
-${msg.message}
-
-</div>
-
-`;
-
-});
-
-}
-async function sendReply(){
-
-const text =
-document.getElementById("replyMessage")
-.value
-.trim();
-
-if(!text){
-
-return;
-
-}
-
-if(!currentTicket){
-
-return;
-
-}
-
-const admin =
-JSON.parse(
-sessionStorage.getItem("vensiz_admin")
-);
-
-if(!admin){
-
-return;
-
-}
-
-const {error} = await db
-.from("ticket_messages")
-.insert({
-
-ticket_id:currentTicket,
-
-sender_type:"admin",
-
-sender_name:admin.name || admin.username,
-
-sender_rank:admin.rank,
-
-message:text
-
-});
-
-if(error){
-
-console.log(error);
-
-return;
-
-}
-
-document.getElementById("replyMessage").value = "";
-
-loadMessages();
-
-}
 async function loadTickets(){
 
 
 const {data,error}=await db
 .from("tickets")
 .select("*")
-.order("created_at",{ascending:false});
+.order(
+"created_at",
+{
+ascending:false
+}
+);
 
 
 
@@ -882,16 +741,11 @@ data.forEach(ticket=>{
 
 box.innerHTML += `
 
-<div style="
-background:#030603;
-border:1px solid rgba(0,255,100,.15);
-padding:20px;
-border-radius:15px;
-margin-bottom:15px;
-">
+
+<div class="ticket">
 
 
-<h3 style="color:#00ff66">
+<h3>
 
 ${ticket.ticket_number}
 
@@ -903,14 +757,17 @@ ${ticket.ticket_number}
 </p>
 
 
+
 <p>
 📌 ${ticket.subject}
 </p>
 
 
+
 <p>
 📂 ${ticket.department}
 </p>
+
 
 
 <p>
@@ -919,16 +776,11 @@ ${ticket.status}
 </p>
 
 
+
+
 <button
-onclick="openTicket('${ticket.id}')"
-style="
-margin-top:15px;
-padding:10px;
-background:#00ff66;
-border:0;
-border-radius:8px;
-cursor:pointer;
-">
+class="action"
+onclick="openTicket('${ticket.id}')">
 
 باز کردن تیکت
 
@@ -937,6 +789,7 @@ cursor:pointer;
 
 </div>
 
+
 `;
 
 });
@@ -944,16 +797,273 @@ cursor:pointer;
 
 }
 
+
+
+
+
+
+
+
+// =======================
+// OPEN TICKET
+// =======================
+
+
+async function openTicket(id){
+
+
+currentTicket=id;
+
+
+
+const {data,error}=await db
+.from("tickets")
+.select("*")
+.eq("id",id)
+.single();
+
+
+
+if(error){
+
+console.log(error);
+
+return;
+
+}
+
+
+
+document
+.getElementById("chatBox")
+.style.display="block";
+
+
+
+document
+.getElementById("ticketInfo")
+.innerHTML=`
+
+کاربر:
+${data.user_name}
+
+<br>
+
+موضوع:
+${data.subject}
+
+<br>
+
+بخش:
+${data.department}
+
+`;
+
+
+
+loadMessages();
+
+
+
+}
+
+
+
+
+
+
+
+
+// =======================
+// LOAD MESSAGES
+// =======================
+
+
+async function loadMessages(){
+
+
+const {data,error}=await db
+.from("ticket_messages")
+.select("*")
+.eq(
+"ticket_id",
+currentTicket
+)
+.order(
+"id",
+{
+ascending:true
+}
+);
+
+
+
+if(error){
+
+console.log(error);
+
+return;
+
+}
+
+
+
+const box =
+document.getElementById("messages");
+
+
+box.innerHTML="";
+
+
+
+data.forEach(msg=>{
+
+
+box.innerHTML += `
+
+
+<div class="message">
+
+
+<b style="color:#00ff66">
+
+${msg.sender_name}
+
+</b>
+
+
+<br>
+
+
+<span style="color:#aaa">
+
+${msg.sender_rank || ""}
+
+</span>
+
+
+<br><br>
+
+
+${msg.message}
+
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =======================
+// SEND MESSAGE
+// =======================
+
+
+async function sendReply(){
+
+
+const text =
+document
+.getElementById("replyMessage")
+.value
+.trim();
+
+
+
+if(!text || !currentTicket){
+
+return;
+
+}
+
+
+
+const admin =
+JSON.parse(
+sessionStorage.getItem("vensiz_admin")
+);
+
+
+
+
+const {error}=await db
+.from("ticket_messages")
+.insert({
+
+ticket_id:currentTicket,
+
+sender_type:"admin",
+
+sender_name:
+admin.name || admin.username,
+
+sender_rank:
+admin.rank,
+
+message:text
+
+});
+
+
+
+
+
+if(error){
+
+console.log(error);
+
+return;
+
+}
+
+
+
+
+
+document
+.getElementById("replyMessage")
+.value="";
+
+
+
+loadMessages();
+
+
+
+}
+
+
+
+
+
+// شروع اولیه
+
+
 loadTickets();
-
-console.log("ticket loader started");
-
-
 
 
 
 </script>
 
+
+</main>
+
+</div>
 
 
 </body>
