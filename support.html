@@ -477,6 +477,23 @@ ${t.department}
 وضعیت:
 ${t.status}
 
+
+<br><br>
+
+<button onclick="openChat('${t.id}')">
+💬 ورود به گفتگو
+</button>
+
+
+<button 
+style="margin-top:10px;background:#ff4444;color:white"
+onclick="deleteTicket('${t.id}')">
+
+🗑 حذف تیکت
+
+</button>
+
+
 </div>
 
 `;
@@ -487,7 +504,43 @@ ${t.status}
 
 }
 
+function openChat(id){
 
+alert("چت تیکت: "+id);
+
+// مرحله بعد اینجا باکس چت باز می‌شود
+
+}
+
+
+
+async function deleteTicket(id){
+
+
+if(!confirm("آیا مطمئن هستید؟")){
+return;
+}
+
+
+const {error}=await db
+.from("tickets")
+.delete()
+.eq("id",id);
+
+
+
+if(error){
+
+console.log(error);
+return;
+
+}
+
+
+loadTickets();
+
+
+}
 
 loadTickets();
 
