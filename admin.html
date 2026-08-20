@@ -1491,35 +1491,16 @@ console.log("Realtime status:", status);
 
 async function loadMessages(){
 
-
 const {data,error}=await db
-
 .from("ticket_messages")
-
 .select("*")
-
-.eq(
-"ticket_id",
-currentTicket
-)
-
-.order(
-"created_at",
-{
+.eq("ticket_id", currentTicket)
+.order("created_at", {
 ascending:true
-}
-);
+});
 
 
-
-console.log("CURRENT TICKET:", currentTicket);
-console.log("MESSAGE DATA:", data);
-console.log("MESSAGE ERROR:", error);
-
-
-
-const box =
-document.getElementById("messages");
+const box = document.getElementById("messages");
 
 
 if(!box){
@@ -1528,69 +1509,66 @@ return;
 }
 
 
-
 if(error){
 
-box.innerHTML="خطا در دریافت پیام‌ها";
 console.log(error);
+
+box.innerHTML = "خطا در دریافت پیام‌ها";
+
+return;
+
+}
+
+
+if(!data || data.length === 0){
+
+box.innerHTML = "هنوز پیامی وجود ندارد";
+
 return;
 
 }
 
 
 
-if(!data || data.length===0){
-
-box.innerHTML="هنوز پیامی وجود ندارد";
-return;
-
-}
+box.innerHTML = "";
 
 
-
-box.innerHTML="";
-
-box.innerHTML="<h2 style='color:red'>تست نمایش چت</h2>";
 
 data.forEach(msg=>{
 
 
-let type =
-msg.sender_type === "admin"
-?
-"admin-message"
-:
-"user-message";
-
+const isAdmin = msg.sender_type === "admin";
 
 
 box.innerHTML += `
 
+<div class="${isAdmin ? "admin-message" : "user-message"}">
 
-<div class="${type}">
 
-
-<b>
+<b style="color:#00ff66">
 
 ${msg.sender_name || "کاربر"}
 
 </b>
 
 
-<br>
+${isAdmin && msg.sender_rank ? 
 
+`<span style="color:#aaa">
+(${msg.sender_rank})
+</span>` 
 
-<span style="color:#aaa">
-
-${msg.sender_rank || ""}
-
-</span>
+: ""}
 
 
 <br><br>
 
 
+<div>
+
 ${msg.message}
+
+</div>
 
 
 </div>
@@ -1608,7 +1586,6 @@ box.scrollTop = box.scrollHeight;
 
 
 }
-
 
 
 
