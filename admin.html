@@ -943,32 +943,7 @@ console.log("ticket loader started");
 
 
 
-async function openTicket(id){
 
-const {data,error}=await db
-.from("tickets")
-.select("*")
-.eq("id",id)
-.single();
-
-
-if(error){
-
-console.log(error);
-return;
-
-}
-
-
-alert(
-"تیکت: "+data.ticket_number+
-"\n\nکاربر: "+data.user_name+
-"\n\nموضوع: "+data.subject+
-"\n\nپیام: "+data.message
-);
-
-
-}
 
 </script>
 
