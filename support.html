@@ -10,134 +10,120 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<style>
+.chat-box{
 
-*{
-box-sizing:border-box;
-font-family:tahoma;
-}
-
-body{
-
-margin:0;
-background:#020403;
-color:white;
-
-background:
-linear-gradient(rgba(0,255,100,.04) 1px,transparent 1px),
-linear-gradient(90deg,rgba(0,255,100,.04) 1px,transparent 1px);
-
-background-size:40px 40px;
-
-}
-
-
-.container{
-
-max-width:850px;
-margin:50px auto;
-padding:20px;
-
-}
-
-
-.box{
+margin-top:30px;
 
 background:#071008;
-padding:30px;
+
+padding:25px;
+
 border-radius:20px;
-border:1px solid #00ff66;
+
+border:1px solid rgba(0,255,100,.25);
+
+box-shadow:
+0 0 30px rgba(0,255,100,.08);
 
 }
 
 
 
-h1{
+.chat-title{
 
 color:#00ff66;
-text-align:center;
+
+font-size:22px;
+
+margin-bottom:20px;
 
 }
 
 
 
-input,
-select,
-textarea{
+.chat-message{
 
-width:100%;
+background:#030603;
+
+border:1px solid rgba(0,255,100,.15);
+
 padding:15px;
-margin:10px 0 20px;
+
+border-radius:15px;
+
+margin-bottom:12px;
+
+}
+
+
+
+.user-message{
+
+border-right:4px solid #00ff66;
+
+}
+
+
+
+.admin-message{
+
+border-left:4px solid #00ff66;
+
+}
+
+
+
+.chat-code{
+
+color:#aaa;
+
+line-height:2;
 
 background:#020403;
-border:1px solid #00ff66;
-border-radius:10px;
-
-color:white;
-
-}
-
-
-
-textarea{
-
-height:150px;
-
-}
-
-
-
-button{
-
-width:100%;
-padding:15px;
-
-background:#00ff66;
-
-border:0;
-
-border-radius:10px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-}
-
-
-
-button:hover{
-
-box-shadow:0 0 20px #00ff66;
-
-}
-
-
-
-.ticket{
-
-margin-top:15px;
 
 padding:15px;
-
-background:#020403;
 
 border-radius:12px;
 
-border:1px solid #333;
+margin-bottom:20px;
 
 }
 
 
 
-.green{
+.chat-send{
 
-color:#00ff66;
+display:flex;
+
+gap:10px;
 
 }
 
 
-</style>
+.chat-send textarea{
+
+height:100px;
+
+}
+
+
+
+.delete-btn{
+
+background:#ff4444;
+
+color:white;
+
+}
+
+
+.chat-btn{
+
+background:#00ff66;
+
+color:#001b08;
+
+}
 
 
 </head>
@@ -242,7 +228,29 @@ placeholder="مشکل خود را توضیح دهید"></textarea>
 
 </div>
 
+<div id="chatBox" style="display:none;margin-top:30px;">
 
+<h2 class="green">
+💬 گفتگوی تیکت
+</h2>
+
+<div id="chatInfo" class="ticket"></div>
+
+<div id="messages"></div>
+
+
+<textarea 
+id="chatMessage"
+placeholder="پیام خود را بنویسید">
+</textarea>
+
+
+<button onclick="sendMessage()">
+ارسال پیام
+</button>
+
+
+</div>
 
 </div>
 
@@ -504,16 +512,175 @@ onclick="deleteTicket('${t.id}')">
 
 }
 
-function openChat(id){
+let currentTicket = null;
 
-alert("چت تیکت: "+id);
 
-// مرحله بعد اینجا باکس چت باز می‌شود
+async function openChat(id){
+
+currentTicket = id;
+
+
+document
+.getElementById("chatBox")
+.style.display="block";
+
+
+const {data,error}=await db
+.from("tickets")
+.select("*")
+.eq("id",id)
+.single();
+
+
+if(error){
+
+console.log(error);
+return;
+
+}
+
+
+document.getElementById("chatInfo").innerHTML = `
+
+کد پیگیری:
+${data.ticket_number}
+
+<br>
+
+موضوع:
+${data.subject}
+
+<br>
+
+وضعیت:
+${data.status}
+
+`;
+
+
+loadMessages();
+
+}
+async function loadMessages(){
+
+
+const {data,error}=await db
+
+.from("ticket_messages")
+
+.select("*")
+
+.eq(
+"ticket_id",
+currentTicket
+)
+
+.order(
+"created_at",
+{
+ascending:true
+}
+);
+
+
+
+if(error){
+
+console.log(error);
+return;
 
 }
 
 
 
+const box=document.getElementById("messages");
+
+box.innerHTML="";
+
+
+
+data.forEach(msg=>{
+
+
+box.innerHTML += `
+
+<div class="ticket">
+
+
+<span class="green">
+${msg.sender_name}
+</span>
+
+<br>
+
+${msg.message}
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+}
+async function sendMessage(){
+
+
+let text =
+document
+.getElementById("chatMessage")
+.value
+.trim();
+
+
+
+if(!text || !currentTicket){
+
+return;
+
+}
+
+
+
+const {error}=await db
+.from("ticket_messages")
+.insert({
+
+ticket_id:currentTicket,
+
+sender_type:"user",
+
+sender_name:
+"کاربر",
+
+message:text
+
+});
+
+
+
+if(error){
+
+console.log(error);
+return;
+
+}
+
+
+
+document
+.getElementById("chatMessage")
+.value="";
+
+
+loadMessages();
+
+
+}
 async function deleteTicket(id){
 
 
