@@ -1009,7 +1009,16 @@ ${ticket.ticket_number || ticket.id}
 ${ticket.status || "-"}
 </p>
 
+<p>
+🛡 مسئول:
+${ticket.assigned_admin || "هنوز کسی قبول نکرده"}
+</p>
 
+
+<p>
+⭐ رنک:
+${ticket.admin_rank || "-"}
+</p>
 
 <button class="action"
 
@@ -1440,6 +1449,8 @@ return;
 alert("تیکت با موفقیت قبول شد");
 
 loadTickets();
+
+openTicket(currentTicket);
 
 }
 
