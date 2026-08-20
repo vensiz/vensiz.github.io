@@ -1885,6 +1885,8 @@ return;
 }
 
 
+// تغییر مسئول تیکت
+
 const {error}=await db
 .from("tickets")
 .update({
@@ -1893,10 +1895,11 @@ assigned_admin: adminName,
 
 admin_rank: adminRank,
 
-status: "در حال بررسی"
+status:"در حال بررسی"
 
 })
 .eq("id", currentTicket);
+
 
 
 if(error){
@@ -1910,7 +1913,40 @@ return;
 }
 
 
+
+// ثبت پیام انتقال داخل چت
+
+const {error:msgError}=await db
+.from("ticket_messages")
+.insert({
+
+ticket_id: currentTicket,
+
+sender_type:"system",
+
+sender_name:"سیستم",
+
+sender_rank:"",
+
+message:
+`🔄 این تیکت به ادمین ${adminName} (${adminRank}) منتقل شد.`
+
+});
+
+
+
+if(msgError){
+
+console.log(msgError);
+
+}
+
+
+
+// بروزرسانی لیست
+
 alert("تیکت با موفقیت منتقل شد");
+
 
 await loadTickets();
 
@@ -1918,14 +1954,6 @@ closeTicketModal();
 
 
 }
-function closeTicketModal(){
-
-document
-.getElementById("ticketModal")
-.style.display="none";
-
-}
-
 
 </script>
 </body>
