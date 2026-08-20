@@ -1408,7 +1408,6 @@ ${admin.permissions || "ندارد"}
 </p>
 
 
-
 <button 
 class="action"
 onclick="manageAdmin('${admin.id}')">
@@ -1423,13 +1422,20 @@ onclick="manageAdmin('${admin.id}')">
 
 `;
 
-});
-function manageAdmin(id){
 
-const admin =
-prompt("شناسه ادمین: "+id);
+});
+
 
 }
+
+
+
+function manageAdmin(id){
+
+alert("مدیریت ادمین: "+id);
+
+}
+  
 async function acceptTicket(){
 
 if(!currentTicket){
