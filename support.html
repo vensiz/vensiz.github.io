@@ -474,9 +474,7 @@ Math.random()*900000
 const {data,error}=
 
 await db
-
 .from("tickets")
-
 .insert({
 
 ticket_number:number,
@@ -494,7 +492,24 @@ message:message,
 status:"open"
 
 })
+.select()
+.single();
 
+
+
+console.log("RESULT:",data);
+
+console.log("ERROR:",error);
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
 .select()
 
 .single();
