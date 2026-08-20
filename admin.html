@@ -1954,7 +1954,19 @@ closeTicketModal();
 
 
 }
+function closeTicketModal(){
 
+const modal = document.getElementById("ticketModal");
+
+if(modal){
+
+modal.style.display="none";
+
+}
+
+document.getElementById("modalContent").innerHTML="";
+
+}
 </script>
 </body>
 </html>
