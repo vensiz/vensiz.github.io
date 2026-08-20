@@ -1278,7 +1278,51 @@ ${data.department}
 
 📝 پیام:
 ${data.message}
+<br><br>
 
+<button onclick="acceptTicket()">
+✅ قبول تیکت
+</button>
+
+
+<button onclick="closeTicket()"
+style="background:#ffaa00">
+
+🔒 بستن تیکت
+
+</button>
+
+
+<button 
+onclick="deleteTicket('${data.id}')"
+style="background:#ff4444;color:white">
+
+🗑 حذف تیکت
+
+</button>
+
+
+<hr>
+
+<h3 class="green">
+💬 گفتگو
+</h3>
+
+
+<div id="adminMessages">
+
+</div>
+
+
+<textarea 
+id="adminReply"
+placeholder="پاسخ به کاربر">
+</textarea>
+
+
+<button onclick="adminSendMessage()">
+ارسال پاسخ
+</button>
 `;
 
 
