@@ -1878,7 +1878,52 @@ document.getElementById("modalContent").innerHTML += html;
 
 
 }
+async function confirmTransfer(adminName, adminRank){
 
+if(!currentTicket){
+return;
+}
+
+
+const {error}=await db
+.from("tickets")
+.update({
+
+assigned_admin: adminName,
+
+admin_rank: adminRank,
+
+status: "در حال بررسی"
+
+})
+.eq("id", currentTicket);
+
+
+if(error){
+
+console.log(error);
+
+alert("خطا در انتقال تیکت");
+
+return;
+
+}
+
+
+alert("تیکت با موفقیت منتقل شد");
+
+
+// نمایش اطلاعات جدید
+
+selectedTicketData.assigned_admin = adminName;
+selectedTicketData.admin_rank = adminRank;
+
+
+// باز کردن دوباره تیکت
+
+openTicket(currentTicket);
+
+}
 function closeTicketModal(){
 
 document
