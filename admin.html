@@ -1386,36 +1386,50 @@ box.innerHTML += `
 
 
 <h3>
-${admin.name || admin.username}
+🛡 ${admin.name || admin.username}
 </h3>
 
 
 <p>
-رنک:
-${admin.rank}
+👤 یوزرنیم:
+${admin.username}
 </p>
 
 
 <p>
-یوزرنیم:
-${admin.username}
+⭐ رنک:
+${admin.rank || "-"}
 </p>
+
+
+<p>
+🔑 دسترسی:
+${admin.permissions || "ندارد"}
+</p>
+
+
+
+<button 
+class="action"
+onclick="manageAdmin('${admin.id}')">
+
+مدیریت ادمین
+
+</button>
 
 
 </div>
 
 
-
 `;
 
-
-
 });
+function manageAdmin(id){
 
-
+const admin =
+prompt("شناسه ادمین: "+id);
 
 }
-
 async function acceptTicket(){
 
 if(!currentTicket){
