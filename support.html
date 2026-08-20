@@ -10,6 +10,199 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<style>
+
+*{
+box-sizing:border-box;
+font-family:tahoma,Arial;
+}
+
+
+body{
+
+margin:0;
+
+background:#020403;
+
+color:white;
+
+background:
+
+linear-gradient(
+rgba(0,255,100,.04) 1px,
+transparent 1px
+),
+
+linear-gradient(
+90deg,
+rgba(0,255,100,.04) 1px,
+transparent 1px
+);
+
+background-size:40px 40px;
+
+}
+
+
+
+.container{
+
+max-width:850px;
+
+margin:50px auto;
+
+padding:20px;
+
+}
+
+
+
+.box{
+
+background:#071008;
+
+padding:30px;
+
+border-radius:20px;
+
+border:1px solid rgba(0,255,100,.25);
+
+box-shadow:
+0 0 30px rgba(0,255,100,.08);
+
+}
+
+
+
+h1{
+
+color:#00ff66;
+
+text-align:center;
+
+font-size:32px;
+
+text-shadow:
+0 0 15px #00ff66;
+
+}
+
+
+
+h2{
+
+margin-top:20px;
+
+}
+
+
+
+.green{
+
+color:#00ff66;
+
+}
+
+
+
+input,
+select,
+textarea{
+
+width:100%;
+
+padding:15px;
+
+margin:10px 0 20px;
+
+background:#020403;
+
+border:1px solid rgba(0,255,100,.5);
+
+border-radius:12px;
+
+color:white;
+
+outline:none;
+
+}
+
+
+
+input:focus,
+select:focus,
+textarea:focus{
+
+box-shadow:
+0 0 15px rgba(0,255,100,.4);
+
+border-color:#00ff66;
+
+}
+
+
+
+textarea{
+
+height:150px;
+
+resize:none;
+
+}
+
+
+
+button{
+
+width:100%;
+
+padding:15px;
+
+background:#00ff66;
+
+border:0;
+
+border-radius:12px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+color:#001b08;
+
+transition:.3s;
+
+}
+
+
+
+button:hover{
+
+box-shadow:
+0 0 20px #00ff66;
+
+transform:translateY(-2px);
+
+}
+
+
+
+.ticket{
+
+margin-top:15px;
+
+padding:20px;
+
+background:#030603;
+
+border-radius:15px;
+
+border:1px solid rgba(0,255,100,.15);
+
+}
+
+
+
 .chat-box{
 
 margin-top:30px;
@@ -100,6 +293,7 @@ gap:10px;
 }
 
 
+
 .chat-send textarea{
 
 height:100px;
@@ -117,6 +311,7 @@ color:white;
 }
 
 
+
 .chat-btn{
 
 background:#00ff66;
@@ -125,6 +320,19 @@ color:#001b08;
 
 }
 
+
+hr{
+
+border:0;
+
+border-top:1px solid rgba(0,255,100,.2);
+
+margin:30px 0;
+
+}
+
+
+</style>
 
 </head>
 
@@ -228,7 +436,7 @@ placeholder="مشکل خود را توضیح دهید"></textarea>
 
 </div>
 
-<div id="chatBox" style="display:none;margin-top:30px;">
+<div id="chatBox" class="chat-box" style="display:none;">
 
 <h2 class="green">
 💬 گفتگوی تیکت
@@ -466,9 +674,9 @@ tickets.innerHTML +=
 
 <div class="ticket">
 
-<span class="green">
+<strong class="green">
 ${t.ticket_number}
-</span>
+</strong>
 
 <br><br>
 
@@ -604,7 +812,7 @@ data.forEach(msg=>{
 
 box.innerHTML += `
 
-<div class="ticket">
+<div class="chat-message">
 
 
 <span class="green">
