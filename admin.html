@@ -1512,42 +1512,68 @@ ascending:true
 
 
 
+console.log("CURRENT TICKET:", currentTicket);
+console.log("MESSAGE DATA:", data);
+console.log("MESSAGE ERROR:", error);
+
+
+
+const box =
+document.getElementById("messages");
+
+
+if(!box){
+console.log("CHAT BOX NOT FOUND");
+return;
+}
+
+
 
 if(error){
 
+box.innerHTML="خطا در دریافت پیام‌ها";
 console.log(error);
-
 return;
 
 }
 
 
 
-const box =
-document.getElementById("messages");
-console.log("CHAT DATA:", data);
-console.log("CHAT BOX:", box);
+if(!data || data.length===0){
+
+box.innerHTML="هنوز پیامی وجود ندارد";
+return;
+
+}
+
+
 
 box.innerHTML="";
 
 
 
-
-
 data.forEach(msg=>{
+
 
 let type =
 msg.sender_type === "admin"
-? "admin-message"
-: "user-message";
+?
+"admin-message"
+:
+"user-message";
+
 
 
 box.innerHTML += `
 
+
 <div class="${type}">
 
-<b style="color:#00ff66">
+
+<b>
+
 ${msg.sender_name || "کاربر"}
+
 </b>
 
 
@@ -1555,7 +1581,9 @@ ${msg.sender_name || "کاربر"}
 
 
 <span style="color:#aaa">
+
 ${msg.sender_rank || ""}
+
 </span>
 
 
@@ -1567,9 +1595,16 @@ ${msg.message}
 
 </div>
 
+
 `;
 
+
+
 });
+
+
+
+box.scrollTop = box.scrollHeight;
 
 
 }
