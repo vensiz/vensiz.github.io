@@ -554,7 +554,82 @@ float:left;
 margin-bottom:20px;
 
 }
+.modal{
 
+display:none;
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,.75);
+
+align-items:center;
+justify-content:center;
+
+z-index:9999;
+
+}
+
+
+.modal-box{
+
+width:90%;
+
+max-width:700px;
+
+max-height:85vh;
+
+overflow:auto;
+
+background:#071008;
+
+border:1px solid #00ff66;
+
+border-radius:20px;
+
+padding:25px;
+
+box-shadow:
+0 0 40px rgba(0,255,100,.2);
+
+position:relative;
+
+}
+
+
+.close-modal{
+
+position:absolute;
+
+top:15px;
+
+left:15px;
+
+width:40px;
+
+height:40px;
+
+background:#ff4444;
+
+color:white;
+
+border-radius:50%;
+
+cursor:pointer;
+
+}
+
+
+.modal button{
+
+margin-top:10px;
+
+}
 </style>
 
 
@@ -1658,7 +1733,13 @@ loadTickets();
 
 
 
+function closeTicketModal(){
 
+document
+.getElementById("ticketModal")
+.style.display="none";
+
+}
 
 
 </script>
