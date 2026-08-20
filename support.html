@@ -725,48 +725,62 @@ let currentTicket = null;
 
 async function openChat(id){
 
-currentTicket = id;
+    currentTicket = id;
 
+    const chatBox = document.getElementById("chatBox");
 
-document
-.getElementById("chatBox")
-.style.display="block";
+    chatBox.style.display = "block";
 
+    chatBox.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 
-const {data,error}=await db
-.from("tickets")
-.select("*")
-.eq("id",id)
-.single();
+    const { data, error } = await db
+        .from("tickets")
+        .select("*")
+        .eq("id", id)
+        .single();
 
+    if(error){
 
-if(error){
+        console.log("OPEN CHAT ERROR:", error);
 
-console.log(error);
-return;
+        document.getElementById("chatInfo").innerHTML =
+        "❌ خطا در دریافت اطلاعات تیکت";
 
-}
+        return;
+    }
 
+    document.getElementById("chatInfo").innerHTML = `
 
-document.getElementById("chatInfo").innerHTML = `
+        <strong class="green">
+        🎫 ${data.ticket_number}
+        </strong>
 
-کد پیگیری:
-${data.ticket_number}
+        <br><br>
 
-<br>
+        👤 کاربر:
+        ${data.user_name || "-"}
 
-موضوع:
-${data.subject}
+        <br>
 
-<br>
+        📌 موضوع:
+        ${data.subject || "-"}
 
-وضعیت:
-${data.status}
+        <br>
 
-`;
+        📂 بخش:
+        ${data.department || "-"}
 
+        <br>
 
-loadMessages();
+        📊 وضعیت:
+        ${data.status || "-"}
+
+    `;
+
+    await loadMessages();
 
 }
 async function loadMessages(){
