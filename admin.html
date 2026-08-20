@@ -849,6 +849,16 @@ document.getElementById("replyMessage").value = "";
 loadMessages();
 
 }
+async function loadTickets(){
+
+
+const {data,error}=await db
+.from("tickets")
+.select("*")
+.order("created_at",{ascending:false});
+
+
+
 if(error){
 
 console.log(error);
@@ -870,9 +880,7 @@ box.innerHTML="";
 data.forEach(ticket=>{
 
 
-box.innerHTML +=
-
-`
+box.innerHTML += `
 
 <div style="
 background:#030603;
@@ -935,7 +943,6 @@ cursor:pointer;
 
 
 }
-
 
 loadTickets();
 
