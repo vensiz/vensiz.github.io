@@ -1,1 +1,398 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>VENSIZ ADMIN LOGIN</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:tahoma;
+}
+
+
+body{
+
+    min-height:100vh;
+
+    background:
+    linear-gradient(rgba(0,255,100,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,100,.03) 1px,transparent 1px),
+    #020403;
+
+    background-size:50px 50px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+
+}
+
+
+.login-box{
+
+    width:100%;
+    max-width:420px;
+
+    background:#071008;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    border:1px solid rgba(0,255,100,.2);
+
+    box-shadow:
+    0 0 50px rgba(0,255,100,.08);
+
+    text-align:center;
+
+}
+
+
+
+.logo{
+
+    width:80px;
+    height:80px;
+
+    margin:auto;
+    margin-bottom:20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid #00ff66;
+
+    border-radius:20px;
+
+    color:#00ff66;
+
+    font-size:45px;
+
+    font-weight:bold;
+
+    box-shadow:
+    0 0 25px #00ff66;
+
+}
+
+
+
+h1{
+
+    color:#00ff66;
+
+    margin-bottom:10px;
+
+}
+
+
+.subtitle{
+
+    color:#777;
+
+    font-size:13px;
+
+    margin-bottom:30px;
+
+}
+
+
+
+input{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:15px;
+
+    background:#020403;
+
+    color:white;
+
+    border:1px solid rgba(0,255,100,.2);
+
+    border-radius:10px;
+
+    outline:none;
+
+}
+
+
+
+input:focus{
+
+    border-color:#00ff66;
+
+}
+
+
+
+button{
+
+    width:100%;
+
+    padding:14px;
+
+    background:#00ff66;
+
+    color:#001b08;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+    box-shadow:
+    0 0 25px #00ff66;
+
+}
+
+
+
+#message{
+
+    margin-top:20px;
+
+    font-size:13px;
+
+}
+
+
+
+.error{
+
+    color:#ff7070;
+
+}
+
+
+
+.success{
+
+    color:#00ff66;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-box">
+
+
+<div class="logo">
+V
+</div>
+
+
+<h1>
+VENSIZ ADMIN
+</h1>
+
+
+<div class="subtitle">
+Management Panel Login
+</div>
+
+
+
+<input
+id="username"
+placeholder="Username"
+>
+
+
+<input
+id="password"
+type="password"
+placeholder="Password"
+>
+
+
+
+<button onclick="login()">
+
+LOGIN
+
+</button>
+
+
+
+<div id="message"></div>
+
+
+</div>
+
+
+
+
+<script>
+
+
+const SUPABASE_URL =
+"https://gpeckwmjsgklzhtgqdso.supabase.co";
+
+
+const SUPABASE_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzIiwicmVmIjoiZ3BlY2t3bWpzZ2tsaHh0Z3Fk c28iLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc4NzA4ODYwNiwiZXhwIjoyMTAyNjY0NjA2fQ.byZLzDxa884_yIMYEgh3-kvLH8r1AB5huaNvRRLspw";
+
+
+const db =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+
+async function login(){
+
+
+const username =
+document.getElementById("username")
+.value
+.trim();
+
+
+
+const password =
+document.getElementById("password")
+.value;
+
+
+
+const message =
+document.getElementById("message");
+
+
+
+if(!username || !password){
+
+message.className="error";
+
+message.innerHTML=
+"اطلاعات را کامل کنید";
+
+return;
+
+}
+
+
+
+const {data,error}=
+
+await db
+
+.from("admins")
+
+.select("*")
+
+.eq(
+"username",
+username
+)
+
+.eq(
+"password",
+password
+)
+
+.single();
+
+
+
+if(error || !data){
+
+
+message.className="error";
+
+message.innerHTML=
+"یوزرنیم یا رمز اشتباه است";
+
+return;
+
+
+}
+
+
+
+sessionStorage.setItem(
+
+"vensiz_admin",
+
+JSON.stringify({
+
+id:data.id,
+
+name:data.name,
+
+username:data.username,
+
+rank:data.rank,
+
+permissions:data.permissions
+
+})
+
+);
+
+
+
+message.className="success";
+
+message.innerHTML=
+"ورود موفق...";
+
+
+
+setTimeout(()=>{
+
+
+window.location.href=
+"admin.html";
+
+
+},800);
+
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
