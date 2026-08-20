@@ -1524,7 +1524,7 @@ return;
 
 const box =
 document.getElementById("messages");
-
+console.log("CHAT DATA:", data);
 console.log("CHAT BOX:", box);
 
 box.innerHTML="";
@@ -1639,7 +1639,7 @@ document
 .value="";
 
 
-loadMessages();
+await loadMessages();
 
 }
 
