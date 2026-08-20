@@ -320,15 +320,10 @@ await db
 .eq(
 "username",
 username
-)
+);
 
-.eq(
-"password",
-password
-)
-
-.single();
-
+console.log("RESULT:", data);
+console.log("ERROR:", error);
 
 
 if(error || !data){
