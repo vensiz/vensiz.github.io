@@ -588,7 +588,9 @@ supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
-
+db.auth.getSession().then(({data})=>{
+    console.log("SESSION:", data);
+});
 
 
 /*
