@@ -517,7 +517,50 @@ onclick="showSection('shop')">
 
 
 </div>
+<div id="chatBox" style="margin-top:30px;display:none;">
 
+<h2 style="color:#00ff66">
+💬 گفتگوی تیکت
+</h2>
+
+<div id="messages" style="
+background:#020403;
+padding:20px;
+border-radius:15px;
+margin-top:20px;
+min-height:200px;
+">
+</div>
+
+<textarea
+id="replyMessage"
+style="
+width:100%;
+margin-top:20px;
+padding:15px;
+background:#020403;
+color:white;
+border:1px solid #00ff66;
+border-radius:10px;
+"
+placeholder="پاسخ خود را بنویسید">
+</textarea>
+
+<button
+onclick="sendReply()"
+style="
+margin-top:15px;
+padding:12px;
+width:100%;
+background:#00ff66;
+border:0;
+border-radius:10px;
+cursor:pointer;
+">
+ارسال پاسخ
+</button>
+
+</div>
 
 
 
@@ -668,26 +711,144 @@ window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
+let currentTicket = null;
 
 
+async function openTicket(id){
 
-async function loadTickets(){
+currentTicket = id;
 
-
-const {data,error}=
-
-await db
+const {data,error} = await db
 .from("tickets")
 .select("*")
-.order(
-"created_at",
-{
-ascending:false
+.eq("id",id)
+.single();
+
+if(error){
+
+console.log(error);
+
+return;
+
 }
+
+document.getElementById("chatBox").style.display = "block";
+
+loadMessages();
+
+}
+async function loadMessages(){
+
+const {data,error} = await db
+.from("ticket_messages")
+.select("*")
+.eq("ticket_id",currentTicket)
+.order("id",{ascending:true});
+
+if(error){
+
+console.log(error);
+
+return;
+
+}
+
+const box =
+document.getElementById("messages");
+
+box.innerHTML = "";
+
+data.forEach(msg => {
+
+box.innerHTML += `
+
+<div style="
+background:#071008;
+padding:15px;
+border-radius:10px;
+margin-bottom:10px;
+">
+
+<b style="color:#00ff66">
+${msg.sender_name}
+</b>
+
+<br>
+
+<span style="color:#aaa">
+${msg.sender_rank}
+</span>
+
+<br><br>
+
+${msg.message}
+
+</div>
+
+`;
+
+});
+
+}
+async function sendReply(){
+
+const text =
+document.getElementById("replyMessage")
+.value
+.trim();
+
+if(!text){
+
+return;
+
+}
+
+if(!currentTicket){
+
+return;
+
+}
+
+const admin =
+JSON.parse(
+sessionStorage.getItem("vensiz_admin")
 );
 
+if(!admin){
 
+return;
 
+}
+
+const {error} = await db
+.from("ticket_messages")
+.insert({
+
+ticket_id:currentTicket,
+
+sender_type:"admin",
+
+sender_name:admin.name || admin.username,
+
+sender_rank:admin.rank,
+
+message:text
+
+});
+
+if(error){
+
+console.log(error);
+
+return;
+
+}
+
+document.getElementById("replyMessage").value = "";
+
+loadMessages();
+
+}
 if(error){
 
 console.log(error);
