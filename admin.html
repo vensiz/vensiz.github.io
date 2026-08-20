@@ -630,6 +630,77 @@ cursor:pointer;
 margin-top:10px;
 
 }
+  .modal-box button{
+
+margin-top:10px;
+
+padding:14px;
+
+border-radius:12px;
+
+border:1px solid rgba(0,255,100,.3);
+
+font-weight:bold;
+
+transition:.3s;
+
+}
+
+
+.modal-box button:hover{
+
+box-shadow:
+0 0 20px #00ff66;
+
+transform:translateY(-2px);
+
+}
+
+
+.accept-btn{
+
+background:#00ff66;
+
+color:#001b08;
+
+}
+
+
+.close-btn{
+
+background:#ffaa00;
+
+color:black;
+
+}
+
+
+.delete-btn{
+
+background:#ff3333;
+
+color:white;
+
+}
+
+
+.chat-area{
+
+background:#020403;
+
+border:1px solid rgba(0,255,100,.2);
+
+border-radius:15px;
+
+padding:15px;
+
+margin-top:20px;
+
+max-height:300px;
+
+overflow:auto;
+
+}
 </style>
 
 
@@ -1320,7 +1391,7 @@ placeholder="پاسخ به کاربر">
 </textarea>
 
 
-<button onclick="adminSendMessage()">
+<button onclick="sendReply()">
 ارسال پاسخ
 </button>
 `;
@@ -1487,14 +1558,11 @@ ${msg.message}
 
 async function sendReply(){
 
-
 const text =
 document
-.getElementById("replyMessage")
+.getElementById("adminReply")
 .value
 .trim();
-
-
 
 
 if(!text || !currentTicket){
@@ -1504,57 +1572,43 @@ return;
 }
 
 
-
-
 const {error}=await db
 
 .from("ticket_messages")
 
 .insert({
 
-
 ticket_id:currentTicket,
 
-
 sender_type:"admin",
-
 
 sender_name:
 adminData.name || adminData.username,
 
-
 sender_rank:
 adminData.rank,
 
-
 message:text
 
-
 });
-
-
 
 
 if(error){
 
 console.log(error);
+alert("خطا در ارسال پیام");
 
 return;
 
 }
 
 
-
-
 document
-.getElementById("replyMessage")
+.getElementById("adminReply")
 .value="";
 
 
-
 loadMessages();
-
-
 
 }
 
