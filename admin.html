@@ -1422,6 +1422,8 @@ style="background:#ff4444;color:white">
 
 <div id="messages" class="chat-area">
 
+در حال دریافت پیام‌ها...
+
 </div>
 
 <textarea 
@@ -1438,9 +1440,8 @@ placeholder="پاسخ به کاربر">
 
 
 
-loadMessages();
+await loadMessages();
 startRealtime();
-
 
 }
 
