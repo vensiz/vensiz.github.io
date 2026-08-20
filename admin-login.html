@@ -264,11 +264,11 @@ const SUPABASE_URL =
 
 
 const SUPABASE_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzIiwicmVmIjoiZ3BlY2t3bWpzZ2tsaHh0Z3Fkc28iLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc4NzA4ODYwNiwiZXhwIjoyMTAyNjY0NjA2fQ.byZLzDxa884_yIMYEgh3-kvLH8r1AB5huaNvRRLspw";
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzIiwicmVmIjoiZ3BlY2t3bWpzZ2tsaHh0Z3Fkc28iLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc4NzA4ODYwNiwiZXhwIjoyMTA2NjQ2MDYwfQ.byZLzDxa884_yIMYEgh3-kvLH8r1AB5huaNvRRLspw";
 
 
 const db =
-supabase.createClient(
+window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
