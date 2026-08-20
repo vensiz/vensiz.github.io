@@ -6,206 +6,75 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>VENSIZ | Support</title>
+<title>VENSIZ Support</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:tahoma;
-}
-
-
 body{
-
-background:
-linear-gradient(rgba(0,255,100,.03) 1px,transparent 1px),
-linear-gradient(90deg,rgba(0,255,100,.03) 1px,transparent 1px),
-#020403;
-
-background-size:50px 50px;
-
+background:#020403;
 color:white;
-
-min-height:100vh;
-
+font-family:tahoma;
+padding:30px;
 }
-
-
-header{
-
-height:80px;
-
-background:#030603;
-
-border-bottom:1px solid rgba(0,255,100,.2);
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-padding:0 40px;
-
-}
-
-
-.logo{
-
-font-size:30px;
-
-font-weight:bold;
-
-color:#00ff66;
-
-text-shadow:0 0 20px #00ff66;
-
-}
-
-
-
-main{
-
-max-width:900px;
-
-margin:50px auto;
-
-padding:20px;
-
-}
-
-
 
 .box{
 
+max-width:700px;
+margin:auto;
 background:#071008;
-
-border:1px solid rgba(0,255,100,.15);
-
-border-radius:18px;
-
 padding:25px;
-
-margin-bottom:25px;
+border-radius:15px;
+border:1px solid #00ff66;
 
 }
-
-
 
 h1,h2{
 
 color:#00ff66;
 
-margin-bottom:20px;
-
 }
 
-
-
-input,
-textarea,
-select{
+input,textarea,select{
 
 width:100%;
-
-background:#030603;
-
-border:1px solid rgba(0,255,100,.2);
-
+padding:12px;
+margin:10px 0;
+background:#020403;
 color:white;
-
-padding:14px;
-
-border-radius:10px;
-
-margin-bottom:15px;
+border:1px solid #00ff66;
+border-radius:8px;
 
 }
 
 
 textarea{
 
-height:140px;
-
-resize:none;
+height:120px;
 
 }
-
 
 
 button{
 
 width:100%;
-
 padding:15px;
-
 background:#00ff66;
-
-border:none;
-
-border-radius:10px;
-
+border:0;
+border-radius:8px;
 font-weight:bold;
-
 cursor:pointer;
 
 }
 
 
-
-button:hover{
-
-box-shadow:0 0 20px #00ff66;
-
-}
-
-
-
 .ticket{
 
-background:#030603;
-
-border:1px solid rgba(255,255,255,.08);
-
+margin-top:15px;
 padding:15px;
-
-border-radius:12px;
-
-margin-top:15px;
-
-}
-
-
-
-.ticket h3{
-
-color:#00ff66;
-
-}
-
-
-
-.small{
-
-color:#888;
-
-font-size:13px;
-
-}
-
-
-
-#result{
-
-margin-top:15px;
-
-text-align:center;
+background:#020403;
+border-radius:10px;
 
 }
 
@@ -213,39 +82,25 @@ text-align:center;
 </style>
 
 </head>
+
+
 <body>
-
-
-<header>
-
-<div class="logo">
-VENSIZ
-</div>
-
-
-<div>
-Support Center
-</div>
-
-
-</header>
-
-
-
-<main>
 
 
 <div class="box">
 
 
 <h1>
-🎫 ارسال تیکت
+VENSIZ Support
 </h1>
 
 
-<input id="userName"
-placeholder="نام شما در سرور">
+<h2>
+ارسال تیکت
+</h2>
 
+
+<input id="userName" placeholder="نام شما">
 
 
 <select id="department">
@@ -254,188 +109,117 @@ placeholder="نام شما در سرور">
 انتخاب بخش
 </option>
 
-<option value="مدیریت ادمین">
+<option>
 مدیریت ادمین
 </option>
 
-<option value="فروشگاه">
+<option>
 فروشگاه
 </option>
 
-<option value="انتقادات و شکایات">
-انتقادات و شکایات
+<option>
+شکایت
 </option>
 
 </select>
 
 
-
-<input id="subject"
-placeholder="موضوع تیکت">
+<input id="subject" placeholder="موضوع">
 
 
-
-<textarea id="message"
-placeholder="توضیحات مشکل"></textarea>
+<textarea id="message" placeholder="مشکل خود را بنویسید"></textarea>
 
 
+<button id="send">
 
-<button id="sendTicket">
 ارسال تیکت
+
 </button>
 
 
-
-<div id="result"></div>
-
-
-</div>
+<p id="result"></p>
 
 
-
-
-
-<div class="box">
+<hr>
 
 
 <h2>
-📋 تیکت‌های من
+تیکت های من
 </h2>
 
 
-<div id="tickets">
-
-در حال دریافت...
+<div id="list">
 
 </div>
 
 
 </div>
-
-
-</main>
 
 
 
 <script>
 
 
-const SUPABASE_URL =
+const URL =
 "https://gpeckwmjsgklzhtgqdso.supabase.co";
 
 
-const SUPABASE_KEY =
+const KEY =
 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdwZWNrd21qc2drbHpodGdxZHNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwODg2MDYsImV4cCI6MjEwMjY2NDYwNn0.byZ-LzDxa884_yIMYEgh3-kvLH8r1AB5huaNvRRLspw";
+
 
 const db =
 supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-console.log("URL:", SUPABASE_URL);
-console.log("KEY:", SUPABASE_KEY.substring(0,20));
-
-
-function getBrowserId(){
-
-
-let id =
-localStorage.getItem(
-"vensiz_browser_id"
+URL,
+KEY
 );
 
 
 
-if(!id){
+let browserId =
+localStorage.getItem("vensiz_id");
 
 
-id =
-"VZ-" +
-crypto.randomUUID();
+if(!browserId){
 
-
+browserId =
+"VZ-"+crypto.randomUUID();
 
 localStorage.setItem(
-"vensiz_browser_id",
-id
+"vensiz_id",
+browserId
 );
-
-
-}
-
-
-return id;
-
 
 }
 
 
 
-const browserId =
-getBrowserId();
 
-
-
-const sendTicket =
-document.getElementById(
-"sendTicket"
-);
-
+const btn =
+document.getElementById("send");
 
 
 const result =
-document.getElementById(
-"result"
-);
+document.getElementById("result");
 
 
-
-const ticketsBox =
-document.getElementById(
-"tickets"
-);
+btn.onclick = async()=>{
 
 
-
-function showResult(text){
-
-
-result.innerHTML=text;
-
-
-}
-
-
-
-sendTicket.onclick =
-async()=>{
-console.log("BUTTON START");
-alert("کلیک شد");
 let userName =
-document
-.getElementById("userName")
-.value.trim();
-
+document.getElementById("userName").value;
 
 
 let department =
-document
-.getElementById("department")
-.value;
-
+document.getElementById("department").value;
 
 
 let subject =
-document
-.getElementById("subject")
-.value.trim();
-
+document.getElementById("subject").value;
 
 
 let message =
-document
-.getElementById("message")
-.value.trim();
+document.getElementById("message").value;
 
 
 
@@ -446,11 +230,7 @@ if(
 !message
 ){
 
-
-showResult(
-"❌ همه بخش‌ها را کامل کنید"
-);
-
+result.innerHTML="همه موارد را پر کنید";
 
 return;
 
@@ -458,20 +238,14 @@ return;
 
 
 
-sendTicket.disabled=true;
-
-
-
 let number =
-"VZ-" +
-Math.floor(
-100000+
-Math.random()*900000
+"VZ-"+Math.floor(
+100000+Math.random()*900000
 );
 
 
 
-const {data,error}=
+let {data,error}=
 
 await db
 .from("tickets")
@@ -497,93 +271,46 @@ status:"open"
 
 
 
-console.log("RESULT:",data);
-
-console.log("ERROR:",error);
+console.log(data,error);
 
 
 
 if(error){
 
-alert(error.message);
+result.innerHTML=
+error.message;
 
 return;
 
 }
-.select()
-
-.single();
 
 
 
-if(error){
+result.innerHTML=
+"تیکت ثبت شد : "+number;
 
 
-console.log(error);
-
-
-showResult(
-"❌ "+error.message
-);
-
-
-sendTicket.disabled=false;
-
-
-return;
-
-
-}
-
-
-
-showResult(
-"✅ تیکت ساخته شد : "+number
-);
-
-
-
-document
-.getElementById("userName")
-.value="";
-
-
-document
-.getElementById("subject")
-.value="";
-
-
-document
-.getElementById("message")
-.value="";
-
-
-
-loadTickets();
-
-
-
-sendTicket.disabled=false;
-
+load();
 
 
 };
-async function loadTickets(){
 
 
-const {data,error}=
+
+
+
+async function load(){
+
+
+let {data,error}=
 
 await db
-
 .from("tickets")
-
 .select("*")
-
 .eq(
 "browser_id",
 browserId
 )
-
 .order(
 "created_at",
 {
@@ -593,90 +320,46 @@ ascending:false
 
 
 
+let box =
+document.getElementById("list");
+
+
+box.innerHTML="";
+
+
 if(error){
 
-
-ticketsBox.innerHTML =
-"❌ خطا در دریافت تیکت‌ها";
-
-
-console.log(error);
-
+box.innerHTML=error.message;
 
 return;
-
 
 }
 
 
 
-if(!data || data.length===0){
+data.forEach(t=>{
 
 
-ticketsBox.innerHTML =
-"هنوز تیکتی ثبت نکرده‌اید";
-
-
-return;
-
-
-}
-
-
-
-ticketsBox.innerHTML="";
-
-
-
-data.forEach(ticket=>{
-
-
-let div =
-document.createElement("div");
-
-
-
-div.className="ticket";
-
-
-
-div.innerHTML=
+box.innerHTML +=
 
 `
 
-<h3>
-${ticket.ticket_number}
-</h3>
+<div class="ticket">
 
+<b>${t.ticket_number}</b>
 
-<p>
-${ticket.subject}
-</p>
+<br>
 
-
-<div class="small">
-
-بخش:
-${ticket.department}
+${t.subject}
 
 <br>
 
 وضعیت:
-${ticket.status}
-
-<br>
-
-تاریخ:
-${ticket.created_at}
+${t.status}
 
 </div>
 
 `;
-
-
-
-ticketsBox.appendChild(div);
-
 
 
 });
@@ -685,10 +368,7 @@ ticketsBox.appendChild(div);
 }
 
 
-
-
-loadTickets();
-
+load();
 
 
 </script>
