@@ -697,7 +697,13 @@ line-height:2;
 
 </div>
 
+<button class="action" onclick="acceptTicket()">
+✅ قبول کردن تیکت
+</button>
 
+<button class="action" onclick="closeTicket()">
+❌ بستن تیکت
+</button>
 
 
 
@@ -917,7 +923,7 @@ SUPABASE_KEY
 
 
 let currentTicket=null;
-
+let selectedTicketData=null;
 
 
 
@@ -1042,7 +1048,7 @@ async function openTicket(id){
 
 
 currentTicket=id;
-
+selectedTicketData=null;
 
 
 const {data,error}=await db
@@ -1066,7 +1072,7 @@ return;
 
 }
 
-
+selectedTicketData=data;
 
 
 
@@ -1401,7 +1407,82 @@ ${admin.username}
 
 }
 
+async function acceptTicket(){
 
+if(!currentTicket){
+return;
+}
+
+const {error}=await db
+.from("tickets")
+.update({
+
+status:"در حال بررسی",
+
+assigned_admin:
+adminData.name || adminData.username,
+
+admin_rank:
+adminData.rank
+
+})
+.eq("id",currentTicket);
+
+
+if(error){
+
+console.log(error);
+return;
+
+}
+
+
+alert("تیکت با موفقیت قبول شد");
+
+loadTickets();
+
+}
+
+
+
+
+
+async function closeTicket(){
+
+if(!currentTicket){
+return;
+}
+
+
+const {error}=await db
+.from("tickets")
+.update({
+
+status:"بسته شده",
+
+closed_at:
+new Date()
+
+})
+.eq("id",currentTicket);
+
+
+
+if(error){
+
+console.log(error);
+return;
+
+}
+
+
+alert("تیکت بسته شد");
+
+
+loadTickets();
+
+
+}
 
 
 
