@@ -1912,16 +1912,10 @@ return;
 
 alert("تیکت با موفقیت منتقل شد");
 
+await loadTickets();
 
-// نمایش اطلاعات جدید
+closeTicketModal();
 
-selectedTicketData.assigned_admin = adminName;
-selectedTicketData.admin_rank = adminRank;
-
-
-// باز کردن دوباره تیکت
-
-openTicket(currentTicket);
 
 }
 function closeTicketModal(){
