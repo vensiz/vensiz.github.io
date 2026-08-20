@@ -1817,7 +1817,67 @@ loadTickets();
 
 }
 
+async function transferTicket(){
 
+if(!currentTicket){
+return;
+}
+
+
+const {data,error}=await db
+.from("admins")
+.select("*");
+
+
+if(error){
+console.log(error);
+alert("خطا در دریافت ادمین‌ها");
+return;
+}
+
+
+let html = `
+<h2 style="color:#00ff66">
+انتقال تیکت
+</h2>
+
+<p>
+انتخاب ادمین مقصد:
+</p>
+`;
+
+
+data.forEach(admin=>{
+
+html += `
+
+<button 
+onclick="confirmTransfer('${admin.name || admin.username}','${admin.rank || "Admin"}')"
+style="
+width:100%;
+margin-top:10px;
+background:#081108;
+color:white;
+padding:12px;
+border:1px solid #00ff66;
+border-radius:10px;
+">
+
+🛡 ${admin.name || admin.username}
+<br>
+⭐ ${admin.rank || "-"}
+
+</button>
+
+`;
+
+});
+
+
+document.getElementById("modalContent").innerHTML += html;
+
+
+}
 
 function closeTicketModal(){
 
