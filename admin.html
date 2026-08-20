@@ -416,7 +416,6 @@ SUPABASE_KEY
 );
 
 
-let selectedTicket = null;
 
 
 
@@ -828,13 +827,13 @@ box.innerHTML=html;
 let selectedTicket = null;
 
 
-function openChat(id){
+window.openChat = function(id){
 
 selectedTicket = id;
 
 alert("تیکت انتخاب شد: " + id);
 
-}
+};
 
 
 </script>
