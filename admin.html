@@ -434,7 +434,38 @@ margin-bottom:10px;
 
 }
 
+.user-message{
 
+background:#0b160d;
+
+border:1px solid rgba(0,255,100,.2);
+
+padding:15px;
+
+border-radius:15px;
+
+align-self:flex-start;
+
+max-width:75%;
+
+}
+
+
+.admin-message{
+
+background:#063d1c;
+
+border:1px solid #00ff66;
+
+padding:15px;
+
+border-radius:15px;
+
+align-self:flex-end;
+
+max-width:75%;
+
+}
 
 
 
@@ -1504,31 +1535,27 @@ box.innerHTML="";
 
 data.forEach(msg=>{
 
+let type =
+msg.sender_type === "admin"
+? "admin-message"
+: "user-message";
+
 
 box.innerHTML += `
 
-
-<div class="message">
-
+<div class="${type}">
 
 <b style="color:#00ff66">
-
-${msg.sender_name}
-
+${msg.sender_name || "کاربر"}
 </b>
-
 
 
 <br>
 
 
-
 <span style="color:#aaa">
-
 ${msg.sender_rank || ""}
-
 </span>
-
 
 
 <br><br>
@@ -1537,13 +1564,9 @@ ${msg.sender_rank || ""}
 ${msg.message}
 
 
-
 </div>
 
-
 `;
-
-
 
 });
 
