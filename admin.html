@@ -672,13 +672,17 @@ loadTickets();
 
 window.openChat=function(id){
 
+alert("باز شد: " + id);
 
 selectedTicket=id;
-
 
 document
 .getElementById("ticket-chat")
 .style.display="block";
+
+loadMessages();
+
+};
 
 
 
