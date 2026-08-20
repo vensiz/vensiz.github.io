@@ -8,8 +8,7 @@
 
 <title>VENSIZ ADMIN</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@Supabase/supabase-js@2"></script>
 
 <style>
 
@@ -19,7 +18,6 @@ padding:0;
 box-sizing:border-box;
 font-family:tahoma;
 }
-
 
 body{
 
@@ -35,7 +33,6 @@ color:white;
 min-height:100vh;
 
 }
-
 
 
 header{
@@ -57,7 +54,6 @@ padding:0 30px;
 }
 
 
-
 .logo{
 
 color:#00ff66;
@@ -71,13 +67,11 @@ text-shadow:0 0 20px #00ff66;
 }
 
 
-
 .admin-info{
 
 color:#aaa;
 
 }
-
 
 
 .layout{
@@ -87,7 +81,6 @@ display:flex;
 min-height:calc(100vh - 75px);
 
 }
-
 
 
 .sidebar{
@@ -101,7 +94,6 @@ border-left:1px solid rgba(0,255,100,.15);
 padding:25px;
 
 }
-
 
 
 .menu button{
@@ -127,13 +119,11 @@ text-align:right;
 }
 
 
-
 .menu button:hover{
 
 border-color:#00ff66;
 
 }
-
 
 
 .content{
@@ -143,7 +133,6 @@ flex:1;
 padding:35px;
 
 }
-
 
 
 .dashboard,
@@ -160,13 +149,11 @@ padding:30px;
 }
 
 
-
 .section{
 
 display:none;
 
 }
-
 
 
 .section.active{
@@ -176,13 +163,11 @@ display:block;
 }
 
 
-
 h1,h2{
 
 color:#00ff66;
 
 }
-
 
 
 .close{
@@ -198,7 +183,6 @@ font-size:22px;
 }
 
 
-
 .card{
 
 margin-top:20px;
@@ -212,7 +196,6 @@ border-radius:12px;
 border:1px solid rgba(255,255,255,.05);
 
 }
-
 
 
 input,textarea,select{
@@ -234,7 +217,6 @@ border-radius:10px;
 }
 
 
-
 .action-btn{
 
 margin-top:10px;
@@ -251,6 +233,44 @@ cursor:pointer;
 
 }
 
+
+#chat-messages{
+
+height:350px;
+
+overflow:auto;
+
+background:#020403;
+
+padding:15px;
+
+border-radius:12px;
+
+margin-top:15px;
+
+}
+
+
+.msg-admin{
+
+border-right:3px solid #00ff66;
+
+padding:10px;
+
+margin:10px;
+
+}
+
+
+.msg-user{
+
+border-right:3px solid #888;
+
+padding:10px;
+
+margin:10px;
+
+}
 
 
 </style>
@@ -276,12 +296,10 @@ VENSIZ ADMIN
 </header>
 
 
-
 <div class="layout">
 
 
 <aside class="sidebar">
-
 
 <div class="menu">
 
@@ -303,9 +321,7 @@ VENSIZ ADMIN
 
 </div>
 
-
 </aside>
-
 
 
 <main class="content">
@@ -313,25 +329,18 @@ VENSIZ ADMIN
 
 <div id="home" class="dashboard">
 
-
 <h1>
 خوش آمدید
 </h1>
-
 
 <p>
 پنل مدیریت VENSIZ
 </p>
 
-
 </div>
 
 
-
-
-
 <div id="tickets" class="section">
-
 
 <span class="close" onclick="closeSection('tickets')">
 ✖
@@ -344,30 +353,37 @@ VENSIZ ADMIN
 
 
 <div id="ticket-list">
+در حال دریافت...
+</div>
+
+
+
 <div id="ticket-chat" style="display:none">
 
-<h2>💬 چت تیکت</h2>
+
+<h2>
+💬 چت تیکت
+</h2>
+
 
 <div id="chat-info"></div>
 
+
 <div id="chat-messages"></div>
 
-<textarea id="chat-input" placeholder="پیام..."></textarea>
+
+<textarea id="chat-input" placeholder="پیام ادمین..."></textarea>
+
 
 <button class="action-btn" onclick="sendMessage()">
-ارسال
+ارسال پیام
 </button>
 
-</div>
-در حال دریافت...
 
 </div>
 
 
 </div>
-
-
-
 
 
 
@@ -395,12 +411,10 @@ VENSIZ ADMIN
 
 </main>
 
-
 </div>
 
+
 <script>
-
-
 const SUPABASE_URL =
 "https://gpeckwmjsgklzhtgqdso.supabase.co";
 
@@ -417,16 +431,14 @@ SUPABASE_KEY
 
 
 
-
-
-let currentAdmin =
+const adminData =
 JSON.parse(
 localStorage.getItem("vensiz_admin")
 );
 
 
 
-if(!currentAdmin){
+if(!adminData){
 
 window.location.href =
 "admin-login.html";
@@ -437,18 +449,18 @@ window.location.href =
 
 document.getElementById("admin-info").innerHTML =
 `
-🛡 ${currentAdmin.name}
+🛡 ${adminData.name || adminData.username}
 |
-${currentAdmin.rank}
+${adminData.rank}
 `;
 
 
 
+let selectedTicket = null;
 
-// باز کردن بخش‌ها
+
 
 function openSection(id){
-
 
 document
 .querySelectorAll(".section")
@@ -466,14 +478,11 @@ document
 .getElementById(id)
 .classList.add("active");
 
-
 }
 
 
 
-
 function closeSection(id){
-
 
 document
 .getElementById(id)
@@ -484,16 +493,14 @@ document
 .getElementById("home")
 .style.display="block";
 
-
 }
 
 
 
 
-
-// ======================
-// تیکت ها
-// ======================
+// =====================
+// دریافت تیکت ها
+// =====================
 
 
 async function loadTickets(){
@@ -507,11 +514,8 @@ document.getElementById("ticket-list");
 const {data,error}=
 
 await db
-
 .from("tickets")
-
 .select("*")
-
 .order(
 "created_at",
 {
@@ -523,10 +527,9 @@ ascending:false
 
 if(error){
 
-console.log(error);
+box.innerHTML="خطا در دریافت تیکت‌ها";
 
-box.innerHTML =
-"خطا در دریافت تیکت‌ها";
+console.log(error);
 
 return;
 
@@ -536,8 +539,7 @@ return;
 
 if(!data.length){
 
-box.innerHTML =
-"تیکتی وجود ندارد";
+box.innerHTML="تیکتی وجود ندارد";
 
 return;
 
@@ -553,7 +555,6 @@ data.forEach(ticket=>{
 
 
 html += `
-
 
 <div class="card">
 
@@ -588,15 +589,10 @@ ${ticket.status || "-"}
 
 
 <p>
-🛡 ادمین مسئول:
+🛡 مسئول:
 ${ticket.assigned_admin || "-"}
 </p>
 
-
-<p>
-⭐ رنک:
-${ticket.admin_rank || "-"}
-</p>
 
 
 <button class="action-btn"
@@ -605,17 +601,22 @@ onclick="assignTicket('${ticket.id}')">
 گرفتن تیکت
 
 </button>
+
+
+
 <button class="action-btn"
 onclick="openChat('${ticket.id}')">
 
-💬 باز کردن گفتگو
+💬 گفتگو
 
 </button>
+
 
 </div>
 
 
 `;
+
 
 });
 
@@ -628,29 +629,26 @@ box.innerHTML=html;
 
 
 
-
-
-
-// گرفتن تیکت توسط ادمین
+// =====================
+// گرفتن تیکت
+// =====================
 
 
 async function assignTicket(id){
 
 
 await db
-
 .from("tickets")
-
 .update({
 
 assigned_admin:
-currentAdmin.name,
+adminData.name || adminData.username,
+
 
 admin_rank:
-currentAdmin.rank
+adminData.rank
 
 })
-
 .eq(
 "id",
 id
@@ -667,27 +665,61 @@ loadTickets();
 
 
 
+// =====================
+// باز کردن چت
+// =====================
 
 
-// ======================
-// مدیریت ادمین
-// ======================
+window.openChat=function(id){
 
 
-
-async function openAdminSection(){
-
+selectedTicket=id;
 
 
-let pass =
-prompt(
-"رمز مدیریت ادمین:"
-);
+document
+.getElementById("ticket-chat")
+.style.display="block";
 
 
 
-if(!pass)
+document
+.getElementById("chat-info")
+.innerHTML=
+`
+🎫 تیکت:
+${id}
+<br>
+🛡 ادمین:
+${adminData.name || adminData.username}
+|
+${adminData.rank}
+`;
+
+
+
+loadMessages();
+
+
+};
+
+
+
+
+// =====================
+// دریافت پیام ها
+// =====================
+
+
+async function loadMessages(){
+
+
+if(!selectedTicket)
 return;
+
+
+
+const box =
+document.getElementById("chat-messages");
 
 
 
@@ -695,24 +727,29 @@ const {data,error}=
 
 await db
 
-.from("admin_settings")
+.from("ticket_messages")
 
 .select("*")
 
 .eq(
-"id",
-1
+"ticket_id",
+selectedTicket
 )
 
-.single();
+.order(
+"created_at",
+{
+ascending:true
+}
+);
 
 
 
 if(error){
 
-alert(
-"تنظیمات پیدا نشد"
-);
+box.innerHTML="خطا در دریافت پیام";
+
+console.log(error);
 
 return;
 
@@ -720,18 +757,137 @@ return;
 
 
 
-if(pass !== data.admin_password){
+box.innerHTML="";
 
 
-alert(
-"رمز اشتباه است"
-);
 
+data.forEach(msg=>{
+
+
+let cls =
+msg.sender_type=="admin"
+?
+"msg-admin"
+:
+"msg-user";
+
+
+
+box.innerHTML +=
+`
+
+<div class="${cls}">
+
+
+<b>
+${msg.sender_name}
+${msg.sender_rank ? " | "+msg.sender_rank:""}
+</b>
+
+
+<br>
+
+
+${msg.message}
+
+
+</div>
+
+
+`;
+
+});
+
+
+box.scrollTop =
+box.scrollHeight;
+
+
+}
+
+
+
+
+// =====================
+// ارسال پیام ادمین
+// =====================
+
+
+async function sendMessage(){
+
+
+let input =
+document.getElementById("chat-input");
+
+
+
+let text =
+input.value.trim();
+
+
+
+if(!text || !selectedTicket)
+return;
+
+
+
+const {error}=
+
+await db
+
+.from("ticket_messages")
+
+.insert({
+
+ticket_id:selectedTicket,
+
+
+sender_type:"admin",
+
+
+sender_name:
+adminData.name || adminData.username,
+
+
+sender_rank:
+adminData.rank,
+
+
+message:text
+
+});
+
+
+
+if(error){
+
+alert(error.message);
 
 return;
 
 }
 
+
+
+input.value="";
+
+
+loadMessages();
+
+
+}
+
+
+
+
+
+
+// =====================
+// مدیریت ادمین ها
+// =====================
+
+
+async function openAdminSection(){
 
 
 openSection("admins");
@@ -741,10 +897,6 @@ loadAdmins();
 
 
 }
-
-
-
-
 
 
 
@@ -769,8 +921,7 @@ await db
 
 if(error){
 
-box.innerHTML =
-"خطا";
+box.innerHTML="خطا";
 
 return;
 
@@ -785,34 +936,28 @@ let html="";
 data.forEach(admin=>{
 
 
-html += `
+html +=
 
+`
 
 <div class="card">
 
-
 🛡 ${admin.name}
 
-
 <br><br>
-
 
 یوزرنیم:
 ${admin.username}
 
-
 <br>
-
 
 رنک:
 ${admin.rank}
 
-
-
 </div>
 
-
 `;
+
 
 
 });
@@ -824,16 +969,21 @@ box.innerHTML=html;
 
 }
 
-let selectedTicket = null;
 
 
-window.openChat = function(id){
 
-selectedTicket = id;
+// رفرش خودکار چت
 
-alert("تیکت انتخاب شد: " + id);
+setInterval(()=>{
 
-};
+if(selectedTicket){
 
+loadMessages();
 
+}
+
+},3000);
 </script>
+
+</body>
+</html>
