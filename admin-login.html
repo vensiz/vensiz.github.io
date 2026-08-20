@@ -341,27 +341,25 @@ return;
 
 const admin = data[0];
 
+console.log("ADMIN OBJECT:", admin);
+
 
 sessionStorage.setItem(
-
 "vensiz_admin",
-
 JSON.stringify({
 
-id:admin.id,
+id: admin.id,
 
-name:admin.name,
+name: admin.name,
 
-username:admin.username,
+username: admin.username,
 
-rank:admin.rank,
+rank: admin.rank,
 
-permissions:admin.permissions
+permissions: admin.permissions
 
 })
-
 );
-
 
 
 message.className="success";
