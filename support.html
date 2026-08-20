@@ -268,7 +268,10 @@ supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
-
+db.from("tickets")
+.select("id")
+.limit(1)
+.then(console.log);
 
 
 let browserId =
