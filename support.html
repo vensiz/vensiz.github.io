@@ -780,7 +780,34 @@ async function openChat(id){
 
     `;
 
-    await loadMessages();
+ await loadMessages();
+
+startRealtime();
+
+}
+    function startRealtime(){
+
+supabase
+.channel('ticket-chat-'+currentTicket)
+
+.on(
+'postgres_changes',
+{
+event:'INSERT',
+schema:'public',
+table:'ticket_messages',
+filter:`ticket_id=eq.${currentTicket}`
+},
+
+(payload)=>{
+
+loadMessages();
+
+}
+
+)
+
+.subscribe();
 
 }
 async function loadMessages(){
