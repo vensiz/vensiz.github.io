@@ -709,12 +709,10 @@ if(
 !message
 ){
 
-
 showResult(
 "لطفا همه بخش‌ها را کامل کنید",
 "error"
 );
-
 
 return;
 
@@ -723,6 +721,7 @@ return;
 
 
 sendTicket.disabled=true;
+
 
 
 let number =
@@ -739,7 +738,6 @@ const {data,error}=
 await db
 .from("tickets")
 .insert({
-
 
 ticket_number:number,
 
@@ -763,39 +761,7 @@ status:"open"
 
 if(error){
 
-alert(error.message);
-
 console.log(error);
-
-sendTicket.disabled=false;
-
-return;
-
-}
-
-
-
-alert("تیکت با موفقیت ثبت شد");
-
-
-showResult(
-"✅ تیکت ساخته شد : "+number,
-"success"
-);
-
-
-document.getElementById("userName").value="";
-document.getElementById("subject").value="";
-document.getElementById("message").value="";
-
-
-load
-
-
-
-
-if(error){
-
 
 showResult(
 error.message,
@@ -824,181 +790,17 @@ document.getElementById("message").value="";
 
 
 
-loadTickets();
+sendTicket.disabled=false;
 
+
+
+loadTickets();
 
 
 openTicket(data);
 
 
-
-sendTicket.disabled=false;
-
-
 };
-/*
-==============================
-LOAD TICKETS
-==============================
-*/
-
-
-async function loadTickets(){
-
-
-const {data,error}=
-
-await db
-.from("tickets")
-.select("*")
-.eq(
-"browser_id",
-browserId
-)
-.order(
-"created_at",
-{
-ascending:false
-}
-);
-
-
-
-if(error){
-
-ticketsBox.innerHTML=
-"خطا در دریافت تیکت‌ها";
-
-return;
-
-}
-
-
-
-if(!data || data.length===0){
-
-ticketsBox.innerHTML=
-"هنوز تیکتی ثبت نکرده‌اید";
-
-return;
-
-}
-
-
-
-ticketsBox.innerHTML="";
-
-
-
-data.forEach(ticket=>{
-
-
-let div=
-document.createElement("div");
-
-
-
-div.className=
-"ticket";
-
-
-
-div.innerHTML=
-
-`
-
-<h3>
-${ticket.ticket_number}
-</h3>
-
-
-<p>
-
-${ticket.subject}
-
-<br>
-
-بخش:
-${ticket.department}
-
-<br>
-
-وضعیت:
-${ticket.status}
-
-</p>
-
-`;
-
-
-
-div.onclick=()=>{
-
-openTicket(ticket);
-
-};
-
-
-
-ticketsBox.appendChild(div);
-
-
-});
-
-
-}
-
-
-
-
-/*
-==============================
-OPEN TICKET
-==============================
-*/
-
-
-async function openTicket(ticket){
-
-
-currentTicket=ticket;
-
-
-
-document
-.getElementById("chatBox")
-.style.display="block";
-
-
-
-document
-.getElementById("chatTitle")
-.innerHTML=
-
-`
-چت تیکت
-${ticket.ticket_number}
-`;
-
-
-
-await loadMessages(ticket.id);
-
-
-
-startRealtime(ticket.id);
-
-
-
-document
-.getElementById("chatBox")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-
-}
-
 
 
 
