@@ -1027,7 +1027,14 @@ onclick="openTicket('${ticket.id}')">
 باز کردن تیکت
 
 </button>
+<button 
+class="action"
+style="background:#ff4444;color:white;margin-top:10px"
+onclick="deleteTicket('${ticket.id}')">
 
+🗑 حذف تیکت
+
+</button>
 
 </div>
 
@@ -1129,13 +1136,43 @@ ${data.message}
 
 
 loadMessages();
-
+startRealtime();
 
 
 }
 
 
+function startRealtime(){
 
+db
+.channel('admin-ticket-chat-'+currentTicket)
+
+.on(
+'postgres_changes',
+{
+event:'INSERT',
+schema:'public',
+table:'ticket_messages',
+filter:`ticket_id=eq.${currentTicket}`
+},
+
+(payload)=>{
+
+console.log("NEW MESSAGE:", payload);
+
+loadMessages();
+
+}
+
+)
+
+.subscribe((status)=>{
+
+console.log("Realtime status:", status);
+
+});
+
+}
 
 
 
@@ -1516,7 +1553,34 @@ loadTickets();
 }
 
 
+async function deleteTicket(id){
 
+if(!confirm("آیا از حذف این تیکت مطمئن هستید؟")){
+return;
+}
+
+
+const {error}=await db
+.from("tickets")
+.delete()
+.eq("id",id);
+
+
+if(error){
+
+console.log(error);
+alert("خطا در حذف تیکت");
+
+return;
+
+}
+
+
+alert("تیکت حذف شد");
+
+loadTickets();
+
+}
 
 
 
