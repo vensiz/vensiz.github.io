@@ -758,6 +758,18 @@ message:message,
 status:"open"
 
 });
+
+
+console.log("INSERT RESULT:", data, error);
+
+
+if(error){
+
+alert(JSON.stringify(error));
+
+return;
+
+}
 .select()
 .single();
 
