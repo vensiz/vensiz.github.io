@@ -326,8 +326,7 @@ console.log("RESULT:", data);
 console.log("ERROR:", error);
 
 
-if(error || !data){
-
+if(error || !data || data.length === 0){
 
 message.className="error";
 
@@ -336,9 +335,11 @@ message.innerHTML=
 
 return;
 
-
 }
 
+
+
+const admin = data[0];
 
 
 sessionStorage.setItem(
@@ -347,15 +348,15 @@ sessionStorage.setItem(
 
 JSON.stringify({
 
-id:data.id,
+id:admin.id,
 
-name:data.name,
+name:admin.name,
 
-username:data.username,
+username:admin.username,
 
-rank:data.rank,
+rank:admin.rank,
 
-permissions:data.permissions
+permissions:admin.permissions
 
 })
 
