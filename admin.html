@@ -503,21 +503,18 @@ onclick="showSection('shop')">
 <div id="tickets" class="panel section">
 
 <h2>
-
 🎫 مدیریت تیکت‌ها
-
 </h2>
 
 
-<p style="color:#888;margin-top:20px">
+<div id="ticketList" style="margin-top:25px">
 
-بخش تیکت‌ها در مرحله بعد ساخته می‌شود.
-
-</p>
-
+در حال دریافت تیکت‌ها...
 
 </div>
 
+
+</div>
 
 
 
@@ -657,7 +654,139 @@ document
 
 }
 
+const SUPABASE_URL =
+"https://gpeckwmjsgklzhtgqdso.supabase.co";
 
+
+const SUPABASE_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdwZWNrd21qc2drbHpodGdxZHNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcwODg2MDYsImV4cCI6MjEwMjY2NDYwNn0.byZLzDxa884_yIMYEgh3-kvLH8r1AB5huaNvRRLspw";
+
+
+const db =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
+
+async function loadTickets(){
+
+
+const {data,error}=
+
+await db
+.from("tickets")
+.select("*")
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+
+
+if(error){
+
+console.log(error);
+
+return;
+
+}
+
+
+
+const box =
+document.getElementById("ticketList");
+
+
+box.innerHTML="";
+
+
+
+data.forEach(ticket=>{
+
+
+box.innerHTML +=
+
+`
+
+<div style="
+background:#030603;
+border:1px solid rgba(0,255,100,.15);
+padding:20px;
+border-radius:15px;
+margin-bottom:15px;
+">
+
+
+<h3 style="color:#00ff66">
+
+${ticket.ticket_number}
+
+</h3>
+
+
+<p>
+👤 ${ticket.user_name}
+</p>
+
+
+<p>
+📌 ${ticket.subject}
+</p>
+
+
+<p>
+📂 ${ticket.department}
+</p>
+
+
+<p>
+وضعیت:
+${ticket.status}
+</p>
+
+
+<button
+onclick="openTicket('${ticket.id}')"
+style="
+margin-top:15px;
+padding:10px;
+background:#00ff66;
+border:0;
+border-radius:8px;
+cursor:pointer;
+">
+
+باز کردن تیکت
+
+</button>
+
+
+</div>
+
+`;
+
+});
+
+
+}
+
+
+loadTickets();
+
+
+
+function openTicket(id){
+
+console.log(
+"ticket:",
+id
+);
+
+}
 
 </script>
 
